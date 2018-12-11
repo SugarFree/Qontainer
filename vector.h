@@ -5,17 +5,19 @@ template<class T>
 class vector {
 private:
     unsigned int size;
-    unsigned int capacity;
     T* punt;
 public:
     vector(unsigned int =0, unsigned int =0, T* =nullptr);
     vector(const vector<T>&);
+    vector<T>& operator=(const vector<T>&);
     ~vector();
-    unsigned int get_size() const;
-    unsigned int get_capacity() const;
-    bool empty();
     void push_back(const T&);
+    void pop_back();
+    void resize(unsigned int size);
+    T& operator[](unsigned int);
 
 };
+
+std::ostream& vector<T> operator<<(std::ostream& os, const vector<T>& v);
 
 #endif // VECTOR_H
