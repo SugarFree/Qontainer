@@ -92,9 +92,10 @@ bool vector<T>::empty() const {
 
 template<class T>
 void vector<T>::clear() {
+    for(unsigned int j=0; j<size; j++)
+        delete[] point;
     capacity=0;
     size=0;
-    point=nullptr;
 }
 
 template<class T>
@@ -119,13 +120,26 @@ void vector<T>::reserve(unsigned int c) {
 
 template<class T>
 void vector<T>::resize(unsigned int s) {
-    reserve(s);
-    size=s;
+    if(s>size) {
+        reserve(s*2);
+        size=s;
+    }
+    else {
+        for(unsigned int j=size; j>s; j--)
+            delete[] point;
+    }
 }
 
 template<class T>
 void vector<T>::push_back(const T& v) {
+    resize(s*2)
+    point[size++]=v;
+}
 
+template<class T>
+void vector<T>::pop_back() {
+    delete point[size];
+    size--;
 }
 
 #endif // VECTOR_H
