@@ -29,8 +29,8 @@ public:
     void resize(unsigned int);
     void push_back(const T&);
     void pop_back();
-    T* search(const T*);
-    T& operator[](unsigned int);
+    T* search(const T*) const;
+    T& operator[](unsigned int) const;
     class constiterator {
     friend class vector<T>;
     private:
@@ -141,5 +141,22 @@ void vector<T>::pop_back() {
     delete point[size];
     size--;
 }
+
+template<class T>
+typedef vector<T>::T* vector<T>::search(const T* v) const {
+    if(point) {
+        for(unsigned int j=0; j<size; j++) {
+            if(point[j]==v)
+                return point[j];
+        }
+    }
+}
+
+template<class T>
+typedef vector<T>::T& vector<T>::operator[](unsigned int j) const {
+    return point[j];
+}
+
+
 
 #endif // VECTOR_H
