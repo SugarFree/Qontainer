@@ -31,22 +31,21 @@ public:
     void pop_back();
     T* search(const T*) const;
     T& operator[](unsigned int) const;
-    class constiterator {
+    class iterator {
     friend class vector<T>;
     private:
         const T* pt;
         bool eov;
-        constiterator(T* =nullptr, bool =false);
+        iterator(T* =nullptr, bool =false);
     public:
-        constiterator();
-        constiterator& operator++();
-        constiterator& operator--();
-        const T& operator*() const;
-        bool operator==(const constiterator&) const;
-        bool operator!=(const constiterator&) const;
+        iterator();
+        iterator& operator++();
+        iterator& operator--();
+        bool operator==(const iterator&) const;
+        bool operator!=(const iterator&) const;
     };
-    constiterator begin() const;
-    constiterator end() const;
+    iterator begin() const;
+    iterator end() const;
 };
 
 template<class T>
@@ -132,7 +131,7 @@ void vector<T>::resize(unsigned int s) {
 
 template<class T>
 void vector<T>::push_back(const T& v) {
-    resize(s*2)
+    resize(size*2);
     point[size++]=v;
 }
 
@@ -143,7 +142,7 @@ void vector<T>::pop_back() {
 }
 
 template<class T>
-typedef vector<T>::T* vector<T>::search(const T* v) const {
+T* vector<T>::search(const T* v) const {
     if(point) {
         for(unsigned int j=0; j<size; j++) {
             if(point[j]==v)
@@ -153,10 +152,11 @@ typedef vector<T>::T* vector<T>::search(const T* v) const {
 }
 
 template<class T>
-typedef vector<T>::T& vector<T>::operator[](unsigned int j) const {
+T& vector<T>::operator[](unsigned int j) const {
     return point[j];
 }
 
-
+template<class T>
+vector<T>::iterator::iterator(): pt(nullptr),
 
 #endif // VECTOR_H
