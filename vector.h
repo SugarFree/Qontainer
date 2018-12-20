@@ -31,6 +31,9 @@ public:
     void pop_back();
     T* search(const T*) const;
     T& operator[](unsigned int) const;
+    bool operator==(const T&) const;
+    bool operator!=(const T&) const;
+    vector<T> operator+(const vector<T>&) const;
     class iterator {
     friend class vector<T>;
     private:
@@ -39,8 +42,10 @@ public:
         iterator(T* =nullptr, bool =false);
     public:
         iterator();
-        iterator& operator++();
-        iterator& operator--();
+        /*iterator operator++(int); //postfisso
+        iterator operator--(int); //postfisso
+        iterator& operator++(); //prefisso
+        iterator& operator--(); //prefisso*/
         bool operator==(const iterator&) const;
         bool operator!=(const iterator&) const;
     };
@@ -131,7 +136,8 @@ void vector<T>::resize(unsigned int s) {
 
 template<class T>
 void vector<T>::push_back(const T& v) {
-    resize(size*2);
+    if(size==capacity)
+        resize(size*2);
     point[size++]=v;
 }
 
@@ -157,6 +163,58 @@ T& vector<T>::operator[](unsigned int j) const {
 }
 
 template<class T>
-vector<T>::iterator::iterator(): pt(nullptr),
+bool vector<T>::operator==(const T& v) const {
+    if(size!=v.size)
+        return false;
+    for(unsigned int j=0; j<size; ++j) {
+        if(point[j]!=v.point[j])
+            return false;
+    }
+    return true;
+}
+
+template<class T>
+bool vector<T>::operator!=(const T& v) const {
+    if(size!=v.size)
+        return true;
+    for(unsigned int j=0; j<size; ++j) {
+        if(point[j]!=v.point[j])
+            return true;
+    }
+    return false;
+}
+
+template<class T>
+vector<T> vector<T>::operator+(const vector<T>& v) const {
+    vector w;
+    unsigned int x=size+v.size;
+    if(x) {
+        w.point=new T[x];
+        w.size=x;
+        for(unsigned int j=0; j<size; ++j)
+            w.point[j]=point[j];
+        for(unsigned int j=0; j<v.size; ++j)
+            w.point[size+j]=v.point[j];
+    }
+    return w;
+}
+
+template<class T>
+vector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
+
+/*template<class T>
+typename vector<T>::iterator vector<T>::iterator::operator++(int) {
+
+}*/
+
+template<class T>
+typename vector<T>::iterator vector<T>::begin() const {
+    return point[0];
+}
+
+template<class T>
+typename vector<T>::iterator vector<T>::end() const {
+    return point[size-1];
+}
 
 #endif // VECTOR_H
