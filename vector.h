@@ -202,11 +202,6 @@ vector<T> vector<T>::operator+(const vector<T>& v) const {
 template<class T>
 vector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
 
-/*template<class T>
-typename vector<T>::iterator vector<T>::iterator::operator++(int) {
-
-}*/
-
 template<class T>
 typename vector<T>::iterator vector<T>::begin() const {
     return point[0];
