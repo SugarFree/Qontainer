@@ -26,11 +26,15 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    componenti_pc.cpp \
+    moba.cpp
 
 HEADERS += \
         mainwindow.h \
-    vector.h
+    vector.h \
+    componenti_pc.h \
+    moba.h
 
 FORMS += \
         mainwindow.ui

@@ -212,4 +212,12 @@ typename vector<T>::iterator vector<T>::end() const {
     return point[size-1];
 }
 
+template<class T>
+std::ostream& operator<<(std::ostream& os, const vector<T>& v) {
+    for(int j=0; j<v.getSize(); ++j)
+        os << v[j] << ' ';
+    return os;
+}
+
+
 #endif // VECTOR_H
