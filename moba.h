@@ -1,19 +1,18 @@
 #ifndef MOBA_H
 #define MOBA_H
 #include "componenti_pc.h"
-#include <string>
 
 class MOBA: public Componenti_PC {
 private:
-    std::string Socket;
-    std::string Form_Factor;
-    unsigned int RAM_Slots;
-    unsigned int Max_RAM;
-    std::string Connectors;
+    std::string moba_socket;
+    std::string form_factor;
+    unsigned int RAM_slots;
+    unsigned int max_RAM;
+    std::string connectors;
 public:
-    MOBA(unsigned int l, unsigned int a, std::string n, float p, std::string ="Non specificato", std::string ="Non specificato", unsigned int =0, unsigned int =0, std::string ="Non specificati");
+    MOBA(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string ="Non specificato", std::string ="Non specificato", unsigned int =0, unsigned int =0, std::string ="Non specificati");
     Componenti_PC* clone() const;
-    int Rating(); //aggiungere prezzo?
+    int Rating();
     void setRightSize();
     ~MOBA() =default;
 };

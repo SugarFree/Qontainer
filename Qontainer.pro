@@ -28,13 +28,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     componenti_pc.cpp \
-    moba.cpp
+    moba.cpp \
+    cpu.cpp \
+    cache.cpp
 
 HEADERS += \
         mainwindow.h \
     vector.h \
     componenti_pc.h \
-    moba.h
+    moba.h \
+    cpu.h \
+    cache.h
 
 FORMS += \
         mainwindow.ui
