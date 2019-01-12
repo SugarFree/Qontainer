@@ -25,7 +25,12 @@ int cpu::Rating() {
     return rating;
 }
 
-void cpu::SocketCheck(MOBA m) {
-    if(m.getMOBASocket()!=cpu_socket)
+void cpu::SocketCheck(const MOBA* m) const {
+    if(m->getMOBASocket()!=cpu_socket)
         std::cerr<<"Socket MOBA e CPU non compatibili.";
+}
+
+void cpu::SupportedRAM(const RAM* r) const {
+    if(r->getSize()>8 && !x64bit)
+        std::cerr<<"CPU a 32 bit. Non verrano supportati quantitativi di RAM superiori ad 8 GB.";
 }

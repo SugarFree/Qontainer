@@ -38,11 +38,11 @@ void Componenti_PC::setProduttore(std::string pr) {
         this->produttore=pr;
 }
 
-float Componenti_PC::getPrezzo() const {
+double Componenti_PC::getPrezzo() const {
     return prezzo;
 }
 
-void Componenti_PC::setPrezzo(float p) {
+void Componenti_PC::setPrezzo(double p) {
     if(this->prezzo!=p)
         this->prezzo=p;
 }

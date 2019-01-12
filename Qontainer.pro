@@ -31,7 +31,9 @@ SOURCES += \
     moba.cpp \
     cpu.cpp \
     cache.cpp \
-    ram.cpp
+    ram.cpp \
+    storage.cpp \
+    gpu.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +42,9 @@ HEADERS += \
     moba.h \
     cpu.h \
     cache.h \
-    ram.h
+    ram.h \
+    storage.h \
+    gpu.h
 
 FORMS += \
         mainwindow.ui
