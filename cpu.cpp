@@ -1,8 +1,8 @@
 #include <iostream>
 #include "cpu.h"
 
-cpu::cpu(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, double s, unsigned int c, bool x64, std::string cs, bool gi, bool di):
-    Componenti_PC (l, a, n, pr, p, ce), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), grafica_integrata(gi), dissipatore_integrato(di)   {}
+cpu::cpu(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, double s, unsigned int c, bool x64, std::string cs, bool gi):
+    Componenti_PC (l, a, n, pr, p, ce), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), grafica_integrata(gi) {}
 
 Componenti_PC* cpu::clone() const {
     return new cpu(*this);

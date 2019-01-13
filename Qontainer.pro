@@ -32,8 +32,8 @@ SOURCES += \
     cpu.cpp \
     cache.cpp \
     ram.cpp \
-    storage.cpp \
-    gpu.cpp
+    gpu.cpp \
+    storage.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,8 +43,8 @@ HEADERS += \
     cpu.h \
     cache.h \
     ram.h \
-    storage.h \
-    gpu.h
+    gpu.h \
+    storage.h
 
 FORMS += \
         mainwindow.ui

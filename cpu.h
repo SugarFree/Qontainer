@@ -13,9 +13,8 @@ private:
     std::string cpu_socket;
     //cache
     bool grafica_integrata;
-    bool dissipatore_integrato;
 public:
-    cpu(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, double =0, unsigned int =0, bool =false, std::string ="Non specificato", bool =false, bool =false);
+    cpu(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, double =0, unsigned int =0, bool =false, std::string ="Non specificato", bool =false);
     Componenti_PC* clone() const;
     int Rating();
     void SocketCheck(const MOBA*) const;

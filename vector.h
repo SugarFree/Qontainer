@@ -219,5 +219,4 @@ std::ostream& operator<<(std::ostream& os, const vector<T>& v) {
     return os;
 }
 
-
 #endif // VECTOR_H
