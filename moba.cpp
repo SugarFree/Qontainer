@@ -59,3 +59,7 @@ void MOBA::setRightFormFactor() {
     }
 }
 
+std::string MOBA::getConnectors() const {
+    return connectors;
+}
+
