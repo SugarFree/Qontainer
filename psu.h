@@ -1,0 +1,19 @@
+#ifndef PSU_H
+#define PSU_H
+#include "componenti_pc.h"
+
+class PSU {
+private:
+    unsigned int larghezza;
+    unsigned int altezza;
+    std::string form_factor;
+    int wattage;
+    std::string efficiency_certification;
+    std::string modularity;
+    std::string connectors;
+public:
+    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", int =0, std::string ="Non specificato", std::string ="Non specificato", std::string ="Non spcificato");
+
+};
+
+#endif // PSU_H

@@ -30,10 +30,10 @@ SOURCES += \
     componenti_pc.cpp \
     moba.cpp \
     cpu.cpp \
-    cache.cpp \
     ram.cpp \
     gpu.cpp \
-    storage.cpp
+    storage.cpp \
+    psu.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,10 +41,10 @@ HEADERS += \
     componenti_pc.h \
     moba.h \
     cpu.h \
-    cache.h \
     ram.h \
     gpu.h \
-    storage.h
+    storage.h \
+    psu.h
 
 FORMS += \
         mainwindow.ui
