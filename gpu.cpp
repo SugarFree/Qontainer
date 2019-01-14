@@ -1,8 +1,8 @@
 #include "gpu.h"
 #include <iostream>
 
-GPU::GPU(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string t, int ms, double pf, float c, std::string i, std::string co):
-    Componenti_PC (l, a, n, pr, p, ce), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co) {}
+GPU::GPU(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string t, int ms, double pf, float c, std::string i, std::string co, bool as):
+    Componenti_PC (l, a, n, pr, p, ce), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), alimentazione_supplementare(as) {}
 
 Componenti_PC *GPU::clone() const {
     return new GPU(*this);
@@ -34,4 +34,11 @@ void GPU::checkRightInterface(const MOBA* m) const {
     size_t pci_gpu=connectors.find("PCI-E 3.0");
     if(!pci_moba || !pci_gpu)
         std::cerr<<"Interfaccia PCI Express non compatibile.";
+}
+
+void GPU::checkAlimentazioneSupplementare(const PSU* p) const {
+    if(alimentazione_supplementare) {
+        if(p->getAlimentazioneSupplementare()==false && alimentazione_supplementare)
+            std::cerr<<"Pin di alimentazione supplementare non disponibili.";
+    }
 }

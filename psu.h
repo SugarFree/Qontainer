@@ -10,10 +10,11 @@ private:
     int wattage;
     std::string efficiency_certification;
     std::string modularity;
-    std::string connectors;
+    bool alimentazione_supplementare;
 public:
-    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", int =0, std::string ="Non specificato", std::string ="Non specificato", std::string ="Non spcificato");
-
+    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", int =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
+    int checkPowerConsumption(const Componenti_PC*);
+    bool getAlimentazioneSupplementare() const;
 };
 
 #endif // PSU_H
