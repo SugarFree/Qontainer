@@ -25,7 +25,7 @@ public:
     void clear();
     unsigned int getCapacity() const;
     unsigned int getSize() const;
-    void reserve(unsigned int);
+    /*void reserve(unsigned int);*/
     void resize(unsigned int);
     void push_back(const T&);
     void pop_back();
@@ -59,8 +59,8 @@ T* vector<T>::copy() const {
     if(!size)
         v=nullptr;
     else
-        v=new T*[size];
-    for(int j=0; j<size; j++)
+        v=new T*[capacity];
+    for(unsigned int j=0; j<size; j++)
         v[j]=point[j];
     return v;
 }
@@ -113,16 +113,17 @@ unsigned int vector<T>::getSize() const {
 }
 
 template<class T>
-void vector<T>::reserve(unsigned int c) {
+void vector<T>::resize(unsigned int c) {
     T* newPoint=new T[c];
     for(unsigned int j=0; j<size; j++)
         newPoint[j]=point[j];
     capacity=c;
-    delete[] point;
+    for(unsigned int j=0; j<size; j++)
+        delete[] point;
     point=newPoint;
 }
 
-template<class T>
+/*template<class T>
 void vector<T>::resize(unsigned int s) {
     if(s>size) {
         reserve(s*2);
@@ -132,13 +133,14 @@ void vector<T>::resize(unsigned int s) {
         for(unsigned int j=size; j>s; j--)
             delete[] point;
     }
-}
+}*/
 
 template<class T>
 void vector<T>::push_back(const T& v) {
     if(size==capacity)
-        resize(size*2);
-    point[size++]=v;
+        resize(capacity*2);
+    point[size]=v;
+    size++;
 }
 
 template<class T>
@@ -191,6 +193,7 @@ vector<T> vector<T>::operator+(const vector<T>& v) const {
     if(x) {
         w.point=new T[x];
         w.size=x;
+        w.capacity=capacity+v.capacity;
         for(unsigned int j=0; j<size; ++j)
             w.point[j]=point[j];
         for(unsigned int j=0; j<v.size; ++j)
@@ -201,6 +204,17 @@ vector<T> vector<T>::operator+(const vector<T>& v) const {
 
 template<class T>
 vector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
+
+template<class T>
+bool vector<T>::iterator::operator==(const iterator& it) const {
+    return pt==it.pt;
+}
+
+template<class T>
+bool vector<T>::iterator::operator!=(const iterator& it) const {
+    return pt!=it.pt;
+}
+
 
 template<class T>
 typename vector<T>::iterator vector<T>::begin() const {
