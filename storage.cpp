@@ -1,15 +1,15 @@
 #include "storage.h"
 #include <iostream>
 
-Storage::Storage(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string t, int r, int si, std::string i, std::string f, int s):
-    Componenti_PC (l, a, n, pr, p, ce), type(t), rpm(r), size(si), interface(i), form_factor(f), speed(s) {}
+Storage::Storage(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string t, unsigned int r, unsigned int s, std::string i, std::string ff, unsigned int sp):
+    PC_Parts (w, h, n, m, p, pc), type(t), rpm(r), size(s), interface(i), form_factor(ff), speed(sp) {}
 
-Componenti_PC *Storage::clone() const {
+PC_Parts *Storage::clone() const {
     return new Storage(*this);
 }
 
-int Storage::Rating() {
-    int rating=0;
+unsigned int Storage::Rating() {
+    unsigned int rating=0;
     if(type=="SSD")
         rating+=2;
     else
@@ -24,7 +24,7 @@ int Storage::Rating() {
 }
 
 double Storage::PricePerGB() const {
-    return (getPrezzo()/size);
+    return (getPrice()/size);
 }
 
 void Storage::typeCheck() {

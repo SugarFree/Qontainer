@@ -1,15 +1,15 @@
 #include "gpu.h"
 #include <iostream>
 
-GPU::GPU(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string t, int ms, double pf, float c, std::string i, std::string co, bool as):
-    Componenti_PC (l, a, n, pr, p, ce), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), alimentazione_supplementare(as) {}
+GPU::GPU(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string t, int ms, double pf, float c, std::string i, std::string co, bool sp):
+    PC_Parts (w, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
 
-Componenti_PC *GPU::clone() const {
+PC_Parts *GPU::clone() const {
     return new GPU(*this);
 }
 
-int GPU::Rating() {
-    int rating=0;
+unsigned int GPU::Rating() {
+    unsigned int rating=0;
     if(type=="GDDR6" || type=="GDDR5X" || type=="GDDR5")
         rating+=2;
     else if(type=="GDDR4")
@@ -36,9 +36,9 @@ void GPU::checkRightInterface(const MOBA* m) const {
         std::cerr<<"Interfaccia PCI Express non compatibile.";
 }
 
-void GPU::checkAlimentazioneSupplementare(const PSU* p) const {
-    if(alimentazione_supplementare) {
-        if(p->getAlimentazioneSupplementare()==false && alimentazione_supplementare)
+void GPU::checkSupplementaryPower(const PSU* p) const {
+    if(supplementary_power) {
+        if(p->getSupplementaryPower()==false && supplementary_power)
             std::cerr<<"Pin di alimentazione supplementare non disponibili.";
     }
 }

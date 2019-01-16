@@ -1,10 +1,10 @@
 #ifndef GPU_H
 #define GPU_H
-#include "componenti_pc.h"
+#include "pc_parts.h"
 #include "moba.h"
 #include "psu.h"
 
-class GPU: public Componenti_PC
+class GPU: public PC_Parts
 {
 private:
     std::string type;
@@ -13,13 +13,13 @@ private:
     float clock;
     std::string interface;
     std::string connectors;
-    bool alimentazione_supplementare;
+    bool supplementary_power;
 public:
-    GPU(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string ="Non specificato", int =0, double =0, float =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
-    Componenti_PC* clone() const;
-    int Rating();
-    void checkRightInterface(const MOBA*) const;
-    void checkAlimentazioneSupplementare(const PSU*) const;
+    GPU(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ="Non specificato", int =0, double =0, float =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
+    PC_Parts* clone() const;
+    unsigned int Rating();
+    void checkRightInterface(const MOBA*) const; //da perferzionare
+    void checkSupplementaryPower(const PSU*) const;
     ~GPU() =default;
 };
 

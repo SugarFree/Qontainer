@@ -1,18 +1,18 @@
 #ifndef RAM_H
 #define RAM_H
-#include "componenti_pc.h"
+#include "pc_parts.h"
 
-class RAM: public Componenti_PC {
+class RAM: public PC_Parts {
 private:
-    int ram_speed;
+    unsigned int ram_speed;
     std::string type;
-    int size;
+    unsigned int size;
 public:
-    RAM(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, int =0, std::string ="Non specificato", int =0);
-    Componenti_PC *clone() const;
-    int Rating();
+    RAM(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, unsigned int =0, std::string ="Non specificato", unsigned int =0);
+    PC_Parts *clone() const;
+    unsigned int Rating();
     double PricePerGB() const;
-    int getSize() const;
+    unsigned int getSize() const;
     ~RAM() =default;
 };
 

@@ -1,20 +1,23 @@
 #ifndef PSU_H
 #define PSU_H
-#include "componenti_pc.h"
+#include "pc_parts.h"
 
 class PSU {
 private:
-    unsigned int larghezza;
-    unsigned int altezza;
+    unsigned int width;
+    unsigned int height;
     std::string form_factor;
-    int wattage;
+    unsigned int wattage;
     std::string efficiency_certification;
     std::string modularity;
-    bool alimentazione_supplementare;
+    bool supplementary_power;
+    std::string name;
+    std::string manufacturer;
+    double price;
 public:
-    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", int =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
-    int checkPowerConsumption(const Componenti_PC*);
-    bool getAlimentazioneSupplementare() const;
+    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", unsigned int =0, std::string ="Non specificato", std::string ="Non specificato", bool =false, std::string ="Non specificato", std::string ="Non specificato", double =0);
+    unsigned int checkPowerConsumption(const PC_Parts*);
+    bool getSupplementaryPower() const;
 };
 
 #endif // PSU_H

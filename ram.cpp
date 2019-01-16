@@ -1,14 +1,14 @@
 #include "ram.h"
 
-RAM::RAM(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, int rs, std::string t, int sz):
-    Componenti_PC (l, a, n, pr, p, ce), ram_speed(rs), type(t), size(sz) {}
+RAM::RAM(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, unsigned int rs, std::string t, unsigned int s):
+    PC_Parts (w, h, n, m, p, pc), ram_speed(rs), type(t), size(s) {}
 
-Componenti_PC *RAM::clone() const {
+PC_Parts *RAM::clone() const {
     return new RAM(*this);
 }
 
-int RAM::Rating() {
-    int rating=0;
+unsigned int RAM::Rating() {
+    unsigned int rating=0;
     if(ram_speed<=3000)
         rating+=2;
     else if(ram_speed<3000 && ram_speed>=2000)
@@ -23,9 +23,9 @@ int RAM::Rating() {
 }
 
 double RAM::PricePerGB() const {
-    return (getPrezzo()/size);
+    return (getPrice()/size);
 }
 
-int RAM::getSize() const {
+unsigned int RAM::getSize() const {
     return size;
 }

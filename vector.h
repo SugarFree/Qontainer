@@ -145,7 +145,7 @@ void vector<T>::push_back(const T& v) {
 
 template<class T>
 void vector<T>::pop_back() {
-    delete point[size];
+    delete point[size--];
     size--;
 }
 

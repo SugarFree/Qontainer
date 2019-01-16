@@ -1,14 +1,14 @@
 #include "moba.h"
 
-MOBA::MOBA(unsigned int l, unsigned int a, std::string n, std::string pr, float p, unsigned int ce, std::string s, std::string f, unsigned int r, unsigned int m, std::string c):
-    Componenti_PC (l, a, n, pr, p, ce), moba_socket(s), form_factor(f), RAM_slots(r), max_RAM(m), connectors(c) {}
+MOBA::MOBA(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ms, std::string ff, unsigned int rs, unsigned int mr, std::string c):
+    PC_Parts (w, h, n, m, p, pc), moba_socket(ms), form_factor(ff), RAM_slots(rs), max_RAM(mr), connectors(c) {}
 
-Componenti_PC *MOBA::clone() const {
+PC_Parts *MOBA::clone() const {
     return new MOBA(*this);
 }
 
-int MOBA::Rating() {
-    int rating=0;
+unsigned int MOBA::Rating() {
+    unsigned int rating=0;
     if(moba_socket=="LGA1151" || moba_socket=="AM4")
         rating++;
     if(RAM_slots>=4)
@@ -32,29 +32,29 @@ void MOBA::setFormFactor(std::string f) {
 }
 
 void MOBA::setRightSize() {
-    if(getAltezza()==0 || getLarghezza()==0) {
+    if(getHeight()==0 || getWidth()==0) {
         if(form_factor=="ATX") {
-            setAltezza(305);
-            setLarghezza(244);
+            setHeight(305);
+            setWidth(244);
         }
         if(form_factor=="Micro ATX"){
-            setAltezza(244);
-            setLarghezza(244);
+            setHeight(244);
+            setWidth(244);
         }
         if(form_factor=="Mini ITX") {
-            setAltezza(170);
-            setLarghezza(170);
+            setHeight(170);
+            setWidth(170);
         }
     }
 }
 
 void MOBA::setRightFormFactor() {
     if(form_factor!="ATX" || form_factor!="Micro ATX" || form_factor!="Mini ITX") {
-        if(getAltezza()==305 && getLarghezza()==244)
+        if(getHeight()==305 && getWidth()==244)
             setFormFactor("ATX");
-        if(getAltezza()==244 && getLarghezza()==244)
+        if(getHeight()==244 && getWidth()==244)
             setFormFactor("Micro ATX");
-        if(getAltezza()==170 && getLarghezza()==170)
+        if(getHeight()==170 && getWidth()==170)
             setFormFactor("Mini ITX");
     }
 }

@@ -27,24 +27,24 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    componenti_pc.cpp \
     moba.cpp \
     cpu.cpp \
     ram.cpp \
     gpu.cpp \
     storage.cpp \
-    psu.cpp
+    psu.cpp \
+    pc_parts.cpp
 
 HEADERS += \
         mainwindow.h \
     vector.h \
-    componenti_pc.h \
     moba.h \
     cpu.h \
     ram.h \
     gpu.h \
     storage.h \
-    psu.h
+    psu.h \
+    pc_parts.h
 
 FORMS += \
         mainwindow.ui
