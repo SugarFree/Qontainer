@@ -18,7 +18,6 @@ public:
     GPU(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ="Non specificato", int =0, double =0, float =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
-    void checkRightInterface(const MOBA*) const; //da perferzionare
     void checkSupplementaryPower(const PSU*) const;
     ~GPU() =default;
 };

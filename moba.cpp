@@ -58,7 +58,3 @@ void MOBA::setRightFormFactor() {
             setFormFactor("Mini ITX");
     }
 }
-
-std::string MOBA::getConnectors() const {
-    return connectors;
-}

@@ -16,7 +16,7 @@ private:
     double price;
 public:
     PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", unsigned int =0, std::string ="Non specificato", std::string ="Non specificato", bool =false, std::string ="Non specificato", std::string ="Non specificato", double =0);
-    unsigned int checkPowerConsumption(const PC_Parts*);
+    void checkPowerConsumption(const PC_Parts*) const;
     bool getSupplementaryPower() const;
 };
 

@@ -1,5 +1,5 @@
-#ifndef COMPONENTI_PC_H
-#define COMPONENTI_PC_H
+#ifndef PC_PARTS_H
+#define PC_PARTS_H
 #include <string>
 
 class PC_Parts {
@@ -29,4 +29,4 @@ public:
     virtual ~PC_Parts() =default;
 };
 
-#endif // COMPONENTI_PC_H
+#endif // PC_PARTS_H

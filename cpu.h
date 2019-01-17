@@ -14,7 +14,7 @@ private:
     //cache
     bool integrated_graphic;
 public:
-    cpu(unsigned int l, unsigned int a, std::string n, std::string m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, std::string ="Non specificato", bool =false);
+    cpu(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, std::string ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
     void SocketCheck(const MOBA*) const;

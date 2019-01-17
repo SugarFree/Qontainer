@@ -29,5 +29,5 @@ double Storage::PricePerGB() const {
 
 void Storage::typeCheck() {
     if(type=="SSD" && rpm!=0)
-        std::cerr<<"RPM non è un parametro valido per storage di tipo SSD.";
+        std::cerr<<"Attenzione! RPM non è un parametro valido per storage di tipo SSD.";
 }

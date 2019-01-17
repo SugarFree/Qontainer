@@ -25,10 +25,12 @@ public:
     void clear();
     unsigned int getCapacity() const;
     unsigned int getSize() const;
-    /*void reserve(unsigned int);*/
+    //void reserve(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
     void pop_back();
+    void swap(const T*, const T*);
+    void erase(unsigned int);
     T* search(const T*) const;
     T& operator[](unsigned int) const;
     bool operator==(const T&) const;
@@ -59,7 +61,7 @@ T* vector<T>::copy() const {
     if(!size)
         v=nullptr;
     else
-        v=new T*[capacity];
+        v=new T[capacity];
     for(unsigned int j=0; j<size; j++)
         v[j]=point[j];
     return v;
@@ -147,6 +149,23 @@ template<class T>
 void vector<T>::pop_back() {
     delete point[size--];
     size--;
+}
+
+template<class T>
+void vector<T>::swap(const T* p, const T* q) {
+    T* temp=p;
+    p=q;
+    q=temp;
+}
+
+template<class T>
+void vector<T>::erase(unsigned int pos) {
+    if(pos==size-1)
+        pop_back();
+    else {
+        swap(point[pos],point[size-1]);
+        pop_back();
+    }
 }
 
 template<class T>

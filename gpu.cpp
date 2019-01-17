@@ -29,13 +29,6 @@ unsigned int GPU::Rating() {
     return rating;
 }
 
-void GPU::checkRightInterface(const MOBA* m) const {
-    size_t pci_moba=m->getConnectors().find("PCI-E 3.0");
-    size_t pci_gpu=connectors.find("PCI-E 3.0");
-    if(!pci_moba || !pci_gpu)
-        std::cerr<<"Interfaccia PCI Express non compatibile.";
-}
-
 void GPU::checkSupplementaryPower(const PSU* p) const {
     if(supplementary_power) {
         if(p->getSupplementaryPower()==false && supplementary_power)

@@ -17,7 +17,6 @@ public:
     void setFormFactor(std::string);
     void setRightSize();
     void setRightFormFactor();
-    std::string getConnectors() const;
     //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
     ~MOBA() =default;
 };
