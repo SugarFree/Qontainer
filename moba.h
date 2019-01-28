@@ -4,17 +4,17 @@
 
 class MOBA: public PC_Parts {
 private:
-    std::string moba_socket;
-    std::string form_factor;
+    QString moba_socket;
+    QString form_factor;
     unsigned int RAM_slots;
     unsigned int max_RAM;
-    std::string connectors; //specializzare ulteriormente (ex. PCI slot) per fare più metodi (ex. su RAM compatibilità)??? Oppure lasciare così e usare find di string per trovare le parole chiave???
+    QString connectors; //specializzare ulteriormente (ex. PCI slot) per fare più metodi (ex. su RAM compatibilità)??? Oppure lasciare così e usare find di string per trovare le parole chiave???
 public:
-    MOBA(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ="Non specificato", std::string ="Non specificato", unsigned int =0, unsigned int =0, std::string ="Non specificati");
+    MOBA(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", QString ="Non specificato", unsigned int =0, unsigned int =0, QString ="Non specificati");
     PC_Parts* clone() const;
     unsigned int Rating();
-    std::string getMOBASocket() const;
-    void setFormFactor(std::string);
+    QString getMOBASocket() const;
+    void setFormFactor(QString);
     void setRightSize();
     void setRightFormFactor();
     //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)

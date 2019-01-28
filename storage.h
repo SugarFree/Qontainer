@@ -4,14 +4,14 @@
 
 class Storage: public PC_Parts {
 private:
-    std::string type;
+    QString type;
     unsigned int rpm;
     unsigned int size;
-    std::string interface;
-    std::string form_factor;
+    QString interface;
+    QString form_factor;
     unsigned int speed;
 public:
-    Storage(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ="Non specificato", unsigned int =0, unsigned int =0, std::string ="Non specificato", std::string ="Non specificato", unsigned int =0);
+    Storage(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", unsigned int =0, unsigned int =0, QString ="Non specificato", QString ="Non specificato", unsigned int =0);
     PC_Parts *clone() const;
     unsigned int Rating();
     double PricePerGB() const;

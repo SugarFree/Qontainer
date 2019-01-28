@@ -10,11 +10,11 @@ private:
     double cpu_speed;
     unsigned int cores;
     bool x64bit; //true se 64bit, false se 32bit
-    std::string cpu_socket;
+    QString cpu_socket;
     //cache
     bool integrated_graphic;
 public:
-    cpu(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, std::string ="Non specificato", bool =false);
+    cpu(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, QString ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
     void SocketCheck(const MOBA*) const;

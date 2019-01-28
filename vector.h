@@ -28,7 +28,7 @@ public:
     //void reserve(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
-    void pop_back();
+    T* pop_back();
     void swap(const T*, const T*);
     void erase(unsigned int);
     T* search(const T*) const;
@@ -98,8 +98,7 @@ bool vector<T>::empty() const {
 
 template<class T>
 void vector<T>::clear() {
-    for(unsigned int j=0; j<size; j++)
-        delete[] point;
+    delete[] point;
     capacity=0;
     size=0;
 }
@@ -120,8 +119,7 @@ void vector<T>::resize(unsigned int c) {
     for(unsigned int j=0; j<size; j++)
         newPoint[j]=point[j];
     capacity=c;
-    for(unsigned int j=0; j<size; j++)
-        delete[] point;
+    delete[] point;
     point=newPoint;
 }
 
@@ -146,7 +144,7 @@ void vector<T>::push_back(const T& v) {
 }
 
 template<class T>
-void vector<T>::pop_back() {
+T* vector<T>::pop_back() {
     delete point[size--];
     size--;
 }

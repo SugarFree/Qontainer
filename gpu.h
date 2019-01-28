@@ -7,15 +7,15 @@
 class GPU: public PC_Parts
 {
 private:
-    std::string type;
+    QString type;
     int memory_size;
     double performance;
     float clock;
-    std::string interface;
-    std::string connectors;
+    QString interface;
+    QString connectors;
     bool supplementary_power;
 public:
-    GPU(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ="Non specificato", int =0, double =0, float =0, std::string ="Non specificato", std::string ="Non specificato", bool =false);
+    GPU(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", int =0, double =0, float =0, QString ="Non specificato", QString ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
     void checkSupplementaryPower(const PSU*) const;

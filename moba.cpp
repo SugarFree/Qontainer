@@ -1,6 +1,6 @@
 #include "moba.h"
 
-MOBA::MOBA(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string ms, std::string ff, unsigned int rs, unsigned int mr, std::string c):
+MOBA::MOBA(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ms, QString ff, unsigned int rs, unsigned int mr, QString c):
     PC_Parts (w, h, n, m, p, pc), moba_socket(ms), form_factor(ff), RAM_slots(rs), max_RAM(mr), connectors(c) {}
 
 PC_Parts *MOBA::clone() const {
@@ -22,11 +22,11 @@ unsigned int MOBA::Rating() {
     return rating;
 }
 
-std::string MOBA::getMOBASocket() const {
+QString MOBA::getMOBASocket() const {
     return moba_socket;
 }
 
-void MOBA::setFormFactor(std::string f) {
+void MOBA::setFormFactor(QString f) {
     if(this->form_factor!=f)
         this->form_factor=f;
 }

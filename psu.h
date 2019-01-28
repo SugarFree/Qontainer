@@ -6,16 +6,16 @@ class PSU {
 private:
     unsigned int width;
     unsigned int height;
-    std::string form_factor;
+    QString form_factor;
     unsigned int wattage;
-    std::string efficiency_certification;
-    std::string modularity;
+    QString efficiency_certification;
+    QString modularity;
     bool supplementary_power;
-    std::string name;
-    std::string manufacturer;
+    QString name;
+    QString manufacturer;
     double price;
 public:
-    PSU(unsigned int =0, unsigned int =0, std::string ="Non specificato", unsigned int =0, std::string ="Non specificato", std::string ="Non specificato", bool =false, std::string ="Non specificato", std::string ="Non specificato", double =0);
+    PSU(unsigned int =0, unsigned int =0, QString ="Non specificato", unsigned int =0, QString ="Non specificato", QString ="Non specificato", bool =false, QString ="Non specificato", QString ="Non specificato", double =0);
     void checkPowerConsumption(const PC_Parts*) const;
     bool getSupplementaryPower() const;
 };

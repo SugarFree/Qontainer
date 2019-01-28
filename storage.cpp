@@ -1,7 +1,7 @@
 #include "storage.h"
 #include <iostream>
 
-Storage::Storage(unsigned int w, unsigned int h, std::string n, std::string m, double p, unsigned int pc, std::string t, unsigned int r, unsigned int s, std::string i, std::string ff, unsigned int sp):
+Storage::Storage(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int r, unsigned int s, QString i, QString ff, unsigned int sp):
     PC_Parts (w, h, n, m, p, pc), type(t), rpm(r), size(s), interface(i), form_factor(ff), speed(sp) {}
 
 PC_Parts *Storage::clone() const {
