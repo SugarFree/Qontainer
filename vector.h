@@ -14,7 +14,7 @@ friend std::ostream& operator<< <T>(std::ostream&, const vector<T>&);
 private:
     unsigned int capacity;
     unsigned int size;
-    T* point;
+    const T* point;
     T* copy() const;
 public:
     vector(unsigned int =0, unsigned int =0, const T* =nullptr);
@@ -231,7 +231,6 @@ template<class T>
 bool vector<T>::iterator::operator!=(const iterator& it) const {
     return pt!=it.pt;
 }
-
 
 template<class T>
 typename vector<T>::iterator vector<T>::begin() const {
