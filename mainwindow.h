@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QObject>
 #include <QWidget>
 #include <QComboBox>
 #include <QLabel>
@@ -11,19 +11,27 @@
 #include <QSize>
 #include <QTableWidget>
 #include <QHeaderView>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QLineEdit>
 #include <QListView>
-#include "vector.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QIODevice>
+#include <QDebug>
+#include "cvector.h"
 #include "pc_parts.h"
+#include "moba.h"
 #include "cpu.h"
 #include "gpu.h"
-#include "moba.h"
 #include "psu.h"
 #include "ram.h"
+#include "psu.h"
 #include "storage.h"
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -71,7 +79,7 @@ private:
     QPushButton *saveBuild;
     QPushButton *discardBuild;
     QVBoxLayout *specLayout;
-    QLabel *widthLabel;
+    QLabel *lengthLabel;
     QLabel *heightLabel;
     QLabel *nameLabel;
     QLabel *manufacturerLabel;
@@ -86,13 +94,14 @@ private:
     QPushButton *addComponent;
     QPushButton *removeComponent;
     QPushButton *editComponent;
-    QLabel *widthLabel2;
+    QLabel *lengthLabel2;
     QLabel *heightLabel2;
     QLabel *nameLabel2;
     QLabel *manufacturerLabel2;
     QLabel *priceLabel2;
     QLabel *powerconsumptionLabel2;
-    vector<PC_Parts> pc_parts;
+    cvector<PC_Parts*> componenti;
+    bool load(QString path);
 };
 
 #endif // MAINWINDOW_H

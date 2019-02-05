@@ -1,25 +1,26 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+//#include "ui_mainwindow.h"
+#include <iostream>
 
-MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
+
+MainWindow::MainWindow(QWidget *parent): QWidget(parent)
 {
     tab=new QTabWidget();
     window=new QWidget(tab);
     window2=new QWidget(tab);
     tab->addTab(window, "Build");
     tab->addTab(window2, "Gestione componenti");
-    layout=new QGridLayout(window);
+    layout=new QGridLayout();
     window->setLayout(layout);
-    layout2=new QFormLayout(window);
+    layout2=new QFormLayout();
     layout->addLayout(layout2, 0, 0);
-    layoutMOBA=new QHBoxLayout(window);
-    layoutCPU=new QHBoxLayout(window);
-    layoutGPU=new QHBoxLayout(window);
-    layoutPSU=new QHBoxLayout(window);
-    layoutRAM=new QHBoxLayout(window);
-    layoutStorage=new QHBoxLayout(window);
+    layoutMOBA=new QHBoxLayout();
+    layoutCPU=new QHBoxLayout();
+    layoutGPU=new QHBoxLayout();
+    layoutPSU=new QHBoxLayout();
+    layoutRAM=new QHBoxLayout();
+    layoutStorage=new QHBoxLayout();
     comboboxPolicy.setHorizontalPolicy(QSizePolicy::Expanding);
-    comboboxPolicy.setVerticalPolicy(QSizePolicy::Expanding);
 
     insertMOBA=new QPushButton("--->");
     insertCPU=new QPushButton("--->");
@@ -76,10 +77,11 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     layout2->addRow(storageLabel);
     layout2->addRow(layoutStorage);
     storageComboBox->setSizePolicy(comboboxPolicy);
+    layout2->setContentsMargins(0, 0, 20, 0);
 
-    layout3=new QFormLayout(window);
+    layout3=new QFormLayout();
     layout->addLayout(layout3, 0, 1);
-    buttonsLayout=new QHBoxLayout(window);
+    buttonsLayout=new QHBoxLayout();
     build=new QTableWidget(6, 5);
     build->setMinimumSize(window->sizeHint());
     build->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -119,11 +121,13 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     buttonsLayout->addWidget(discardBuild);
     layout3->addRow(build);
     layout3->addRow(buttonsLayout);
+    build->setMinimumWidth(900);
     layout3->setVerticalSpacing(30);
+    layout3->setContentsMargins(0, 0, 20, 0);
 
-    specLayout=new QVBoxLayout(window);
+    specLayout=new QVBoxLayout();
     layout->addLayout(specLayout, 0, 2);
-    widthLabel=new QLabel("Larghezza: ");
+    lengthLabel=new QLabel("Larghezza: ");
     heightLabel=new QLabel("Altezza: ");
     nameLabel=new QLabel("Nome componente: ");
     manufacturerLabel=new QLabel("Produttore: ");
@@ -131,20 +135,21 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     powerconsumptionLabel=new QLabel("Consumo energetico: ");
     specLayout->addWidget(nameLabel);
     specLayout->addWidget(manufacturerLabel);
-    specLayout->addWidget(widthLabel);
+    specLayout->addWidget(lengthLabel);
     specLayout->addWidget(heightLabel);
     specLayout->addWidget(priceLabel);
     specLayout->addWidget(powerconsumptionLabel);
+    specLayout->setContentsMargins(0, 0, 300, 0);
 
-    layout4=new QGridLayout(window2);
+    layout4=new QGridLayout();
     window2->setLayout(layout4);
-    layout5=new QFormLayout(window2);
+    layout5=new QFormLayout();
     layout4->addLayout(layout5, 0, 0);
-    managementButtonsLayout=new QHBoxLayout(window2);
+    managementButtonsLayout=new QHBoxLayout();
     searchBox=new QLineEdit(window2);
     componentsList=new QListView(window2);
     componentsList->setMaximumWidth(750);
-    componentsList->setMinimumHeight(450);
+    componentsList->setMinimumHeight(350);
     searchBox->setMaximumWidth(750);
     addComponent=new QPushButton("Aggiungi componente");
     removeComponent=new QPushButton("Rimuovi componente");
@@ -152,15 +157,14 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     managementButtonsLayout->addWidget(addComponent);
     managementButtonsLayout->addWidget(removeComponent);
     managementButtonsLayout->addWidget(editComponent);
-    managementButtonsLayout->setContentsMargins(0, 0, 38, 0);
+    managementButtonsLayout->setContentsMargins(0, 20, 188, 0);
     layout5->addRow(searchBox);
     layout5->addRow(componentsList);
     layout5->addRow(managementButtonsLayout);
 
-    specLayout2=new QVBoxLayout(window2);
+    specLayout2=new QVBoxLayout();
     layout4->addLayout(specLayout2, 0, 1);
-    specLayout2->setContentsMargins(0, 0, 850, 0);
-    widthLabel2=new QLabel("Larghezza: ");
+    lengthLabel2=new QLabel("Larghezza: ");
     heightLabel2=new QLabel("Altezza: ");
     nameLabel2=new QLabel("Nome componente: ");
     manufacturerLabel2=new QLabel("Produttore: ");
@@ -168,17 +172,130 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     powerconsumptionLabel2=new QLabel("Consumo energetico: ");
     specLayout2->addWidget(nameLabel2);
     specLayout2->addWidget(manufacturerLabel2);
-    specLayout2->addWidget(widthLabel2);
+    specLayout2->addWidget(lengthLabel2);
     specLayout2->addWidget(heightLabel2);
     specLayout2->addWidget(priceLabel2);
     specLayout2->addWidget(powerconsumptionLabel2);
+    specLayout2->setContentsMargins(0, 0, 700, 0);
 
-    window->setMinimumSize(1800, 500);
-    window2->setMinimumSize(1000, 500);
+    load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 500);
-    screenGeometry = QApplication::desktop()->screenGeometry();
-    int x = (screenGeometry.width()-tab->width()) / 2;
-    int y = (screenGeometry.height()-tab->height()) / 2;
-    tab->move(x, y);
+    tab->setMaximumSize(1800, 500);
+    tab->move(50, 200);
     tab->show();
+}
+
+bool MainWindow::load(QString path) {
+    QFile file(path);
+    file.open(QIODevice::ReadOnly);
+    QByteArray json=file.readAll();
+    file.close();
+    QJsonDocument document = QJsonDocument::fromJson(json);
+    QJsonArray array = document.object().value("pc_parts").toArray();
+    if(!array.isEmpty()) {
+        foreach(const QJsonValue& j, array) {
+            QString component_type=QString(j.toObject().value("component_type").toString());
+            if(component_type=="MOBA") {
+                componenti.push_back(new MOBA(j.toObject().value("length").toInt(),
+                                              j.toObject().value("height").toInt(),
+                                              j.toObject().value("name").toString(),
+                                              j.toObject().value("manufacturer").toString(),
+                                              j.toObject().value("price").toDouble(),
+                                              j.toObject().value("power_consumption").toInt(),
+                                              j.toObject().value("moba_socket").toString(),
+                                              j.toObject().value("form_factor").toString(),
+                                              j.toObject().value("RAM_slots").toInt(),
+                                              j.toObject().value("max_RAM").toInt(),
+                                              j.toObject().value("connectors").toString()
+                                              ));
+            }
+            else if(component_type=="CPU") {
+                componenti.push_back(new CPU(j.toObject().value("length").toInt(),
+                                             j.toObject().value("height").toInt(),
+                                             j.toObject().value("name").toString(),
+                                             j.toObject().value("manufacturer").toString(),
+                                             j.toObject().value("price").toDouble(),
+                                             j.toObject().value("power_consumption").toInt(),
+                                             j.toObject().value("cpu_speed").toDouble(),
+                                             j.toObject().value("cores").toInt(),
+                                             j.toObject().value("x64bit").toBool(),
+                                             j.toObject().value("cpu_socket").toString(),
+                                             j.toObject().value("integrated_graphics").toBool()
+                                             ));
+            }
+            else if(component_type=="GPU") {
+                componenti.push_back(new GPU(j.toObject().value("length").toInt(),
+                                             j.toObject().value("height").toInt(),
+                                             j.toObject().value("name").toString(),
+                                             j.toObject().value("manufacturer").toString(),
+                                             j.toObject().value("price").toDouble(),
+                                             j.toObject().value("power_consumption").toInt(),
+                                             j.toObject().value("type").toString(),
+                                             j.toObject().value("memory_size").toInt(),
+                                             j.toObject().value("performance").toDouble(),
+                                             j.toObject().value("clock").toDouble(),
+                                             j.toObject().value("interface").toString(),
+                                             j.toObject().value("connectors").toString(),
+                                             j.toObject().value("supplementary_power").toBool()
+                                             ));
+            }
+            else if(component_type=="PSU") {
+                componenti.push_back(new PSU(j.toObject().value("length").toInt(),
+                                             j.toObject().value("height").toInt(),
+                                             j.toObject().value("name").toString(),
+                                             j.toObject().value("manufacturer").toString(),
+                                             j.toObject().value("price").toDouble(),
+                                             j.toObject().value("power_consumption").toInt(),
+                                             j.toObject().value("form_factor").toString(),
+                                             j.toObject().value("wattage").toInt(),
+                                             j.toObject().value("efficiency_certification").toString(),
+                                             j.toObject().value("modularity").toString(),
+                                             j.toObject().value("supplementary_power").toBool()
+                                             ));
+            }
+            else if(component_type=="RAM") {
+                componenti.push_back(new RAM(j.toObject().value("length").toInt(),
+                                             j.toObject().value("height").toInt(),
+                                             j.toObject().value("name").toString(),
+                                             j.toObject().value("manufacturer").toString(),
+                                             j.toObject().value("price").toDouble(),
+                                             j.toObject().value("power_consumption").toInt(),
+                                             j.toObject().value("ram_speed").toInt(),
+                                             j.toObject().value("type").toString(),
+                                             j.toObject().value("size").toInt()
+                                             ));
+            }
+            else if(component_type=="Storage") {
+                componenti.push_back(new Storage(j.toObject().value("length").toInt(),
+                                                 j.toObject().value("height").toInt(),
+                                                 j.toObject().value("name").toString(),
+                                                 j.toObject().value("manufacturer").toString(),
+                                                 j.toObject().value("price").toDouble(),
+                                                 j.toObject().value("power_consumption").toInt(),
+                                                 j.toObject().value("type").toString(),
+                                                 j.toObject().value("rpm").toInt(),
+                                                 j.toObject().value("size").toInt(),
+                                                 j.toObject().value("interface").toString(),
+                                                 j.toObject().value("form_factor").toDouble(),
+                                                 j.toObject().value("speed").toInt()
+                                                 ));
+            }
+        }
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
+                mobaComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<CPU*>(componenti[i])!=nullptr)
+                cpuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<GPU*>(componenti[i])!=nullptr)
+                gpuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<PSU*>(componenti[i])!=nullptr)
+                psuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<RAM*>(componenti[i])!=nullptr)
+                ramComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<Storage*>(componenti[i])!=nullptr)
+                storageComboBox->addItem(componenti[i]->getName());
+        }
+        return true;
+    }
+    return false;
 }

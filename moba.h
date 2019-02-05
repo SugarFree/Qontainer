@@ -10,7 +10,7 @@ private:
     unsigned int max_RAM;
     QString connectors; //specializzare ulteriormente (ex. PCI slot) per fare più metodi (ex. su RAM compatibilità)??? Oppure lasciare così e usare find di string per trovare le parole chiave???
 public:
-    MOBA(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", QString ="Non specificato", unsigned int =0, unsigned int =0, QString ="Non specificati");
+    MOBA(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", QString ="Non specificato", unsigned int =0, unsigned int =0, QString ="Non specificati");
     PC_Parts* clone() const;
     unsigned int Rating();
     QString getMOBASocket() const;

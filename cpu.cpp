@@ -1,14 +1,14 @@
 #include <iostream>
-#include "cpu.h"
+#include "CPU.h"
 
-cpu::cpu(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, double s, unsigned int c, bool x64, QString cs, bool ig):
-    PC_Parts (w, h, n, m, p, pc), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), integrated_graphic(ig) {}
+CPU::CPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, double s, unsigned int c, bool x64, QString cs, bool ig):
+    PC_Parts (l, h, n, m, p, pc), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), integrated_graphic(ig) {}
 
-PC_Parts* cpu::clone() const {
-    return new cpu(*this);
+PC_Parts* CPU::clone() const {
+    return new CPU(*this);
 }
 
-unsigned int cpu::Rating() {
+unsigned int CPU::Rating() {
     unsigned int rating=0;
     if(cpu_speed>=2.4 && cpu_speed<3.6)
         rating++;
@@ -25,12 +25,12 @@ unsigned int cpu::Rating() {
     return rating;
 }
 
-void cpu::SocketCheck(const MOBA* m) const {
+void CPU::SocketCheck(const MOBA* m) const {
     if(m->getMOBASocket()!=cpu_socket)
         std::cerr<<"Socket MOBA e CPU non compatibili.";
 }
 
-void cpu::SupportedRAM(const RAM* r) const {
+void CPU::SupportedRAM(const RAM* r) const {
     if(r->getSize()>8 && !x64bit)
         std::cerr<<"CPU a 32 bit. Non verrano supportati quantitativi di RAM superiori ad 8 GB.";
 }

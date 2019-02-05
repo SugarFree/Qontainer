@@ -1,15 +1,15 @@
 #include "pc_parts.h"
 
-PC_Parts::PC_Parts(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc)
-    : width(w), height(h), name(n), manufacturer(m), price(p), power_consumption(pc) {}
+PC_Parts::PC_Parts(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc)
+    : length(l), height(h), name(n), manufacturer(m), price(p), power_consumption(pc) {}
 
-unsigned int PC_Parts::getWidth() const {
-    return width;
+unsigned int PC_Parts::getlength() const {
+    return length;
 }
 
-void PC_Parts::setWidth(unsigned int w) {
-    if(this->width!=w)
-        this->width=w;
+void PC_Parts::setlength(unsigned int l) {
+    if(this->length!=l)
+        this->length=l;
 }
 
 unsigned int PC_Parts::getHeight() const {
@@ -31,7 +31,7 @@ void PC_Parts::setName(QString n) {
 }
 
 QString PC_Parts::getManufacturer() const {
-    return manufacturer;
+    return this->manufacturer;
 }
 
 void PC_Parts::setManufacturer(QString m) {

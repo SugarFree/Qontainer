@@ -8,7 +8,7 @@ private:
     QString type;
     unsigned int size;
 public:
-    RAM(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int =0, QString ="Non specificato", unsigned int =0);
+    RAM(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int =0, QString ="Non specificato", unsigned int =0);
     PC_Parts *clone() const;
     unsigned int Rating();
     double PricePerGB() const;

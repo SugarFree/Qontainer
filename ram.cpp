@@ -1,7 +1,7 @@
 #include "ram.h"
 
-RAM::RAM(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int rs, QString t, unsigned int s):
-    PC_Parts (w, h, n, m, p, pc), ram_speed(rs), type(t), size(s) {}
+RAM::RAM(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int rs, QString t, unsigned int s):
+    PC_Parts (l, h, n, m, p, pc), ram_speed(rs), type(t), size(s) {}
 
 PC_Parts *RAM::clone() const {
     return new RAM(*this);

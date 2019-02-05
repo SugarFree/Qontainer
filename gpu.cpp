@@ -1,8 +1,8 @@
 #include "gpu.h"
 #include <iostream>
 
-GPU::GPU(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, int ms, double pf, float c, QString i, QString co, bool sp):
-    PC_Parts (w, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
+GPU::GPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int ms, double pf, float c, QString i, QString co, bool sp):
+    PC_Parts (l, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
 
 PC_Parts *GPU::clone() const {
     return new GPU(*this);

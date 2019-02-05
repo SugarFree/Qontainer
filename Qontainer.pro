@@ -37,14 +37,14 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    vector.h \
     moba.h \
     cpu.h \
     ram.h \
     gpu.h \
     storage.h \
     psu.h \
-    pc_parts.h
+    pc_parts.h \
+    cvector.h
 
 FORMS +=
 

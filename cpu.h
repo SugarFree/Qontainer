@@ -5,7 +5,7 @@
 #include "moba.h"
 #include "ram.h"
 
-class cpu: public PC_Parts {
+class CPU: public PC_Parts {
 private:
     double cpu_speed;
     unsigned int cores;
@@ -14,12 +14,12 @@ private:
     //cache
     bool integrated_graphic;
 public:
-    cpu(unsigned int w, unsigned int h, QString n, QString m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, QString ="Non specificato", bool =false);
+    CPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, QString ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
     void SocketCheck(const MOBA*) const;
     void SupportedRAM(const RAM*) const;
-    ~cpu() =default;
+    ~CPU() =default;
 };
 
 #endif // CPU_H

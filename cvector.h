@@ -1,26 +1,34 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef cvector_H
+#define cvector_H
 #include<iostream>
+#include "pc_parts.h"
+#include "moba.h"
+#include "cpu.h"
+#include "gpu.h"
+#include "psu.h"
+#include "ram.h"
+#include "psu.h"
+#include "storage.h"
 
 template<class T>
-class vector;
+class cvector;
 
 template<class T>
-std::ostream& operator<<(std::ostream&, const vector<T>&);
+std::ostream& operator<<(std::ostream&, const cvector<T>&);
 
 template<class T>
-class vector {
-friend std::ostream& operator<< <T>(std::ostream&, const vector<T>&);
+class cvector {
+friend std::ostream& operator<< <T>(std::ostream&, const cvector<T>&);
 private:
     unsigned int capacity;
     unsigned int size;
-    const T* point;
+    T* point;
     T* copy() const;
 public:
-    vector(unsigned int =0, unsigned int =0, const T* =nullptr);
-    vector(const vector<T>&);
-    vector<T>& operator=(const vector<T>&);
-    ~vector();
+    cvector(unsigned int =0, unsigned int =0, T* =nullptr);
+    cvector(const cvector<T>&);
+    cvector<T>& operator=(const cvector<T>&);
+    ~cvector();
     bool empty() const;
     void clear();
     unsigned int getCapacity() const;
@@ -32,12 +40,12 @@ public:
     void swap(const T*, const T*);
     void erase(unsigned int);
     T* search(const T*) const;
-    T& operator[](unsigned int) const;
+    const T& operator[](unsigned int) const;
     bool operator==(const T&) const;
     bool operator!=(const T&) const;
-    vector<T> operator+(const vector<T>&) const;
+    cvector<T> operator+(const cvector<T>&) const;
     class iterator {
-    friend class vector<T>;
+    friend class cvector<T>;
     private:
         const T* pt;
         bool eov;
@@ -56,7 +64,7 @@ public:
 };
 
 template<class T>
-T* vector<T>::copy() const {
+T* cvector<T>::copy() const {
     T* v;
     if(!size)
         v=nullptr;
@@ -68,13 +76,13 @@ T* vector<T>::copy() const {
 }
 
 template<class T>
-vector<T>::vector(unsigned int c, unsigned int s, const T* p): capacity(c), size(s), point(p) {}
+cvector<T>::cvector(unsigned int c, unsigned int s, T* p): capacity(c), size(s), point(p) {}
 
 template<class T>
-vector<T>::vector(const vector<T>& v): capacity(v.capacity), size(v.size), point(v.copy()) {}
+cvector<T>::cvector(const cvector<T>& v): capacity(v.capacity), size(v.size), point(v.copy()) {}
 
 template<class T>
-vector<T>& vector<T>::operator=(const vector<T>& v) {
+cvector<T>& cvector<T>::operator=(const cvector<T>& v) {
     if(this!=&v) {
         if(point)
             delete[] point;
@@ -86,78 +94,71 @@ vector<T>& vector<T>::operator=(const vector<T>& v) {
 }
 
 template<class T>
-vector<T>::~vector<T>() {
-    if(point)
+cvector<T>::~cvector<T>() {
+    if(point) {
         delete[] point;
+    }
 }
 
 template<class T>
-bool vector<T>::empty() const {
+bool cvector<T>::empty() const {
     return size==0;
 }
 
 template<class T>
-void vector<T>::clear() {
+void cvector<T>::clear() {
     delete[] point;
     capacity=0;
     size=0;
 }
 
 template<class T>
-unsigned int vector<T>::getCapacity() const {
+unsigned int cvector<T>::getCapacity() const {
     return capacity;
 }
 
 template<class T>
-unsigned int vector<T>::getSize() const {
+unsigned int cvector<T>::getSize() const {
     return size;
 }
 
 template<class T>
-void vector<T>::resize(unsigned int c) {
+void cvector<T>::resize(unsigned int c) {
     T* newPoint=new T[c];
     for(unsigned int j=0; j<size; j++)
         newPoint[j]=point[j];
-    capacity=c;
     delete[] point;
     point=newPoint;
 }
 
-/*template<class T>
-void vector<T>::resize(unsigned int s) {
-    if(s>size) {
-        reserve(s*2);
-        size=s;
-    }
-    else {
-        for(unsigned int j=size; j>s; j--)
-            delete[] point;
-    }
-}*/
-
 template<class T>
-void vector<T>::push_back(const T& v) {
-    if(size==capacity)
-        resize(capacity*2);
-    point[size]=v;
-    size++;
+const T& cvector<T>::operator[](unsigned int j) const {
+    return point[j];
 }
 
 template<class T>
-T* vector<T>::pop_back() {
+void cvector<T>::push_back(const T& v) {
+    if(size==capacity)
+        resize(capacity*2);
+    point[size]=v;
+    ++size;
+}
+
+template<class T>
+T* cvector<T>::pop_back() {
     delete point[size--];
     size--;
 }
 
 template<class T>
-void vector<T>::swap(const T* p, const T* q) {
+void cvector<T>::swap(const T* p, const T* q) {
     T* temp=p;
     p=q;
     q=temp;
 }
 
 template<class T>
-void vector<T>::erase(unsigned int pos) {
+void cvector<T>::erase(unsigned int pos) {
     if(pos==size-1)
         pop_back();
     else {
@@ -167,7 +168,7 @@ void vector<T>::erase(unsigned int pos) {
 }
 
 template<class T>
-T* vector<T>::search(const T* v) const {
+T* cvector<T>::search(const T* v) const {
     if(point) {
         for(unsigned int j=0; j<size; j++) {
             if(point[j]==v)
@@ -177,12 +178,7 @@ T* vector<T>::search(const T* v) const {
 }
 
 template<class T>
-T& vector<T>::operator[](unsigned int j) const {
-    return point[j];
-}
-
-template<class T>
-bool vector<T>::operator==(const T& v) const {
+bool cvector<T>::operator==(const T& v) const {
     if(size!=v.size)
         return false;
     for(unsigned int j=0; j<size; ++j) {
@@ -193,7 +189,7 @@ bool vector<T>::operator==(const T& v) const {
 }
 
 template<class T>
-bool vector<T>::operator!=(const T& v) const {
+bool cvector<T>::operator!=(const T& v) const {
     if(size!=v.size)
         return true;
     for(unsigned int j=0; j<size; ++j) {
@@ -204,8 +200,8 @@ bool vector<T>::operator!=(const T& v) const {
 }
 
 template<class T>
-vector<T> vector<T>::operator+(const vector<T>& v) const {
-    vector w;
+cvector<T> cvector<T>::operator+(const cvector<T>& v) const {
+    cvector w;
     unsigned int x=size+v.size;
     if(x) {
         w.point=new T[x];
@@ -220,33 +216,33 @@ vector<T> vector<T>::operator+(const vector<T>& v) const {
 }
 
 template<class T>
-vector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
+cvector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
 
 template<class T>
-bool vector<T>::iterator::operator==(const iterator& it) const {
+bool cvector<T>::iterator::operator==(const iterator& it) const {
     return pt==it.pt;
 }
 
 template<class T>
-bool vector<T>::iterator::operator!=(const iterator& it) const {
+bool cvector<T>::iterator::operator!=(const iterator& it) const {
     return pt!=it.pt;
 }
 
 template<class T>
-typename vector<T>::iterator vector<T>::begin() const {
+typename cvector<T>::iterator cvector<T>::begin() const {
     return point[0];
 }
 
 template<class T>
-typename vector<T>::iterator vector<T>::end() const {
+typename cvector<T>::iterator cvector<T>::end() const {
     return point[size-1];
 }
 
 template<class T>
-std::ostream& operator<<(std::ostream& os, const vector<T>& v) {
+std::ostream& operator<<(std::ostream& os, const cvector<T>& v) {
     for(int j=0; j<v.getSize(); ++j)
         os << v[j] << ' ';
     return os;
 }
 
-#endif // VECTOR_H
+#endif // cvector_H
