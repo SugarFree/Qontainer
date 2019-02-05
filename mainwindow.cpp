@@ -147,7 +147,7 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent)
     layout4->addLayout(layout5, 0, 0);
     managementButtonsLayout=new QHBoxLayout();
     searchBox=new QLineEdit(window2);
-    componentsList=new QListView(window2);
+    componentsList=new QListWidget(window2);
     componentsList->setMaximumWidth(750);
     componentsList->setMinimumHeight(350);
     searchBox->setMaximumWidth(750);
@@ -282,18 +282,30 @@ bool MainWindow::load(QString path) {
             }
         }
         for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
                 mobaComboBox->addItem(componenti[i]->getName());
-            else if(dynamic_cast<CPU*>(componenti[i])!=nullptr)
+                componentsList->addItem(componenti[i]->getName());
+            }
+            else if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
                 cpuComboBox->addItem(componenti[i]->getName());
-            else if(dynamic_cast<GPU*>(componenti[i])!=nullptr)
+                componentsList->addItem(componenti[i]->getName());
+            }
+            else if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
                 gpuComboBox->addItem(componenti[i]->getName());
-            else if(dynamic_cast<PSU*>(componenti[i])!=nullptr)
+                componentsList->addItem(componenti[i]->getName());
+            }
+            else if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
                 psuComboBox->addItem(componenti[i]->getName());
-            else if(dynamic_cast<RAM*>(componenti[i])!=nullptr)
+                componentsList->addItem(componenti[i]->getName());
+            }
+            else if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
                 ramComboBox->addItem(componenti[i]->getName());
-            else if(dynamic_cast<Storage*>(componenti[i])!=nullptr)
+                componentsList->addItem(componenti[i]->getName());
+            }
+            else if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
                 storageComboBox->addItem(componenti[i]->getName());
+                componentsList->addItem(componenti[i]->getName());
+            }
         }
         return true;
     }

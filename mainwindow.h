@@ -13,7 +13,7 @@
 #include <QHeaderView>
 #include <QScreen>
 #include <QLineEdit>
-#include <QListView>
+#include <QListWidget>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -90,7 +90,7 @@ private:
     QHBoxLayout *managementButtonsLayout;
     QVBoxLayout *specLayout2;
     QLineEdit *searchBox;
-    QListView *componentsList;
+    QListWidget *componentsList;
     QPushButton *addComponent;
     QPushButton *removeComponent;
     QPushButton *editComponent;
