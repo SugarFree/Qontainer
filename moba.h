@@ -18,7 +18,6 @@ public:
     void setRightSize();
     void setRightFormFactor();
     //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
-    ~MOBA() =default;
 };
 
 #endif // MOBA_H

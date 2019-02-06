@@ -20,7 +20,6 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QIODevice>
-#include <QDebug>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"

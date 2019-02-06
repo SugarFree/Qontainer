@@ -19,7 +19,6 @@ public:
     PC_Parts* clone() const;
     unsigned int Rating();
     void checkSupplementaryPower(const PSU*) const;
-    ~GPU() =default;
 };
 
 #endif // GPU_H

@@ -19,7 +19,6 @@ public:
     unsigned int Rating();
     void SocketCheck(const MOBA*) const;
     void SupportedRAM(const RAM*) const;
-    ~CPU() =default;
 };
 
 #endif // CPU_H

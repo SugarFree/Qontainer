@@ -13,7 +13,6 @@ public:
     unsigned int Rating();
     double PricePerGB() const;
     unsigned int getSize() const;
-    ~RAM() =default;
 };
 
 #endif // RAM_H
