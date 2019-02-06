@@ -1,5 +1,5 @@
 #include <iostream>
-#include "CPU.h"
+#include "cpu.h"
 
 CPU::CPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, double s, unsigned int c, bool x64, QString cs, bool ig):
     PC_Parts (l, h, n, m, p, pc), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), integrated_graphic(ig) {}

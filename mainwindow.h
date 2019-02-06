@@ -37,6 +37,9 @@ class MainWindow : public QWidget
 public:
     MainWindow(QWidget *parent=nullptr);
 
+private slots:
+    bool insertComponentsList();
+
 private:
     QTabWidget *tab;
     QWidget *window;

@@ -184,6 +184,10 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     tab->show();
 }
 
+bool MainWindow::insertComponentsList() {
+
+}
+
 bool MainWindow::load(QString path) {
     QFile file(path);
     file.open(QIODevice::ReadOnly);
@@ -207,7 +211,6 @@ bool MainWindow::load(QString path) {
                                               j.toObject().value("max_RAM").toInt(),
                                               j.toObject().value("connectors").toString()
                                               ));
-
             else if(component_type=="CPU")
                 componenti.push_back(new CPU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
@@ -221,7 +224,6 @@ bool MainWindow::load(QString path) {
                                              j.toObject().value("cpu_socket").toString(),
                                              j.toObject().value("integrated_graphics").toBool()
                                              ));
-
             else if(component_type=="GPU")
                 componenti.push_back(new GPU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
@@ -237,7 +239,6 @@ bool MainWindow::load(QString path) {
                                              j.toObject().value("connectors").toString(),
                                              j.toObject().value("supplementary_power").toBool()
                                              ));
-
             else if(component_type=="PSU")
                 componenti.push_back(new PSU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
@@ -251,7 +252,6 @@ bool MainWindow::load(QString path) {
                                              j.toObject().value("modularity").toString(),
                                              j.toObject().value("supplementary_power").toBool()
                                              ));
-
             else if(component_type=="RAM")
                 componenti.push_back(new RAM(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
@@ -263,7 +263,6 @@ bool MainWindow::load(QString path) {
                                              j.toObject().value("type").toString(),
                                              j.toObject().value("size").toInt()
                                              ));
-
             else if(component_type=="Storage")
                 componenti.push_back(new Storage(j.toObject().value("length").toInt(),
                                                  j.toObject().value("height").toInt(),
@@ -278,7 +277,6 @@ bool MainWindow::load(QString path) {
                                                  j.toObject().value("form_factor").toDouble(),
                                                  j.toObject().value("speed").toInt()
                                                  ));
-
         }
         for(unsigned int i=0; i!=componenti.getSize(); ++i) {
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {

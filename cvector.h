@@ -138,8 +138,8 @@ const T& cvector<T>::operator[](unsigned int j) const {
 
 template<class T>
 void cvector<T>::push_back(const T& v) {
-    if(size==capacity)
-        resize(capacity*2);
+    if(size>=capacity)
+        resize(size+1);
     point[size]=v;
     ++size;
 }
