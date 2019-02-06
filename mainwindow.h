@@ -29,6 +29,8 @@
 #include "ram.h"
 #include "psu.h"
 #include "storage.h"
+#include <string>
+
 
 class MainWindow : public QWidget
 {
@@ -38,7 +40,14 @@ public:
     MainWindow(QWidget *parent=nullptr);
 
 private slots:
-    bool insertComponentsList();
+    void mobaToBuild();
+    void cpuToBuild();
+    void gpuToBuild();
+    void psuToBuild();
+    void ramToBuild();
+    void storageToBuild();
+    void calculateTotal();
+    void removeMOBAFromBuild();
 
 private:
     QTabWidget *tab;
@@ -75,9 +84,11 @@ private:
     QFormLayout *layout3;
     QHBoxLayout *buttonsLayout;
     QTableWidget *build;
+    QPushButton *removeMOBA;
     QStringList *horizontalHeaders;
     QStringList *verticalHeaders;
     QSizePolicy headersPolicy;
+    QPushButton *calculate;
     QPushButton *saveBuild;
     QPushButton *discardBuild;
     QVBoxLayout *specLayout;
@@ -104,6 +115,7 @@ private:
     QLabel *powerconsumptionLabel2;
     cvector<PC_Parts*> componenti;
     bool load(QString path);
+    std::string removeZero(std::string);
 };
 
 #endif // MAINWINDOW_H
