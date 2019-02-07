@@ -1,6 +1,36 @@
 #include "storage.h"
 #include <iostream>
 
+QString Storage::getType() const
+{
+    return type;
+}
+
+unsigned int Storage::getRpm() const
+{
+    return rpm;
+}
+
+unsigned int Storage::getSize() const
+{
+    return size;
+}
+
+QString Storage::getInterface() const
+{
+    return interface;
+}
+
+double Storage::getForm_factor() const
+{
+    return form_factor;
+}
+
+unsigned int Storage::getSpeed() const
+{
+    return speed;
+}
+
 Storage::Storage(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int r, unsigned int s, QString i, double ff, unsigned int sp):
     PC_Parts (l, h, n, m, p, pc), type(t), rpm(r), size(s), interface(i), form_factor(ff), speed(sp) {}
 

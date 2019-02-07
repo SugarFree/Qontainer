@@ -19,6 +19,13 @@ public:
     PC_Parts* clone() const;
     unsigned int Rating();
     void checkSupplementaryPower(const PSU*) const;
+    QString getType() const;
+    unsigned int getMemory_size() const;
+    double getPerformance() const;
+    float getClock() const;
+    QString getInterface() const;
+    QString getConnectors() const;
+    bool getSupplementary_power() const;
 };
 
 #endif // GPU_H

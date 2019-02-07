@@ -18,6 +18,10 @@ public:
     void setRightSize();
     void setRightFormFactor();
     //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
+    QString getForm_factor() const;
+    unsigned int getRAM_slots() const;
+    unsigned int getMax_RAM() const;
+    QString getConnectors() const;
 };
 
 #endif // MOBA_H

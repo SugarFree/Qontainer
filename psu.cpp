@@ -1,6 +1,26 @@
 #include "psu.h"
 #include <iostream>
 
+QString PSU::getForm_factor() const
+{
+    return form_factor;
+}
+
+unsigned int PSU::getWattage() const
+{
+    return wattage;
+}
+
+QString PSU::getEfficiency_certification() const
+{
+    return efficiency_certification;
+}
+
+QString PSU::getModularity() const
+{
+    return modularity;
+}
+
 PSU::PSU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ff, unsigned int wa, QString ec, QString mo, bool sp):
     PC_Parts(l, h, n, m, p, 0), form_factor(ff), wattage(wa), efficiency_certification(ec), modularity(mo), supplementary_power(sp) {}
 

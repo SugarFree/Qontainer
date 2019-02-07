@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 //#include "ui_mainwindow.h"
+#include <iostream>
 
 std::string MainWindow::removeZero(std::string str) {
     int j=0;
@@ -28,6 +29,7 @@ void MainWindow::mobaToBuild() {
     (build->item(0, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(0, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(0, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::cpuToBuild() {
@@ -49,6 +51,7 @@ void MainWindow::cpuToBuild() {
     (build->item(1, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(1, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(1, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::gpuToBuild() {
@@ -70,6 +73,7 @@ void MainWindow::gpuToBuild() {
     (build->item(2, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(2, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(2, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::psuToBuild() {
@@ -91,6 +95,7 @@ void MainWindow::psuToBuild() {
     (build->item(3, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(3, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(3, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::ramToBuild() {
@@ -112,6 +117,7 @@ void MainWindow::ramToBuild() {
     (build->item(4, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(4, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(4, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::storageToBuild() {
@@ -133,6 +139,7 @@ void MainWindow::storageToBuild() {
     (build->item(5, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(5, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
     (build->item(5, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    calculateTotal();
 }
 
 void MainWindow::calculateTotal() {
@@ -199,6 +206,11 @@ void MainWindow::calculateTotal() {
         (build->item(6, 1))->setTextAlignment(Qt::AlignCenter);
         (build->item(6, 2))->setTextAlignment(Qt::AlignCenter);
     }
+    else {
+        build->setItem(6, 1, nullptr);
+        build->setItem(6, 2, nullptr);
+    }
+
 }
 
 void MainWindow::removeMOBAFromBuild() {
@@ -209,6 +221,260 @@ void MainWindow::removeMOBAFromBuild() {
     }
     calculateTotal();
 }
+
+void MainWindow::removeCPUFromBuild() {
+    if((build->item(1, 0))!=nullptr) {
+        build->setItem(1, 0, nullptr);
+        build->setItem(1, 1, nullptr);
+        build->setItem(1, 2, nullptr);
+    }
+    calculateTotal();
+}
+
+void MainWindow::removeGPUFromBuild() {
+    if((build->item(2, 0))!=nullptr) {
+        build->setItem(2, 0, nullptr);
+        build->setItem(2, 1, nullptr);
+        build->setItem(2, 2, nullptr);
+    }
+    calculateTotal();
+}
+
+void MainWindow::removePSUFromBuild() {
+    if((build->item(3, 0))!=nullptr) {
+        build->setItem(3, 0, nullptr);
+        build->setItem(3, 1, nullptr);
+        build->setItem(3, 2, nullptr);
+    }
+    calculateTotal();
+}
+
+void MainWindow::removeRAMFromBuild() {
+    if((build->item(4, 0))!=nullptr) {
+        build->setItem(4, 0, nullptr);
+        build->setItem(4, 1, nullptr);
+        build->setItem(4, 2, nullptr);
+    }
+    calculateTotal();
+}
+
+void MainWindow::removeStorageFromBuild() {
+    if((build->item(5, 0))!=nullptr) {
+        build->setItem(5, 0, nullptr);
+        build->setItem(5, 1, nullptr);
+        build->setItem(5, 2, nullptr);
+    }
+    calculateTotal();
+}
+
+void MainWindow::deleteBuild() {
+    removeMOBAFromBuild();
+    removeCPUFromBuild();
+    removeGPUFromBuild();
+    removePSUFromBuild();
+    removeRAMFromBuild();
+    removeStorageFromBuild();
+}
+
+void MainWindow::saveBuildToFile() {
+    QString file = QFileDialog::getSaveFileName(this, tr("Save Build"), "", tr("JSON (*.json);"));
+    QJsonArray newBuild;
+    QFile savePath(file);
+    bool mobaCheck=(build->item(0, 0)!=nullptr);
+    bool cpuCheck=(build->item(1, 0)!=nullptr);
+    bool gpuCheck=(build->item(2, 0)!=nullptr);
+    bool psuCheck=(build->item(3, 0)!=nullptr);
+    bool ramCheck=(build->item(4, 0)!=nullptr);
+    bool storageCheck=(build->item(5, 0)!=nullptr);
+    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+        QJsonObject singleComponent;
+        if(mobaCheck && (build->item(0, 0))->text()==componenti[i]->getName()) {
+            MOBA* moba=static_cast<MOBA*>(componenti[i]);
+            singleComponent.insert("component_type", "MOBA");
+            singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
+            singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getForm_factor()));
+            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAM_slots()));
+            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMax_RAM()));
+            singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
+            newBuild.append(singleComponent);
+        }
+        else if(cpuCheck && (build->item(1, 0))->text()==componenti[i]->getName()) {
+            CPU* cpu=static_cast<CPU*>(componenti[i]);
+            singleComponent.insert("component_type", "CPU");
+            singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
+            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpu_speed()));
+            singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
+            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getX64bit()));
+            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpu_socket()));
+            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegrated_graphic()));
+            newBuild.append(singleComponent);
+        }
+        else if(gpuCheck && (build->item(2, 0))->text()==componenti[i]->getName()) {
+            GPU* gpu=static_cast<GPU*>(componenti[i]);
+            singleComponent.insert("component_type", "GPU");
+            singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
+            singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
+            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemory_size()));
+            singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
+            singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
+            singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
+            singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementary_power()));
+            newBuild.append(singleComponent);
+        }
+        else if(psuCheck && (build->item(3, 0))->text()==componenti[i]->getName()) {
+            PSU* psu=static_cast<PSU*>(componenti[i]);
+            singleComponent.insert("component_type", "PSU");
+            singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getForm_factor()));
+            singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
+            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiency_certification()));
+            singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
+            newBuild.append(singleComponent);
+        }
+        else if(ramCheck && (build->item(4, 0))->text()==componenti[i]->getName()) {
+            RAM* ram=static_cast<RAM*>(componenti[i]);
+            singleComponent.insert("component_type", "RAM");
+            singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
+            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRam_speed()));
+            singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
+            singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
+            newBuild.append(singleComponent);
+        }
+        else if(storageCheck && (build->item(5, 0))->text()==componenti[i]->getName()) {
+            Storage* storage=static_cast<Storage*>(componenti[i]);
+            singleComponent.insert("component_type", "Storage");
+            singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
+            singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
+            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRpm()));
+            singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
+            singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getForm_factor()));
+            singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
+            newBuild.append(singleComponent);
+        }
+    }
+    QJsonObject toAdd;
+    toAdd.insert("pc_parts", newBuild);
+    QJsonDocument json(toAdd);
+    if(savePath.open(QIODevice::WriteOnly)) {
+        savePath.write(json.toJson());
+        std::cout<<"File salvato correttamente!"<<std::endl;
+    }
+}
+
+void MainWindow::showMOBASpecs() {
+    if(build->item(0, 0)!=nullptr) {
+        bool trovato=false;
+        QString mobaName=(build->item(0, 0))->text();
+        for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
+            if(componenti[i]->getName()==mobaName) {
+                trovato=true;
+                QString mobaLength=(QString::number(componenti[i]->getLength()));
+                QString mobaHeight=(QString::number(componenti[i]->getHeight()));
+                QString mobaManufacturer=(QString::number(componenti[i]->getManufacturer()));
+                std::string price=std::to_string(componenti[i]->getPrice());
+                price=removeZero(price);
+                QString mobaPrice=QString::fromStdString(price);
+                QString mobaPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                MOBA* moba=static_cast<MOBA*>(componenti[i]);
+                QString mobaMOBASocket=moba->getMOBASocket();
+                QString mobaFormFactor=moba->getForm_factor();
+                QString mobaRAMSlots=(QString::number(moba->getRAM_slots()));
+                QString mobaMaxRAM=(QString::number(moba->getMax_RAM()));
+                QString mobaConnectors=moba->getConnectors();
+                mobaNameLabel->setText(mobaName);
+                mobaManufacturerLabel->setText(mobaManufacturer);
+                mobaLengthLabel->setText(mobaLength);
+                mobaHeightLabel->setText(mobaHeight);
+                mobaPriceLabel->setText(mobaPrice);
+                mobaPowerConsumptionLabel->setText(mobaPowerConsumption);
+                mobaMOBASocketLabel->setText(mobaMOBASocket);
+                mobaFormFactorLabel->setText(mobaFormFactor);
+                mobaRAMSlotsLabel->setText(mobaRAMSlots);
+                mobaMaxRAMLabel->setText(mobaMaxRAM);
+                mobaMOBAConnectorsLabel->setText(mobaConnectors);
+            }
+        }
+    }
+}
+
+/*void MainWindow::loadFileToBuild() {
+    QString path = QFileDialog::getOpenFileName(this, tr("Load Build"), "", tr("JSON (*.json);"));
+    QFile file(path);
+    file.open(QIODevice::ReadOnly);
+    QByteArray json=file.readAll();
+    file.close();
+    QJsonDocument document=QJsonDocument::fromJson(json);
+    QJsonArray array=document.object().value("pc_parts").toArray();
+    if(!array.isEmpty()) {
+        bool componentPresence=false;
+        foreach(const QJsonValue& j, array) {
+            QString component_type=QString(j.toObject().value("component_type").toString());
+            QString component_name=QString(j.toObject().value("name").toString());
+            for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+                if(component_name==componenti[i]->getName())
+                    componentPresence=true;
+            }
+            if(component_type=="MOBA") {
+                if(componentPresence==false) {
+                    componenti.push_back(new MOBA(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("moba_socket").toString(),
+                                                  j.toObject().value("form_factor").toString(),
+                                                  j.toObject().value("RAM_slots").toInt(),
+                                                  j.toObject().value("max_RAM").toInt(),
+                                                  j.toObject().value("connectors").toString()
+                                                  ));
+                    mobaComboBox->addItem(componenti[componenti.getSize()]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()]->getName());
+                    mobaComboBox->setCurrentIndex(mobaComboBox->count());
+                    mobaToBuild();
+                }
+                else {
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(componenti[componenti.getSize()]->getName()));
+                    mobaToBuild();
+                }
+            }
+        }
+    }
+}*/
 
 bool MainWindow::load(QString path) {
     QFile file(path);
@@ -420,18 +686,24 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     build->setColumnWidth(4, 175);
     build->setShowGrid(false);
     removeMOBA=new QPushButton("-");
-    build->setIndexWidget(build->model()->index(0,3), new QPushButton("≡"));
+    removeCPU=new QPushButton("-");
+    removeGPU=new QPushButton("-");
+    removePSU=new QPushButton("-");
+    removeRAM=new QPushButton("-");
+    removeStorage=new QPushButton("-");
+    mobaSpecs=new QPushButton("≡");
+    build->setIndexWidget(build->model()->index(0,3), mobaSpecs);
     build->setIndexWidget(build->model()->index(0,4), removeMOBA);
     build->setIndexWidget(build->model()->index(1,3), new QPushButton("≡"));
-    build->setIndexWidget(build->model()->index(1,4), new QPushButton("-"));
+    build->setIndexWidget(build->model()->index(1,4), removeCPU);
     build->setIndexWidget(build->model()->index(2,3), new QPushButton("≡"));
-    build->setIndexWidget(build->model()->index(2,4), new QPushButton("-"));
+    build->setIndexWidget(build->model()->index(2,4), removeGPU);
     build->setIndexWidget(build->model()->index(3,3), new QPushButton("≡"));
-    build->setIndexWidget(build->model()->index(3,4), new QPushButton("-"));
+    build->setIndexWidget(build->model()->index(3,4), removePSU);
     build->setIndexWidget(build->model()->index(4,3), new QPushButton("≡"));
-    build->setIndexWidget(build->model()->index(4,4), new QPushButton("-"));
+    build->setIndexWidget(build->model()->index(4,4), removeRAM);
     build->setIndexWidget(build->model()->index(5,3), new QPushButton("≡"));
-    build->setIndexWidget(build->model()->index(5,4), new QPushButton("-"));
+    build->setIndexWidget(build->model()->index(5,4), removeStorage);
     horizontalHeaders=new QStringList();
     horizontalHeaders->append("Componente");
     horizontalHeaders->append("Rating");
@@ -448,19 +720,42 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     verticalHeaders->append("Storage");
     verticalHeaders->append("Totale");
     build->setVerticalHeaderLabels(*verticalHeaders);
+    /*(build->item(0, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(0, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(0, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(1, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(1, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(1, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(2, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(2, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(2, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(3, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(3, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(3, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(4, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(4, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(4, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(5, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(5, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(5, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(6, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(6, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(6, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(6, 3))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    (build->item(6, 4))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);*/
 
-    calculate=new QPushButton("Calcola totale");
     saveBuild=new QPushButton("Salva Build");
+    loadBuild=new QPushButton("Carica Build");
     discardBuild=new QPushButton("Scarta Build");
-    buttonsLayout->addWidget(calculate);
     buttonsLayout->addWidget(saveBuild);
+    buttonsLayout->addWidget(loadBuild);
     buttonsLayout->addWidget(discardBuild);
     layout3->addRow(build);
     layout3->addRow(buttonsLayout);
     layout3->setVerticalSpacing(30);
     layout3->setContentsMargins(0, 0, 20, 0);
 
-    specLayout=new QVBoxLayout();
+    specLayout=new QFormLayout();
     layout->addLayout(specLayout, 0, 2);
     lengthLabel=new QLabel("Larghezza: ");
     heightLabel=new QLabel("Altezza: ");
@@ -468,12 +763,24 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     manufacturerLabel=new QLabel("Produttore: ");
     priceLabel=new QLabel("Prezzo: ");
     powerconsumptionLabel=new QLabel("Consumo energetico: ");
-    specLayout->addWidget(nameLabel);
-    specLayout->addWidget(manufacturerLabel);
-    specLayout->addWidget(lengthLabel);
-    specLayout->addWidget(heightLabel);
-    specLayout->addWidget(priceLabel);
-    specLayout->addWidget(powerconsumptionLabel);
+    mobaNameLabel=new QLabel();
+    mobaLengthLabel=new QLabel();
+    mobaHeightLabel=new QLabel();
+    mobaPriceLabel=new QLabel();
+    mobaPowerConsumptionLabel=new QLabel();
+    mobaManufacturerLabel=new QLabel();
+    mobaMOBASocketLabel=new QLabel();
+    mobaFormFactorLabel=new QLabel();
+    mobaRAMSlotsLabel=new QLabel();
+    mobaMaxRAMLabel=new QLabel();
+    mobaMOBAConnectorsLabel=new QLabel();
+    manufacturerLabel=new QLabel();
+    specLayout->addRow(nameLabel, mobaNameLabel);
+    specLayout->addRow(manufacturerLabel, mobaManufacturerLabel);
+    specLayout->addRow(lengthLabel, mobaLengthLabel);
+    specLayout->addRow(heightLabel, mobaHeightLabel);
+    specLayout->addRow(priceLabel, mobaPriceLabel);
+    specLayout->addRow(powerconsumptionLabel, mobaPowerConsumptionLabel);
     specLayout->setContentsMargins(0, 0, 300, 0);
 
     layout4=new QGridLayout();
@@ -519,8 +826,16 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     connect(insertPSU, SIGNAL(clicked(bool)), this, SLOT(psuToBuild()));
     connect(insertRAM, SIGNAL(clicked(bool)), this, SLOT(ramToBuild()));
     connect(insertStorage, SIGNAL(clicked(bool)), this, SLOT(storageToBuild()));
-    connect(calculate, SIGNAL(clicked(bool)), this, SLOT(calculateTotal()));
     connect(removeMOBA, SIGNAL(clicked(bool)), this, SLOT(removeMOBAFromBuild()));
+    connect(removeCPU, SIGNAL(clicked(bool)), this, SLOT(removeCPUFromBuild()));
+    connect(removeGPU, SIGNAL(clicked(bool)), this, SLOT(removeGPUFromBuild()));
+    connect(removePSU, SIGNAL(clicked(bool)), this, SLOT(removePSUFromBuild()));
+    connect(removeRAM, SIGNAL(clicked(bool)), this, SLOT(removeRAMFromBuild()));
+    connect(removeStorage, SIGNAL(clicked(bool)), this, SLOT(removeStorageFromBuild()));
+    connect(discardBuild, SIGNAL(clicked(bool)), this, SLOT(deleteBuild()));
+    connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
+    connect(mobaSpecs, SIGNAL(clicked(bool)), this, SLOT(showMOBASpecs()));
+    //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 500);
     tab->setMaximumSize(1800, 500);

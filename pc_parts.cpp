@@ -3,11 +3,11 @@
 PC_Parts::PC_Parts(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc)
     : length(l), height(h), name(n), manufacturer(m), price(p), power_consumption(pc) {}
 
-unsigned int PC_Parts::getlength() const {
+unsigned int PC_Parts::getLength() const {
     return length;
 }
 
-void PC_Parts::setlength(unsigned int l) {
+void PC_Parts::setLength(unsigned int l) {
     if(this->length!=l)
         this->length=l;
 }

@@ -1,6 +1,41 @@
 #include "gpu.h"
 #include <iostream>
 
+QString GPU::getType() const
+{
+    return type;
+}
+
+unsigned int GPU::getMemory_size() const
+{
+    return memory_size;
+}
+
+double GPU::getPerformance() const
+{
+    return performance;
+}
+
+float GPU::getClock() const
+{
+    return clock;
+}
+
+QString GPU::getInterface() const
+{
+    return interface;
+}
+
+QString GPU::getConnectors() const
+{
+    return connectors;
+}
+
+bool GPU::getSupplementary_power() const
+{
+    return supplementary_power;
+}
+
 GPU::GPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int ms, double pf, float c, QString i, QString co, bool sp):
     PC_Parts (l, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
 

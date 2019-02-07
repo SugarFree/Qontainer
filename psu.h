@@ -15,6 +15,10 @@ public:
     unsigned int Rating();
     void checkPowerConsumption(const PC_Parts*) const;
     bool getSupplementaryPower() const;
+    QString getForm_factor() const;
+    unsigned int getWattage() const;
+    QString getEfficiency_certification() const;
+    QString getModularity() const;
 };
 
 #endif // PSU_H

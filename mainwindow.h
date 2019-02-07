@@ -20,6 +20,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QIODevice>
+#include <QFileDialog>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -46,8 +47,16 @@ private slots:
     void psuToBuild();
     void ramToBuild();
     void storageToBuild();
-    void calculateTotal();
     void removeMOBAFromBuild();
+    void removeCPUFromBuild();
+    void removeGPUFromBuild();
+    void removePSUFromBuild();
+    void removeRAMFromBuild();
+    void removeStorageFromBuild();
+    void deleteBuild();
+    void saveBuildToFile();
+    void showMOBASpecs();
+    //void loadFileToBuild();
 
 private:
     QTabWidget *tab;
@@ -84,20 +93,38 @@ private:
     QFormLayout *layout3;
     QHBoxLayout *buttonsLayout;
     QTableWidget *build;
+    QPushButton *mobaSpecs;
     QPushButton *removeMOBA;
+    QPushButton *removeCPU;
+    QPushButton *removeGPU;
+    QPushButton *removePSU;
+    QPushButton *removeRAM;
+    QPushButton *removeStorage;
     QStringList *horizontalHeaders;
     QStringList *verticalHeaders;
     QSizePolicy headersPolicy;
     QPushButton *calculate;
     QPushButton *saveBuild;
+    QPushButton *loadBuild;
     QPushButton *discardBuild;
-    QVBoxLayout *specLayout;
+    QFormLayout *specLayout;
     QLabel *lengthLabel;
     QLabel *heightLabel;
     QLabel *nameLabel;
     QLabel *manufacturerLabel;
     QLabel *priceLabel;
     QLabel *powerconsumptionLabel;
+    QLabel *mobaNameLabel;
+    QLabel *mobaLengthLabel;
+    QLabel *mobaHeightLabel;
+    QLabel *mobaPriceLabel;
+    QLabel *mobaPowerConsumptionLabel;
+    QLabel *mobaManufacturerLabel;
+    QLabel *mobaMOBASocketLabel;
+    QLabel *mobaFormFactorLabel;
+    QLabel *mobaRAMSlotsLabel;
+    QLabel *mobaMaxRAMLabel;
+    QLabel *mobaMOBAConnectorsLabel;
     QGridLayout *layout4;
     QFormLayout *layout5;
     QHBoxLayout *managementButtonsLayout;
@@ -116,6 +143,7 @@ private:
     cvector<PC_Parts*> componenti;
     bool load(QString path);
     std::string removeZero(std::string);
+    void calculateTotal();
 };
 
 #endif // MAINWINDOW_H

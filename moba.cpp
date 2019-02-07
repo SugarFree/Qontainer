@@ -1,5 +1,25 @@
 #include "moba.h"
 
+QString MOBA::getForm_factor() const
+{
+    return form_factor;
+}
+
+unsigned int MOBA::getRAM_slots() const
+{
+    return RAM_slots;
+}
+
+unsigned int MOBA::getMax_RAM() const
+{
+    return max_RAM;
+}
+
+QString MOBA::getConnectors() const
+{
+    return connectors;
+}
+
 MOBA::MOBA(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ms, QString ff, unsigned int rs, unsigned int mr, QString c):
     PC_Parts (l, h, n, m, p, pc), moba_socket(ms), form_factor(ff), RAM_slots(rs), max_RAM(mr), connectors(c) {}
 
@@ -32,29 +52,29 @@ void MOBA::setFormFactor(QString f) {
 }
 
 void MOBA::setRightSize() {
-    if(getHeight()==0 || getlength()==0) {
+    if(getHeight()==0 || getLength()==0) {
         if(form_factor=="ATX") {
             setHeight(305);
-            setlength(244);
+            setLength(244);
         }
         if(form_factor=="Micro ATX"){
             setHeight(244);
-            setlength(244);
+            setLength(244);
         }
         if(form_factor=="Mini ITX") {
             setHeight(170);
-            setlength(170);
+            setLength(170);
         }
     }
 }
 
 void MOBA::setRightFormFactor() {
     if(form_factor!="ATX" || form_factor!="Micro ATX" || form_factor!="Mini ITX") {
-        if(getHeight()==305 && getlength()==244)
+        if(getHeight()==305 && getLength()==244)
             setFormFactor("ATX");
-        if(getHeight()==244 && getlength()==244)
+        if(getHeight()==244 && getLength()==244)
             setFormFactor("Micro ATX");
-        if(getHeight()==170 && getlength()==170)
+        if(getHeight()==170 && getLength()==170)
             setFormFactor("Mini ITX");
     }
 }

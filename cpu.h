@@ -19,6 +19,11 @@ public:
     unsigned int Rating();
     void SocketCheck(const MOBA*) const;
     void SupportedRAM(const RAM*) const;
+    double getCpu_speed() const;
+    unsigned int getCores() const;
+    bool getX64bit() const;
+    QString getCpu_socket() const;
+    bool getIntegrated_graphic() const;
 };
 
 #endif // CPU_H

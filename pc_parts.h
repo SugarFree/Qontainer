@@ -14,8 +14,8 @@ public:
     PC_Parts(unsigned int =0, unsigned int =0, QString ="Non specificato", QString ="Non specificato", double =0, unsigned int =0);
     virtual PC_Parts* clone() const =0;
     virtual unsigned int Rating() =0;
-    unsigned int getlength() const;
-    void setlength(unsigned int);
+    unsigned int getLength() const;
+    void setLength(unsigned int);
     unsigned int getHeight() const;
     void setHeight(unsigned int);
     QString getName() const;

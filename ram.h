@@ -13,6 +13,8 @@ public:
     unsigned int Rating();
     double PricePerGB() const;
     unsigned int getSize() const;
+    unsigned int getRam_speed() const;
+    QString getType() const;
 };
 
 #endif // RAM_H

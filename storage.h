@@ -16,6 +16,12 @@ public:
     unsigned int Rating();
     double PricePerGB() const;
     void typeCheck();
+    QString getType() const;
+    unsigned int getRpm() const;
+    unsigned int getSize() const;
+    QString getInterface() const;
+    double getForm_factor() const;
+    unsigned int getSpeed() const;
 };
 
 #endif // STORAGE_H

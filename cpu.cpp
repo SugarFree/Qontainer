@@ -1,6 +1,31 @@
 #include <iostream>
 #include "cpu.h"
 
+double CPU::getCpu_speed() const
+{
+    return cpu_speed;
+}
+
+unsigned int CPU::getCores() const
+{
+    return cores;
+}
+
+bool CPU::getX64bit() const
+{
+    return x64bit;
+}
+
+QString CPU::getCpu_socket() const
+{
+    return cpu_socket;
+}
+
+bool CPU::getIntegrated_graphic() const
+{
+    return integrated_graphic;
+}
+
 CPU::CPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, double s, unsigned int c, bool x64, QString cs, bool ig):
     PC_Parts (l, h, n, m, p, pc), cpu_speed(s), cores(c), x64bit(x64), cpu_socket(cs), integrated_graphic(ig) {}
 
