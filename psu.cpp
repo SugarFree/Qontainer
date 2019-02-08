@@ -22,7 +22,7 @@ QString PSU::getModularity() const
 }
 
 PSU::PSU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ff, unsigned int wa, QString ec, QString mo, bool sp):
-    PC_Parts(l, h, n, m, p, 0), form_factor(ff), wattage(wa), efficiency_certification(ec), modularity(mo), supplementary_power(sp) {}
+    PC_Parts(l, h, n, m, p, pc), form_factor(ff), wattage(wa), efficiency_certification(ec), modularity(mo), supplementary_power(sp) {}
 
 PC_Parts *PSU::clone() const {
     return new PSU(*this);

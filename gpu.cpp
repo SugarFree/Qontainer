@@ -16,7 +16,7 @@ double GPU::getPerformance() const
     return performance;
 }
 
-double GPU::getClock() const
+unsigned int GPU::getClock() const
 {
     return clock;
 }
@@ -36,7 +36,7 @@ bool GPU::getSupplementary_power() const
     return supplementary_power;
 }
 
-GPU::GPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int ms, double pf, double c, QString i, QString co, bool sp):
+GPU::GPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int ms, double pf, unsigned int c, QString i, QString co, bool sp):
     PC_Parts (l, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
 
 PC_Parts *GPU::clone() const {

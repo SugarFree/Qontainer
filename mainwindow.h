@@ -56,6 +56,12 @@ private slots:
     void deleteBuild();
     void saveBuildToFile();
     void showMOBASpecs();
+    void showCPUSpecs();
+    void showGPUSpecs();
+    void showPSUSpecs();
+    void showRAMSpecs();
+    void showStorageSpecs();
+    void resetSpecs();
     //void loadFileToBuild();
 
 private:
@@ -94,6 +100,11 @@ private:
     QHBoxLayout *buttonsLayout;
     QTableWidget *build;
     QPushButton *mobaSpecs;
+    QPushButton *cpuSpecs;
+    QPushButton *gpuSpecs;
+    QPushButton *psuSpecs;
+    QPushButton *ramSpecs;
+    QPushButton *storageSpecs;
     QPushButton *removeMOBA;
     QPushButton *removeCPU;
     QPushButton *removeGPU;
@@ -114,13 +125,13 @@ private:
     QLabel *manufacturerLabel;
     QLabel *priceLabel;
     QLabel *powerconsumptionLabel;
-    QFormLayout *mobaSpecsLayout;
-    QLabel *mobaNameLabel;
-    QLabel *mobaLengthLabel;
-    QLabel *mobaHeightLabel;
-    QLabel *mobaPriceLabel;
-    QLabel *mobaPowerConsumptionLabel;
-    QLabel *mobaManufacturerLabel;
+    QFormLayout *componentsSpecsLayout;
+    QLabel *componentNameLabel;
+    QLabel *componentLengthLabel;
+    QLabel *componentHeightLabel;
+    QLabel *componentPriceLabel;
+    QLabel *componentPowerConsumptionLabel;
+    QLabel *componentManufacturerLabel;
     QGridLayout *layout4;
     QFormLayout *layout5;
     QHBoxLayout *managementButtonsLayout;
@@ -140,7 +151,6 @@ private:
     bool load(QString path);
     std::string removeZero(std::string);
     void calculateTotal();
-    void resetSpecs();
 };
 
 #endif // MAINWINDOW_H

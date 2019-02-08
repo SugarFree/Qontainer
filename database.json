@@ -142,7 +142,7 @@
 			"power_consumption": 0,
 			"form_factor": "ATX",
 			"wattage": 750,
-			"efficiency_cerfication": "80+ Gold",
+			"efficiency_certification": "80+ Gold",
 			"modularity": "Full",
 			"supplementary_power": true
 		},
@@ -156,7 +156,7 @@
 			"power_consumption": 0,
 			"form_factor": "ATX",
 			"wattage": 550,
-			"efficiency_cerfication": "80+ Bronze",
+			"efficiency_certification": "80+ Bronze",
 			"modularity": "Semi",
 			"supplementary_power": true
 		},
@@ -170,7 +170,7 @@
 			"power_consumption": 0,
 			"form_factor": "Micro ATX",
 			"wattage": 180,
-			"efficiency_cerfication": "Nessuna",
+			"efficiency_certification": "Nessuna",
 			"modularity": "No",
 			"supplementary_power": false
 		},
