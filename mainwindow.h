@@ -114,17 +114,13 @@ private:
     QLabel *manufacturerLabel;
     QLabel *priceLabel;
     QLabel *powerconsumptionLabel;
+    QFormLayout *mobaSpecsLayout;
     QLabel *mobaNameLabel;
     QLabel *mobaLengthLabel;
     QLabel *mobaHeightLabel;
     QLabel *mobaPriceLabel;
     QLabel *mobaPowerConsumptionLabel;
     QLabel *mobaManufacturerLabel;
-    QLabel *mobaMOBASocketLabel;
-    QLabel *mobaFormFactorLabel;
-    QLabel *mobaRAMSlotsLabel;
-    QLabel *mobaMaxRAMLabel;
-    QLabel *mobaMOBAConnectorsLabel;
     QGridLayout *layout4;
     QFormLayout *layout5;
     QHBoxLayout *managementButtonsLayout;
@@ -144,6 +140,7 @@ private:
     bool load(QString path);
     std::string removeZero(std::string);
     void calculateTotal();
+    void resetSpecs();
 };
 
 #endif // MAINWINDOW_H

@@ -215,6 +215,7 @@ void MainWindow::calculateTotal() {
 
 void MainWindow::removeMOBAFromBuild() {
     if((build->item(0, 0))!=nullptr) {
+        resetSpecs();
         build->setItem(0, 0, nullptr);
         build->setItem(0, 1, nullptr);
         build->setItem(0, 2, nullptr);
@@ -395,16 +396,27 @@ void MainWindow::saveBuildToFile() {
     }
 }
 
+void MainWindow::resetSpecs() {
+    mobaNameLabel->setText("");
+    mobaLengthLabel->setText("");
+    mobaHeightLabel->setText("");
+    mobaPriceLabel->setText("");
+    mobaPowerConsumptionLabel->setText("");
+    mobaManufacturerLabel->setText("");
+    specLayout->removeRow(mobaSpecsLayout);
+}
+
 void MainWindow::showMOBASpecs() {
-    if(build->item(0, 0)!=nullptr) {
+    resetSpecs();
+    if(build->item(0, 0)!=nullptr && (build->item(0, 0))->text()!=mobaNameLabel->text()) {
         bool trovato=false;
         QString mobaName=(build->item(0, 0))->text();
         for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
-            if(componenti[i]->getName()==mobaName) {
+            if(!trovato && componenti[i]->getName()==mobaName) {
                 trovato=true;
                 QString mobaLength=(QString::number(componenti[i]->getLength()));
                 QString mobaHeight=(QString::number(componenti[i]->getHeight()));
-                QString mobaManufacturer=(QString::number(componenti[i]->getManufacturer()));
+                QString mobaManufacturer=(componenti[i]->getManufacturer());
                 std::string price=std::to_string(componenti[i]->getPrice());
                 price=removeZero(price);
                 QString mobaPrice=QString::fromStdString(price);
@@ -415,6 +427,17 @@ void MainWindow::showMOBASpecs() {
                 QString mobaRAMSlots=(QString::number(moba->getRAM_slots()));
                 QString mobaMaxRAM=(QString::number(moba->getMax_RAM()));
                 QString mobaConnectors=moba->getConnectors();
+                mobaConnectors.insert(37, "\n");
+                QLabel *MOBASocketLabel=new QLabel("Socket: ");
+                QLabel *FormFactorLabel=new QLabel("Form Factor: ");
+                QLabel *RAMSlotsLabel=new QLabel("Slot RAM: ");
+                QLabel *MaxRAMLabel=new QLabel("RAM massima supportata: ");
+                QLabel *MOBAConnectorsLabel=new QLabel("Interfacce: ");
+                QLabel *mobaMOBASocketLabel=new QLabel();
+                QLabel *mobaFormFactorLabel=new QLabel();
+                QLabel *mobaRAMSlotsLabel=new QLabel();
+                QLabel *mobaMaxRAMLabel=new QLabel();
+                QLabel *mobaMOBAConnectorsLabel=new QLabel();
                 mobaNameLabel->setText(mobaName);
                 mobaManufacturerLabel->setText(mobaManufacturer);
                 mobaLengthLabel->setText(mobaLength);
@@ -426,6 +449,13 @@ void MainWindow::showMOBASpecs() {
                 mobaRAMSlotsLabel->setText(mobaRAMSlots);
                 mobaMaxRAMLabel->setText(mobaMaxRAM);
                 mobaMOBAConnectorsLabel->setText(mobaConnectors);
+                mobaSpecsLayout=new QFormLayout();
+                mobaSpecsLayout->addRow(MOBASocketLabel, mobaMOBASocketLabel);
+                mobaSpecsLayout->addRow(RAMSlotsLabel, mobaRAMSlotsLabel);
+                mobaSpecsLayout->addRow(MOBAConnectorsLabel, mobaMOBAConnectorsLabel);
+                mobaSpecsLayout->addRow(MaxRAMLabel, mobaMaxRAMLabel);
+                mobaSpecsLayout->addRow(FormFactorLabel, mobaFormFactorLabel);
+                specLayout->addRow(mobaSpecsLayout);
             }
         }
     }
@@ -769,19 +799,12 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     mobaPriceLabel=new QLabel();
     mobaPowerConsumptionLabel=new QLabel();
     mobaManufacturerLabel=new QLabel();
-    mobaMOBASocketLabel=new QLabel();
-    mobaFormFactorLabel=new QLabel();
-    mobaRAMSlotsLabel=new QLabel();
-    mobaMaxRAMLabel=new QLabel();
-    mobaMOBAConnectorsLabel=new QLabel();
-    manufacturerLabel=new QLabel();
     specLayout->addRow(nameLabel, mobaNameLabel);
     specLayout->addRow(manufacturerLabel, mobaManufacturerLabel);
     specLayout->addRow(lengthLabel, mobaLengthLabel);
     specLayout->addRow(heightLabel, mobaHeightLabel);
     specLayout->addRow(priceLabel, mobaPriceLabel);
     specLayout->addRow(powerconsumptionLabel, mobaPowerConsumptionLabel);
-    specLayout->setContentsMargins(0, 0, 300, 0);
 
     layout4=new QGridLayout();
     window2->setLayout(layout4);
