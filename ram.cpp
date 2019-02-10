@@ -10,6 +10,21 @@ QString RAM::getType() const
     return type;
 }
 
+void RAM::setRam_speed(unsigned int value)
+{
+    ram_speed = value;
+}
+
+void RAM::setType(const QString &value)
+{
+    type = value;
+}
+
+void RAM::setSize(unsigned int value)
+{
+    size = value;
+}
+
 RAM::RAM(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int rs, QString t, unsigned int s):
     PC_Parts (l, h, n, m, p, pc), ram_speed(rs), type(t), size(s) {}
 

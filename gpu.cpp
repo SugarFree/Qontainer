@@ -36,6 +36,41 @@ bool GPU::getSupplementary_power() const
     return supplementary_power;
 }
 
+void GPU::setType(const QString &value)
+{
+    type = value;
+}
+
+void GPU::setMemory_size(unsigned int value)
+{
+    memory_size = value;
+}
+
+void GPU::setPerformance(double value)
+{
+    performance = value;
+}
+
+void GPU::setClock(unsigned int value)
+{
+    clock = value;
+}
+
+void GPU::setInterface(const QString &value)
+{
+    interface = value;
+}
+
+void GPU::setConnectors(const QString &value)
+{
+    connectors = value;
+}
+
+void GPU::setSupplementary_power(bool value)
+{
+    supplementary_power = value;
+}
+
 GPU::GPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int ms, double pf, unsigned int c, QString i, QString co, bool sp):
     PC_Parts (l, h, n, m, p, pc), type(t), memory_size(ms), performance(pf), clock(c), interface(i), connectors(co), supplementary_power(sp) {}
 

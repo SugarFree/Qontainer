@@ -9,6 +9,7 @@
 #include "ram.h"
 #include "psu.h"
 #include "storage.h"
+#include <QDebug>
 
 template<class T>
 class cvector;
@@ -36,8 +37,8 @@ public:
     //void reserve(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
-    T* pop_back();
-    void swap(const T*, const T*);
+    void pop_back();
+    void swap(T&, T&);
     void erase(unsigned int);
     T* search(const T*) const;
     const T& operator[](unsigned int) const;
@@ -145,14 +146,15 @@ void cvector<T>::push_back(const T& v) {
 }
 
 template<class T>
-T* cvector<T>::pop_back() {
-    delete point[size--];
+void cvector<T>::pop_back() {
+    delete point[size-1];
+    qDebug()<<"fatto";
     size--;
 }
 
 template<class T>
-void cvector<T>::swap(const T* p, const T* q) {
-    T* temp=p;
+void cvector<T>::swap(T& p, T& q) {
+    T temp(p);
     p=q;
     q=temp;
 }

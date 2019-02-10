@@ -21,6 +21,31 @@ QString PSU::getModularity() const
     return modularity;
 }
 
+void PSU::setForm_factor(const QString &value)
+{
+    form_factor = value;
+}
+
+void PSU::setWattage(unsigned int value)
+{
+    wattage = value;
+}
+
+void PSU::setEfficiency_certification(const QString &value)
+{
+    efficiency_certification = value;
+}
+
+void PSU::setModularity(const QString &value)
+{
+    modularity = value;
+}
+
+void PSU::setSupplementary_power(bool value)
+{
+    supplementary_power = value;
+}
+
 PSU::PSU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ff, unsigned int wa, QString ec, QString mo, bool sp):
     PC_Parts(l, h, n, m, p, pc), form_factor(ff), wattage(wa), efficiency_certification(ec), modularity(mo), supplementary_power(sp) {}
 

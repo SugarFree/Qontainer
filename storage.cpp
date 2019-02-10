@@ -31,6 +31,36 @@ unsigned int Storage::getSpeed() const
     return speed;
 }
 
+void Storage::setType(const QString &value)
+{
+    type = value;
+}
+
+void Storage::setRpm(unsigned int value)
+{
+    rpm = value;
+}
+
+void Storage::setSize(unsigned int value)
+{
+    size = value;
+}
+
+void Storage::setInterface(const QString &value)
+{
+    interface = value;
+}
+
+void Storage::setForm_factor(double value)
+{
+    form_factor = value;
+}
+
+void Storage::setSpeed(unsigned int value)
+{
+    speed = value;
+}
+
 Storage::Storage(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString t, unsigned int r, unsigned int s, QString i, double ff, unsigned int sp):
     PC_Parts (l, h, n, m, p, pc), type(t), rpm(r), size(s), interface(i), form_factor(ff), speed(sp) {}
 

@@ -26,6 +26,13 @@ public:
     QString getInterface() const;
     QString getConnectors() const;
     bool getSupplementary_power() const;
+    void setType(const QString &value);
+    void setMemory_size(unsigned int value);
+    void setPerformance(double value);
+    void setClock(unsigned int value);
+    void setInterface(const QString &value);
+    void setConnectors(const QString &value);
+    void setSupplementary_power(bool value);
 };
 
 #endif // GPU_H

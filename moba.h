@@ -15,13 +15,15 @@ public:
     unsigned int Rating();
     QString getMOBASocket() const;
     void setFormFactor(QString);
-    void setRightSize();
-    void setRightFormFactor();
     //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
     QString getForm_factor() const;
     unsigned int getRAM_slots() const;
     unsigned int getMax_RAM() const;
     QString getConnectors() const;
+    void setMoba_socket(const QString &value);
+    void setRAM_slots(unsigned int value);
+    void setMax_RAM(unsigned int value);
+    void setConnectors(const QString &value);
 };
 
 #endif // MOBA_H

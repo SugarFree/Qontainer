@@ -22,6 +22,12 @@ public:
     QString getInterface() const;
     double getForm_factor() const;
     unsigned int getSpeed() const;
+    void setType(const QString &value);
+    void setRpm(unsigned int value);
+    void setSize(unsigned int value);
+    void setInterface(const QString &value);
+    void setForm_factor(double value);
+    void setSpeed(unsigned int value);
 };
 
 #endif // STORAGE_H

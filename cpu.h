@@ -24,6 +24,11 @@ public:
     bool getX64bit() const;
     QString getCpu_socket() const;
     bool getIntegrated_graphic() const;
+    void setCpu_speed(double value);
+    void setCores(unsigned int value);
+    void setX64bit(bool value);
+    void setCpu_socket(const QString &value);
+    void setIntegrated_graphic(bool value);
 };
 
 #endif // CPU_H

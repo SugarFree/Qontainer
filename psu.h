@@ -19,6 +19,11 @@ public:
     unsigned int getWattage() const;
     QString getEfficiency_certification() const;
     QString getModularity() const;
+    void setForm_factor(const QString &value);
+    void setWattage(unsigned int value);
+    void setEfficiency_certification(const QString &value);
+    void setModularity(const QString &value);
+    void setSupplementary_power(bool value);
 };
 
 #endif // PSU_H

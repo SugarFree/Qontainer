@@ -15,6 +15,9 @@ public:
     unsigned int getSize() const;
     unsigned int getRam_speed() const;
     QString getType() const;
+    void setRam_speed(unsigned int value);
+    void setType(const QString &value);
+    void setSize(unsigned int value);
 };
 
 #endif // RAM_H

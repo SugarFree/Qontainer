@@ -21,6 +21,7 @@
 #include <QJsonValue>
 #include <QIODevice>
 #include <QFileDialog>
+#include <QRegExp>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -62,6 +63,11 @@ private slots:
     void showRAMSpecs();
     void showStorageSpecs();
     void resetSpecs();
+    void searchComponents(QString);
+    void removeComponents();
+    void editComponentsSpecs();
+    void resetEditSpecs();
+    void saveComponentsChanges();
     //void loadFileToBuild();
 
 private:
@@ -135,7 +141,7 @@ private:
     QGridLayout *layout4;
     QFormLayout *layout5;
     QHBoxLayout *managementButtonsLayout;
-    QVBoxLayout *specLayout2;
+    QFormLayout *specLayout2;
     QLineEdit *searchBox;
     QListWidget *componentsList;
     QPushButton *addComponent;
@@ -147,10 +153,51 @@ private:
     QLabel *manufacturerLabel2;
     QLabel *priceLabel2;
     QLabel *powerconsumptionLabel2;
+    QFormLayout *componentsSpecsLayout2;
+    QLineEdit *componentNameLine;
+    QLineEdit *componentLengthLine;
+    QLineEdit *componentHeightLine;
+    QLineEdit *componentPriceLine;
+    QLineEdit *componentPowerConsumptionLine;
+    QLineEdit *componentManufacturerLine;
+    QLineEdit *mobaMOBASocketLine;
+    QLineEdit *mobaMOBAFormFactorLine;
+    QLineEdit *mobaMOBARAMSlotsLine;
+    QLineEdit *mobaMOBAmaxRAMLine;
+    QLineEdit *mobaMOBAConnectorsLine;
+    QLineEdit *cpuCPUSpeedLine;
+    QLineEdit *cpuCPUCoresLine;
+    QLineEdit *cpuCPUx64bitLine;
+    QLineEdit *cpuCPUIntegratedGraphicLine;
+    QLineEdit *cpuCPUSocketLine;
+    QLineEdit *gpuGPUTypeLine;
+    QLineEdit *gpuGPUMemorySizeLine;
+    QLineEdit *gpuGPUPerformanceLine;
+    QLineEdit *gpuGPUClockLine;
+    QLineEdit *gpuGPUInterfaceLine;
+    QLineEdit *gpuGPUConnectorsLine;
+    QLineEdit *gpuGPUSupplementaryPowerLine;
+    QLineEdit *psuPSUFormFactorLine;
+    QLineEdit *psuPSUWattageLine;
+    QLineEdit *psuPSUEfficiencyCertificationLine;
+    QLineEdit *psuPSUModularityLine;
+    QLineEdit *psuPSUSupplementaryPowerLine;
+    QLineEdit *ramRAMSpeedLine;
+    QLineEdit *ramRAMTypeLine;
+    QLineEdit *ramRAMSizeLine;
+    QLineEdit *storageStorageTypeLine;
+    QLineEdit *storageStorageRPMLine;
+    QLineEdit *storageStorageSizeLine;
+    QLineEdit *storageStorageInterfaceLine;
+    QLineEdit *storageStorageFormFactorLine;
+    QLineEdit *storageStorageSpeedLine;
+    QPushButton *saveChanges;
+    QPushButton *discardChanges;
     cvector<PC_Parts*> componenti;
     bool load(QString path);
     std::string removeZero(std::string);
     void calculateTotal();
+    void hideAll();
 };
 
 #endif // MAINWINDOW_H

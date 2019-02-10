@@ -11,147 +11,159 @@ std::string MainWindow::removeZero(std::string str) {
 }
 
 void MainWindow::mobaToBuild() {
-    QString mobaName=mobaComboBox->currentText();
-    if(build->item(0, 0)!=nullptr && mobaName!=(build->item(0, 0))->text())
-        resetSpecs();
-    build->setItem(0, 0, new QTableWidgetItem(mobaName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==mobaName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(0, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(0, 2, new QTableWidgetItem(price2));
+    if(mobaComboBox->currentText()!="") {
+        QString mobaName=mobaComboBox->currentText();
+        if(build->item(0, 0)!=nullptr && mobaName!=(build->item(0, 0))->text())
+            resetSpecs();
+        build->setItem(0, 0, new QTableWidgetItem(mobaName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==mobaName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(0, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(0, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(0, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(0, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(0, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(0, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(0, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(0, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(0, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(0, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(0, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(0, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::cpuToBuild() {
-    QString cpuName=cpuComboBox->currentText();
-    if(build->item(1, 0)!=nullptr && cpuName!=(build->item(1, 0))->text())
-        resetSpecs();
-    build->setItem(1, 0, new QTableWidgetItem(cpuName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==cpuName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(1, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(1, 2, new QTableWidgetItem(price2));
+    if(cpuComboBox->currentText()!="") {
+        QString cpuName=cpuComboBox->currentText();
+        if(build->item(1, 0)!=nullptr && cpuName!=(build->item(1, 0))->text())
+            resetSpecs();
+        build->setItem(1, 0, new QTableWidgetItem(cpuName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==cpuName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(1, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(1, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(1, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(1, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(1, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(1, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(1, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(1, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(1, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(1, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(1, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(1, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::gpuToBuild() {
-    QString gpuName=gpuComboBox->currentText();
-    if(build->item(2, 0)!=nullptr && gpuName!=(build->item(2, 0))->text())
-        resetSpecs();
-    build->setItem(2, 0, new QTableWidgetItem(gpuName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==gpuName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(2, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(2, 2, new QTableWidgetItem(price2));
+    if(gpuComboBox->currentText()!="") {
+        QString gpuName=gpuComboBox->currentText();
+        if(build->item(2, 0)!=nullptr && gpuName!=(build->item(2, 0))->text())
+            resetSpecs();
+        build->setItem(2, 0, new QTableWidgetItem(gpuName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==gpuName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(2, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(2, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(2, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(2, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(2, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(2, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(2, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(2, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(2, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(2, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(2, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(2, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::psuToBuild() {
-    QString psuName=psuComboBox->currentText();
-    if(build->item(3, 0)!=nullptr && psuName!=(build->item(3, 0))->text())
-        resetSpecs();
-    build->setItem(3, 0, new QTableWidgetItem(psuName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==psuName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(3, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(3, 2, new QTableWidgetItem(price2));
+    if(psuComboBox->currentText()!="") {
+        QString psuName=psuComboBox->currentText();
+        if(build->item(3, 0)!=nullptr && psuName!=(build->item(3, 0))->text())
+            resetSpecs();
+        build->setItem(3, 0, new QTableWidgetItem(psuName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==psuName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(3, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(3, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(3, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(3, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(3, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(3, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(3, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(3, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(3, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(3, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(3, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(3, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::ramToBuild() {
-    QString ramName=ramComboBox->currentText();
-    if(build->item(4, 0)!=nullptr && ramName!=(build->item(4, 0))->text())
-        resetSpecs();
-    build->setItem(4, 0, new QTableWidgetItem(ramName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==ramName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(4, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(4, 2, new QTableWidgetItem(price2));
+    if(ramComboBox->currentText()!="") {
+        QString ramName=ramComboBox->currentText();
+        if(build->item(4, 0)!=nullptr && ramName!=(build->item(4, 0))->text())
+            resetSpecs();
+        build->setItem(4, 0, new QTableWidgetItem(ramName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==ramName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(4, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(4, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(4, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(4, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(4, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(4, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(4, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(4, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(4, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(4, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(4, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(4, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::storageToBuild() {
-    QString storageName=storageComboBox->currentText();
-    if(build->item(5, 0)!=nullptr && storageName!=(build->item(5, 0))->text())
-        resetSpecs();
-    build->setItem(5, 0, new QTableWidgetItem(storageName));
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
-            if(componenti[i]->getName()==storageName) {
-                std::string price=std::to_string(componenti[i]->getPrice());
-                price=removeZero(price);
-                QString price2=QString::fromStdString(price);
-                build->setItem(5, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
-                build->setItem(5, 2, new QTableWidgetItem(price2));
+    if(storageComboBox->currentText()!="") {
+        QString storageName=storageComboBox->currentText();
+        if(build->item(5, 0)!=nullptr && storageName!=(build->item(5, 0))->text())
+            resetSpecs();
+        build->setItem(5, 0, new QTableWidgetItem(storageName));
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
+                if(componenti[i]->getName()==storageName) {
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString price2=QString::fromStdString(price);
+                    build->setItem(5, 1, new QTableWidgetItem(QString::number(componenti[i]->Rating())));
+                    build->setItem(5, 2, new QTableWidgetItem(price2));
+                }
             }
         }
+        (build->item(5, 1))->setTextAlignment(Qt::AlignCenter);
+        (build->item(5, 2))->setTextAlignment(Qt::AlignCenter);
+        (build->item(5, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(5, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        (build->item(5, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        calculateTotal();
     }
-    (build->item(5, 1))->setTextAlignment(Qt::AlignCenter);
-    (build->item(5, 2))->setTextAlignment(Qt::AlignCenter);
-    (build->item(5, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(5, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(5, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    calculateTotal();
 }
 
 void MainWindow::calculateTotal() {
@@ -223,6 +235,592 @@ void MainWindow::calculateTotal() {
         build->setItem(6, 2, nullptr);
     }
 
+}
+
+void MainWindow::hideAll() {
+  for(unsigned int i=0; i!=componentsList->count(); i++)
+    componentsList->item(i)->setHidden(true);
+}
+
+void MainWindow::searchComponents(QString search_str) {
+      hideAll();
+      QList<QListWidgetItem*> matches (componentsList->findItems(search_str, Qt::MatchFlag::MatchContains));
+      for(QListWidgetItem* item:matches)
+          item->setHidden(false);
+}
+
+void MainWindow::removeComponents() {
+    if(componentsList->currentItem()!=nullptr) {
+        bool trovato=false;
+        for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
+            if(componenti[i]->getName()==(componentsList->currentItem())->text()) {
+                trovato=true;
+                componentsList->takeItem(componentsList->currentRow());
+                if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
+                    mobaComboBox->removeItem(mobaComboBox->findText(componenti[i]->getName()));
+                if(dynamic_cast<CPU*>(componenti[i])!=nullptr)
+                    cpuComboBox->removeItem(cpuComboBox->findText(componenti[i]->getName()));
+                if(dynamic_cast<GPU*>(componenti[i])!=nullptr)
+                    gpuComboBox->removeItem(gpuComboBox->findText(componenti[i]->getName()));
+                if(dynamic_cast<PSU*>(componenti[i])!=nullptr)
+                    psuComboBox->removeItem(psuComboBox->findText(componenti[i]->getName()));
+                if(dynamic_cast<RAM*>(componenti[i])!=nullptr)
+                    ramComboBox->removeItem(ramComboBox->findText(componenti[i]->getName()));
+                if(dynamic_cast<Storage*>(componenti[i])!=nullptr)
+                    storageComboBox->removeItem(storageComboBox->findText(componenti[i]->getName()));
+                if(build->item(0, 0)!=nullptr && componenti[i]->getName()==(build->item(0, 0)->text()))
+                    removeMOBAFromBuild();
+                if(build->item(1, 0)!=nullptr && componenti[i]->getName()==(build->item(1, 0)->text()))
+                    removeCPUFromBuild();
+                if(build->item(2, 0)!=nullptr && componenti[i]->getName()==(build->item(2, 0)->text()))
+                    removeGPUFromBuild();
+                if(build->item(3, 0)!=nullptr && componenti[i]->getName()==(build->item(3, 0)->text()))
+                    removePSUFromBuild();
+                if(build->item(4, 0)!=nullptr && componenti[i]->getName()==(build->item(4, 0)->text()))
+                    removeRAMFromBuild();
+                if(build->item(5, 0)!=nullptr && componenti[i]->getName()==(build->item(5, 0)->text()))
+                    removeStorageFromBuild();
+                componenti.erase(i);
+            }
+        }
+    }
+}
+
+void MainWindow::resetEditSpecs() {
+    componentNameLine->setText("");
+    componentLengthLine->setText("");
+    componentHeightLine->setText("");
+    componentPriceLine->setText("");
+    componentPowerConsumptionLine->setText("");
+    componentManufacturerLine->setText("");
+    specLayout2->removeRow(componentsSpecsLayout2);
+}
+
+void MainWindow::saveComponentsChanges() {
+    QString componentName=(componentsList->currentItem())->text();
+    bool trovato=false;
+    for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
+        if(!trovato && componenti[i]->getName()==componentName) {
+            trovato=true;
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
+                MOBA* moba=static_cast<MOBA*>(componenti[i]);
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(0, 0))!=nullptr && (build->item(0, 0))->text()==componentName)
+                        removeMOBAFromBuild();
+                    mobaComboBox->setItemText(mobaComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(mobaMOBASocketLine->text()!=moba->getMOBASocket())
+                        moba->setMoba_socket(mobaMOBASocketLine->text());
+                    if(mobaMOBAFormFactorLine->text()!=moba->getForm_factor())
+                        moba->setFormFactor(mobaMOBAFormFactorLine->text());
+                    if(mobaMOBARAMSlotsLine->text()!=moba->getRAM_slots())
+                        moba->setRAM_slots((mobaMOBARAMSlotsLine->text()).toInt());
+                    if(mobaMOBAmaxRAMLine->text()!=moba->getMax_RAM())
+                        moba->setMax_RAM((mobaMOBAmaxRAMLine->text()).toInt());
+                    if(mobaMOBAConnectorsLine->text()!=moba->getConnectors())
+                        moba->setConnectors(mobaMOBAConnectorsLine->text());
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+            if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
+                CPU* cpu=static_cast<CPU*>(componenti[i]);
+                bool cpuX64bit;
+                bool cpuIntegratedGraphic;
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(1, 0))!=nullptr && (build->item(1, 0))->text()==componentName)
+                        removeCPUFromBuild();
+                    cpuComboBox->setItemText(cpuComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(cpuCPUSpeedLine->text()!=QString::number(cpu->getCpu_speed()))
+                        cpu->setCpu_speed((cpuCPUSpeedLine->text()).toDouble());
+                    if(cpuCPUCoresLine->text()!=cpu->getCores())
+                        cpu->setCores((cpuCPUCoresLine->text()).toInt());
+                    if(cpuCPUx64bitLine->text()!=cpu->getX64bit()) {
+                        if((cpuCPUx64bitLine->text())=="Sì")
+                            cpuX64bit=true;
+                        else
+                            cpuX64bit=false;
+                        cpu->setX64bit(cpuX64bit);
+                    }
+                    if(cpuCPUSocketLine->text()!=cpu->getCores())
+                        cpu->setCpu_socket(cpuCPUSocketLine->text());
+                    if(cpuCPUIntegratedGraphicLine->text()!=cpu->getIntegrated_graphic()) {
+                        if((cpuCPUIntegratedGraphicLine->text())=="Sì")
+                            cpuIntegratedGraphic=true;
+                        else
+                            cpuIntegratedGraphic=false;
+                        cpu->setIntegrated_graphic(cpuIntegratedGraphic);
+                    }
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+            if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
+                GPU* gpu=static_cast<GPU*>(componenti[i]);
+                bool gpuSupplementaryPower;
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(2, 0))!=nullptr && (build->item(2, 0))->text()==componentName)
+                        removeGPUFromBuild();
+                    gpuComboBox->setItemText(gpuComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(gpuGPUTypeLine->text()!=gpu->getType())
+                        gpu->setType(gpuGPUTypeLine->text());
+                    if(gpuGPUMemorySizeLine->text()!=gpu->getMemory_size())
+                        gpu->setMemory_size((gpuGPUMemorySizeLine->text()).toInt());
+                    if(gpuGPUPerformanceLine->text()!=QString::number(gpu->getPerformance()))
+                        gpu->setPerformance((gpuGPUPerformanceLine->text()).toDouble());
+                    if(gpuGPUClockLine->text()!=gpu->getClock())
+                        gpu->setClock((gpuGPUClockLine->text()).toInt());
+                    if(gpuGPUInterfaceLine->text()!=gpu->getInterface())
+                        gpu->setInterface(gpuGPUInterfaceLine->text());
+                    if(gpuGPUConnectorsLine->text()!=gpu->getConnectors())
+                        gpu->setConnectors(gpuGPUConnectorsLine->text());
+                    if(gpuGPUSupplementaryPowerLine->text()!=gpu->getSupplementary_power()) {
+                        if(gpuGPUSupplementaryPowerLine->text()=="Sì")
+                            gpuSupplementaryPower=true;
+                        else
+                            gpuSupplementaryPower=false;
+                        gpu->setSupplementary_power(gpuSupplementaryPower);
+                    }
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+            if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
+                PSU* psu=static_cast<PSU*>(componenti[i]);
+                bool psuSupplementaryPower;
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(3, 0))!=nullptr && (build->item(3, 0))->text()==componentName)
+                        removePSUFromBuild();
+                    psuComboBox->setItemText(psuComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(psuPSUFormFactorLine->text()!=psu->getForm_factor())
+                        psu->setForm_factor(psuPSUFormFactorLine->text());
+                    if(psuPSUWattageLine->text()!=psu->getWattage())
+                        psu->setWattage((psuPSUWattageLine->text()).toInt());
+                    if(psuPSUEfficiencyCertificationLine->text()!=psu->getEfficiency_certification())
+                        psu->setEfficiency_certification(psuPSUEfficiencyCertificationLine->text());
+                    if(psuPSUModularityLine->text()!=psu->getModularity())
+                        psu->setModularity(psuPSUModularityLine->text());
+                    if(psuPSUSupplementaryPowerLine->text()!=psu->getSupplementaryPower()) {
+                        if(psuPSUSupplementaryPowerLine->text()=="Sì")
+                            psuSupplementaryPower=true;
+                        else
+                            psuSupplementaryPower=false;
+                        psu->setSupplementary_power(psuSupplementaryPower);
+                    }
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+            if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
+                RAM* ram=static_cast<RAM*>(componenti[i]);
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(4, 0))!=nullptr && (build->item(4, 0))->text()==componentName)
+                        removeRAMFromBuild();
+                    ramComboBox->setItemText(ramComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(ramRAMSpeedLine->text()!=ram->getRam_speed())
+                        ram->setRam_speed((ramRAMSpeedLine->text()).toInt());
+                    if(ramRAMTypeLine->text()!=ram->getType())
+                        ram->setType(ramRAMTypeLine->text());
+                    if(ramRAMSizeLine->text()!=ram->getSize())
+                        ram->setSize((ramRAMSizeLine->text()).toInt());
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+            if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
+                Storage* storage=static_cast<Storage*>(componenti[i]);
+                if(componentNameLine->text()!=componenti[i]->getName()) {
+                    if((build->item(5, 0))!=nullptr && (build->item(5, 0))->text()==componentName)
+                        removeStorageFromBuild();
+                    storageComboBox->setItemText(storageComboBox->findText(componentName), componentNameLine->text());
+                    componenti[i]->setName(componentNameLine->text());
+                    if(componentLengthLine->text()!=componenti[i]->getLength())
+                        componenti[i]->setLength((componentLengthLine->text()).toInt());
+                    if(componentHeightLine->text()!=componenti[i]->getHeight())
+                        componenti[i]->setHeight((componentHeightLine->text()).toInt());
+                    if(componentPriceLine->text()!=QString::number(componenti[i]->getPrice()))
+                        componenti[i]->setPrice((componentPriceLine->text()).toDouble());
+                    if(componentPowerConsumptionLine->text()!=componenti[i]->getPowerConsumption())
+                        componenti[i]->setPowerConsumption((componentPowerConsumptionLine->text()).toInt());
+                    if(componentManufacturerLine->text()!=componenti[i]->getManufacturer())
+                        componenti[i]->setManufacturer(componentManufacturerLine->text());
+                    if(storageStorageTypeLine->text()!=storage->getType())
+                        storage->setType(storageStorageTypeLine->text());
+                    if(storageStorageRPMLine->text()!=storage->getRpm())
+                        storage->setRpm((storageStorageRPMLine->text()).toInt());
+                    if(storageStorageSizeLine->text()!=storage->getSize())
+                        storage->setSize((storageStorageSizeLine->text()).toInt());
+                    if(storageStorageInterfaceLine->text()!=storage->getInterface())
+                        storage->setInterface(storageStorageInterfaceLine->text());
+                    if(storageStorageFormFactorLine->text()!=QString::number(storage->getForm_factor()))
+                        storage->setForm_factor((storageStorageFormFactorLine->text()).toDouble());
+                    if(storageStorageSpeedLine->text()!=storage->getSpeed())
+                        storage->setSpeed((storageStorageSpeedLine->text()).toInt());
+                    (componentsList->currentItem())->setText(componentNameLine->text());
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::editComponentsSpecs() {
+    resetEditSpecs();
+    if(componentsList->currentItem()!=nullptr && (componentsList->currentItem())->text()!=componentNameLine->text()) {
+        bool trovato=false;
+        for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
+                QString mobaName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==mobaName) {
+                    trovato=true;
+                    QString mobaLength=(QString::number(componenti[i]->getLength()));
+                    QString mobaHeight=(QString::number(componenti[i]->getHeight()));
+                    QString mobaManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString mobaPrice=QString::fromStdString(price);
+                    QString mobaPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    MOBA* moba=static_cast<MOBA*>(componenti[i]);
+                    QString mobaMOBASocket=moba->getMOBASocket();
+                    QString mobaFormFactor=moba->getForm_factor();
+                    QString mobaRAMSlots=(QString::number(moba->getRAM_slots()));
+                    QString mobaMaxRAM=(QString::number(moba->getMax_RAM()));
+                    QString mobaConnectors=moba->getConnectors();
+                    QLabel *mobaSocketLabel=new QLabel("Socket: ");
+                    QLabel *mobaFormFactorLabel=new QLabel("Form Factor: ");
+                    QLabel *mobaRAMSlotsLabel=new QLabel("Slot RAM: ");
+                    QLabel *mobaMaxRAMLabel=new QLabel("RAM massima supportata (GB): ");
+                    QLabel *mobaConnectorsLabel=new QLabel("Interfacce: ");
+                    mobaMOBASocketLine=new QLineEdit(mobaMOBASocket);
+                    mobaMOBAFormFactorLine=new QLineEdit(mobaFormFactor);
+                    mobaMOBARAMSlotsLine=new QLineEdit(mobaRAMSlots);
+                    mobaMOBAmaxRAMLine=new QLineEdit(mobaMaxRAM);
+                    mobaMOBAConnectorsLine=new QLineEdit(mobaConnectors);
+                    componentNameLine->setText(mobaName);
+                    componentManufacturerLine->setText(mobaManufacturer);
+                    componentLengthLine->setText(mobaLength);
+                    componentHeightLine->setText(mobaHeight);
+                    componentPriceLine->setText(mobaPrice);
+                    componentPowerConsumptionLine->setText(mobaPowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(mobaSocketLabel, mobaMOBASocketLine);
+                    componentsSpecsLayout2->addRow(mobaFormFactorLabel, mobaMOBAFormFactorLine);
+                    componentsSpecsLayout2->addRow(mobaRAMSlotsLabel, mobaMOBARAMSlotsLine);
+                    componentsSpecsLayout2->addRow(mobaMaxRAMLabel, mobaMOBAmaxRAMLine);
+                    componentsSpecsLayout2->addRow(mobaConnectorsLabel, mobaMOBAConnectorsLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+            if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
+                QString cpuName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==cpuName) {
+                    trovato=true;
+                    QString cpux64bit;
+                    QString cpuIntegratedGraphics;
+                    QString cpuLength=(QString::number(componenti[i]->getLength()));
+                    QString cpuHeight=(QString::number(componenti[i]->getHeight()));
+                    QString cpuManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString cpuPrice=QString::fromStdString(price);
+                    QString cpuPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    CPU* cpu=static_cast<CPU*>(componenti[i]);
+                    std::string speed=std::to_string(cpu->getCpu_speed());
+                    speed=removeZero(speed);
+                    QString cpuSpeed=QString::fromStdString(speed);
+                    QString cpuCores=(QString::number(cpu->getCores()));
+                    if(cpu->getX64bit())
+                        cpux64bit="Sì";
+                    else
+                        cpux64bit="No";
+                    QString cpuSocket=cpu->getCpu_socket();
+                    if(cpu->getIntegrated_graphic())
+                        cpuIntegratedGraphics="Sì";
+                    else
+                        cpuIntegratedGraphics="No";
+                    QLabel *SpeedLabel=new QLabel("Frequenza (GHz): ");
+                    QLabel *CoresLabel=new QLabel("Cores: ");
+                    QLabel *x64bitLabel=new QLabel("Supporto 64 bit: ");
+                    QLabel *cpuSocketLabel=new QLabel("Socket CPU: ");
+                    QLabel *IntegratedGraphicsLabel=new QLabel("Chip grafico integrato: ");
+                    cpuCPUSpeedLine=new QLineEdit(cpuSpeed);
+                    cpuCPUCoresLine=new QLineEdit(cpuCores);
+                    cpuCPUx64bitLine=new QLineEdit(cpux64bit);
+                    cpuCPUSocketLine=new QLineEdit(cpuSocket);
+                    cpuCPUIntegratedGraphicLine=new QLineEdit(cpuIntegratedGraphics);
+                    componentNameLine->setText(cpuName);
+                    componentManufacturerLine->setText(cpuManufacturer);
+                    componentLengthLine->setText(cpuLength);
+                    componentHeightLine->setText(cpuHeight);
+                    componentPriceLine->setText(cpuPrice);
+                    componentPowerConsumptionLine->setText(cpuPowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(SpeedLabel, cpuCPUSpeedLine);
+                    componentsSpecsLayout2->addRow(CoresLabel, cpuCPUCoresLine);
+                    componentsSpecsLayout2->addRow(x64bitLabel, cpuCPUx64bitLine);
+                    componentsSpecsLayout2->addRow(cpuSocketLabel, cpuCPUSocketLine);
+                    componentsSpecsLayout2->addRow(IntegratedGraphicsLabel, cpuCPUIntegratedGraphicLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+            if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
+                QString gpuName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==gpuName) {
+                    trovato=true;
+                    QString gpuSupplementaryPower;
+                    QString gpuLength=(QString::number(componenti[i]->getLength()));
+                    QString gpuHeight=(QString::number(componenti[i]->getHeight()));
+                    QString gpuManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString gpuPrice=QString::fromStdString(price);
+                    QString gpuPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    GPU *gpu=static_cast<GPU*>(componenti[i]);
+                    QString gpuType=gpu->getType();
+                    QString gpuMemorySize=(QString::number(gpu->getMemory_size()));
+                    std::string performance=std::to_string(gpu->getPerformance());
+                    performance=removeZero(performance);
+                    QString gpuPerformance=QString::fromStdString(performance);
+                    QString gpuClock=(QString::number(gpu->getClock()));
+                    QString gpuInterface=gpu->getInterface();
+                    QString gpuConnectors=gpu->getConnectors();
+                    if(gpu->getSupplementary_power())
+                        gpuSupplementaryPower="Sì";
+                    else
+                        gpuSupplementaryPower="No";
+                    QLabel *gpuTypeLabel=new QLabel("Tipo: ");
+                    QLabel *gpuMemorySizeLabel=new QLabel("Memoria dedicata (GB): ");
+                    QLabel *gpuPerformanceLabel=new QLabel("TFLOPs: ");
+                    QLabel *gpuClockLabel=new QLabel("Clock (MHz): ");
+                    QLabel *gpuInterfaceLabel=new QLabel("Interfacce: ");
+                    QLabel *gpuConnectorsLabel=new QLabel("Porte: ");
+                    QLabel *gpuSupplementaryPowerLabel=new QLabel("Alimentazione supplementare richiesta: ");
+                    gpuGPUTypeLine=new QLineEdit(gpuType);
+                    gpuGPUMemorySizeLine=new QLineEdit(gpuMemorySize);
+                    gpuGPUPerformanceLine=new QLineEdit(gpuPerformance);
+                    gpuGPUClockLine=new QLineEdit(gpuClock);
+                    gpuGPUInterfaceLine=new QLineEdit(gpuInterface);
+                    gpuGPUConnectorsLine=new QLineEdit(gpuConnectors);
+                    gpuGPUSupplementaryPowerLine=new QLineEdit(gpuSupplementaryPower);
+                    componentNameLine->setText(gpuName);
+                    componentManufacturerLine->setText(gpuManufacturer);
+                    componentLengthLine->setText(gpuLength);
+                    componentHeightLine->setText(gpuHeight);
+                    componentPriceLine->setText(gpuPrice);
+                    componentPowerConsumptionLine->setText(gpuPowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(gpuTypeLabel, gpuGPUTypeLine);
+                    componentsSpecsLayout2->addRow(gpuMemorySizeLabel, gpuGPUMemorySizeLine);
+                    componentsSpecsLayout2->addRow(gpuPerformanceLabel, gpuGPUPerformanceLine);
+                    componentsSpecsLayout2->addRow(gpuClockLabel, gpuGPUClockLine);
+                    componentsSpecsLayout2->addRow(gpuInterfaceLabel, gpuGPUInterfaceLine);
+                    componentsSpecsLayout2->addRow(gpuConnectorsLabel, gpuGPUConnectorsLine);
+                    componentsSpecsLayout2->addRow(gpuSupplementaryPowerLabel, gpuGPUSupplementaryPowerLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+            if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
+                QString psuName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==psuName) {
+                    trovato=true;
+                    QString psuSupplementaryPower;
+                    QString psuLength=(QString::number(componenti[i]->getLength()));
+                    QString psuHeight=(QString::number(componenti[i]->getHeight()));
+                    QString psuManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString psuPrice=QString::fromStdString(price);
+                    QString psuPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    PSU *psu=static_cast<PSU*>(componenti[i]);
+                    QString psuFormFactor=psu->getForm_factor();
+                    QString psuWattage=(QString::number(psu->getWattage()));
+                    QString psuEfficiencyCertification=psu->getEfficiency_certification();
+                    QString psuModularity=psu->getModularity();
+                    if(psu->getSupplementaryPower()==true)
+                        psuSupplementaryPower="Sì";
+                    else
+                        psuSupplementaryPower="No";
+                    QLabel *psuFormFactorLabel=new QLabel("Form Factor: ");
+                    QLabel *psuWattageLabel=new QLabel("Wattaggio: ");
+                    QLabel *psuEfficiencyCertificationLabel=new QLabel("Certificazione di efficienza: ");
+                    QLabel *psuModularityLabel=new QLabel("Modularità: ");
+                    QLabel *psuSupplementaryPowerLabel=new QLabel("Predisposizione alimentazione supplementare: ");
+                    psuPSUFormFactorLine=new QLineEdit(psuFormFactor);
+                    psuPSUWattageLine=new QLineEdit(psuWattage);
+                    psuPSUEfficiencyCertificationLine=new QLineEdit(psuEfficiencyCertification);
+                    psuPSUModularityLine=new QLineEdit(psuModularity);
+                    psuPSUSupplementaryPowerLine=new QLineEdit(psuSupplementaryPower);
+                    componentNameLine->setText(psuName);
+                    componentManufacturerLine->setText(psuManufacturer);
+                    componentLengthLine->setText(psuLength);
+                    componentHeightLine->setText(psuHeight);
+                    componentPriceLine->setText(psuPrice);
+                    componentPowerConsumptionLine->setText(psuPowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(psuFormFactorLabel, psuPSUFormFactorLine);
+                    componentsSpecsLayout2->addRow(psuEfficiencyCertificationLabel, psuPSUEfficiencyCertificationLine);
+                    componentsSpecsLayout2->addRow(psuWattageLabel, psuPSUWattageLine);
+                    componentsSpecsLayout2->addRow(psuModularityLabel, psuPSUModularityLine);
+                    componentsSpecsLayout2->addRow(psuSupplementaryPowerLabel, psuPSUSupplementaryPowerLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+            if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
+                QString ramName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==ramName) {
+                    trovato=true;
+                    QString ramLength=(QString::number(componenti[i]->getLength()));
+                    QString ramHeight=(QString::number(componenti[i]->getHeight()));
+                    QString ramManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString ramPrice=QString::fromStdString(price);
+                    QString ramPowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    RAM *ram=static_cast<RAM*>(componenti[i]);
+                    QString ramSpeed=(QString::number(ram->getRam_speed()));
+                    QString ramType=ram->getType();
+                    QString ramSize=(QString::number(ram->getSize()));
+                    QLabel *ramSpeedLabel=new QLabel("Frequenza (MHz): ");
+                    QLabel *ramTypeLabel=new QLabel("Tipo: ");
+                    QLabel *ramSizeLabel=new QLabel("Capacità (GB): ");
+                    ramRAMSpeedLine=new QLineEdit(ramSpeed);
+                    ramRAMTypeLine=new QLineEdit(ramType);
+                    ramRAMSizeLine=new QLineEdit(ramSize);
+                    componentNameLine->setText(ramName);
+                    componentManufacturerLine->setText(ramManufacturer);
+                    componentLengthLine->setText(ramLength);
+                    componentHeightLine->setText(ramHeight);
+                    componentPriceLine->setText(ramPrice);
+                    componentPowerConsumptionLine->setText(ramPowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(ramSpeedLabel, ramRAMSpeedLine);
+                    componentsSpecsLayout2->addRow(ramTypeLabel, ramRAMTypeLine);
+                    componentsSpecsLayout2->addRow(ramSizeLabel, ramRAMSizeLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+            if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
+                QString storageName=(componentsList->currentItem())->text();
+                if(!trovato && componenti[i]->getName()==storageName) {
+                    trovato=true;
+                    QString storageLength=(QString::number(componenti[i]->getLength()));
+                    QString storageHeight=(QString::number(componenti[i]->getHeight()));
+                    QString storageManufacturer=(componenti[i]->getManufacturer());
+                    std::string price=std::to_string(componenti[i]->getPrice());
+                    price=removeZero(price);
+                    QString storagePrice=QString::fromStdString(price);
+                    QString storagePowerConsumption=(QString::number(componenti[i]->getPowerConsumption()));
+                    Storage* storage=static_cast<Storage*>(componenti[i]);
+                    QString storageType=storage->getType();
+                    QString storageRPM=(QString::number(storage->getRpm()));
+                    QString storageSize=(QString::number(storage->getSize()));
+                    QString storageInterface=storage->getInterface();
+                    std::string form_factor=std::to_string(storage->getForm_factor());
+                    form_factor=removeZero(form_factor);
+                    QString storageFormFactor=QString::fromStdString(form_factor);
+                    QString storageSpeed=(QString::number(storage->getSpeed()));
+                    QLabel *storageTypeLabel=new QLabel("Tipo: ");
+                    QLabel *storageRPMLabel=new QLabel("RPM: ");
+                    QLabel *storageSizeLabel=new QLabel("Capacità (GB): ");
+                    QLabel *storageInterfaceLabel=new QLabel("Interfaccia: ");
+                    QLabel *storageFormFactorLabel=new QLabel("Form Factor: ");
+                    QLabel *storageSpeedLabel=new QLabel("Velocità trasferimento (MB/s): ");
+                    storageStorageTypeLine=new QLineEdit(storageType);
+                    storageStorageRPMLine=new QLineEdit(storageRPM);
+                    storageStorageSizeLine=new QLineEdit(storageSize);
+                    storageStorageInterfaceLine=new QLineEdit(storageInterface);
+                    storageStorageFormFactorLine=new QLineEdit(storageFormFactor);
+                    storageStorageSpeedLine=new QLineEdit(storageSpeed);
+                    componentNameLine->setText(storageName);
+                    componentManufacturerLine->setText(storageManufacturer);
+                    componentLengthLine->setText(storageLength);
+                    componentHeightLine->setText(storageHeight);
+                    componentPriceLine->setText(storagePrice);
+                    componentPowerConsumptionLine->setText(storagePowerConsumption);
+                    componentsSpecsLayout2=new QFormLayout();
+                    saveChanges=new QPushButton("Salva modifiche");
+                    componentsSpecsLayout2->addRow(storageTypeLabel, storageStorageTypeLine);
+                    componentsSpecsLayout2->addRow(storageRPMLabel, storageStorageRPMLine);
+                    componentsSpecsLayout2->addRow(storageSizeLabel, storageStorageSizeLine);
+                    componentsSpecsLayout2->addRow(storageInterfaceLabel, storageStorageInterfaceLine);
+                    componentsSpecsLayout2->addRow(storageFormFactorLabel, storageStorageFormFactorLine);
+                    componentsSpecsLayout2->addRow(storageSpeedLabel, storageStorageSpeedLine);
+                    componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->setVerticalSpacing(25);
+                    specLayout2->addRow(componentsSpecsLayout2);
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
+                }
+            }
+        }
+    }
 }
 
 void MainWindow::removeMOBAFromBuild() {
@@ -471,6 +1069,7 @@ void MainWindow::showMOBASpecs() {
                 componentsSpecsLayout->addRow(MOBAConnectorsLabel, mobaMOBAConnectorsLabel);
                 componentsSpecsLayout->addRow(MaxRAMLabel, mobaMaxRAMLabel);
                 componentsSpecsLayout->addRow(FormFactorLabel, mobaFormFactorLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -535,6 +1134,7 @@ void MainWindow::showCPUSpecs() {
                 componentsSpecsLayout->addRow(x64bitLabel, cpux64bitLabel);
                 componentsSpecsLayout->addRow(cpuSocketLabel, cpuCPUSocketLabel);
                 componentsSpecsLayout->addRow(IntegratedGraphicsLabel, cpuIntegratedGraphicsLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -605,6 +1205,7 @@ void MainWindow::showGPUSpecs() {
                 componentsSpecsLayout->addRow(gpuInterfaceLabel, gpuGPUInterfaceLabel);
                 componentsSpecsLayout->addRow(gpuConnectorsLabel, gpuGPUConnectorsLabel);
                 componentsSpecsLayout->addRow(gpuSupplementaryPowerLabel, gpuGPUSupplementaryPowerLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -663,6 +1264,7 @@ void MainWindow::showPSUSpecs() {
                 componentsSpecsLayout->addRow(psuWattageLabel, psuPSUWattageLabel);
                 componentsSpecsLayout->addRow(psuModularityLabel, psuPSUModularityLabel);
                 componentsSpecsLayout->addRow(psuSupplementaryPowerLabel, psuPSUSupplementaryPowerLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -707,6 +1309,7 @@ void MainWindow::showRAMSpecs() {
                 componentsSpecsLayout->addRow(ramSpeedLabel, ramRAMSpeedLabel);
                 componentsSpecsLayout->addRow(ramTypeLabel, ramRAMTypeLabel);
                 componentsSpecsLayout->addRow(ramSizeLabel, ramRAMSizeLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -768,6 +1371,7 @@ void MainWindow::showStorageSpecs() {
                 componentsSpecsLayout->addRow(storageInterfaceLabel, storageStorageInterfaceLabel);
                 componentsSpecsLayout->addRow(storageFormFactorLabel, storageStorageFormFactorLabel);
                 componentsSpecsLayout->addRow(storageSpeedLabel, storageStorageSpeedLabel);
+                componentsSpecsLayout->setVerticalSpacing(25);
                 specLayout->addRow(componentsSpecsLayout);
             }
         }
@@ -1123,6 +1727,8 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     specLayout->addRow(heightLabel, componentHeightLabel);
     specLayout->addRow(priceLabel, componentPriceLabel);
     specLayout->addRow(powerconsumptionLabel, componentPowerConsumptionLabel);
+    specLayout->setVerticalSpacing(25);
+    specLayout->setContentsMargins(0, 0, 20, 0);
 
     layout4=new QGridLayout();
     window2->setLayout(layout4);
@@ -1140,12 +1746,12 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     managementButtonsLayout->addWidget(addComponent);
     managementButtonsLayout->addWidget(removeComponent);
     managementButtonsLayout->addWidget(editComponent);
-    managementButtonsLayout->setContentsMargins(0, 20, 188, 0);
+    managementButtonsLayout->setContentsMargins(0, 20, 131, 0);
     layout5->addRow(searchBox);
     layout5->addRow(componentsList);
     layout5->addRow(managementButtonsLayout);
 
-    specLayout2=new QVBoxLayout();
+    specLayout2=new QFormLayout();
     layout4->addLayout(specLayout2, 0, 1);
     lengthLabel2=new QLabel("Larghezza: ");
     heightLabel2=new QLabel("Altezza: ");
@@ -1153,13 +1759,19 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     manufacturerLabel2=new QLabel("Produttore: ");
     priceLabel2=new QLabel("Prezzo: ");
     powerconsumptionLabel2=new QLabel("Consumo energetico: ");
-    specLayout2->addWidget(nameLabel2);
-    specLayout2->addWidget(manufacturerLabel2);
-    specLayout2->addWidget(lengthLabel2);
-    specLayout2->addWidget(heightLabel2);
-    specLayout2->addWidget(priceLabel2);
-    specLayout2->addWidget(powerconsumptionLabel2);
-    specLayout2->setContentsMargins(0, 0, 700, 0);
+    componentNameLine=new QLineEdit();
+    componentLengthLine=new QLineEdit();
+    componentHeightLine=new QLineEdit();
+    componentPriceLine=new QLineEdit();
+    componentPowerConsumptionLine=new QLineEdit();
+    componentManufacturerLine=new QLineEdit();
+    specLayout2->addRow(nameLabel2, componentNameLine);
+    specLayout2->addRow(manufacturerLabel2, componentManufacturerLine);
+    specLayout2->addRow(lengthLabel2, componentLengthLine);
+    specLayout2->addRow(heightLabel2, componentHeightLine);
+    specLayout2->addRow(priceLabel2, componentPriceLine);
+    specLayout2->addRow(powerconsumptionLabel2, componentPowerConsumptionLine);
+    specLayout2->setContentsMargins(0, 0, 400, 0);
 
     connect(insertMOBA, SIGNAL(clicked(bool)), this, SLOT(mobaToBuild()));
     connect(insertCPU, SIGNAL(clicked(bool)), this, SLOT(cpuToBuild()));
@@ -1181,10 +1793,13 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     connect(psuSpecs, SIGNAL(clicked(bool)), this, SLOT(showPSUSpecs()));
     connect(ramSpecs, SIGNAL(clicked(bool)), this, SLOT(showRAMSpecs()));
     connect(storageSpecs, SIGNAL(clicked(bool)), this, SLOT(showStorageSpecs()));
+    connect(searchBox, SIGNAL(textEdited(QString)), this, SLOT(searchComponents(QString)));
+    connect(removeComponent, SIGNAL(clicked(bool)), this, SLOT(removeComponents()));
+    connect(editComponent, SIGNAL(clicked(bool)), this, SLOT(editComponentsSpecs()));
     //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     load("../Qontainer/database.json");
-    tab->setMinimumSize(1800, 500);
-    tab->setMaximumSize(1800, 500);
+    tab->setMinimumSize(1800, 600);
+    tab->setMaximumSize(1800, 600);
     tab->move(50, 200);
     tab->show();
 }
