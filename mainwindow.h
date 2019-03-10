@@ -22,6 +22,8 @@
 #include <QIODevice>
 #include <QFileDialog>
 #include <QRegExp>
+#include <QDebug>
+#include <QAction>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -67,7 +69,7 @@ private slots:
     void removeComponents();
     void editComponentsSpecs();
     void resetEditSpecs();
-    void saveComponentsChanges();
+    void saveComponentsChanges(QListWidgetItem *);
     //void loadFileToBuild();
 
 private:
