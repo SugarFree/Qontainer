@@ -293,11 +293,18 @@ void MainWindow::resetEditSpecs() {
     specLayout2->removeRow(componentsSpecsLayout2);
 }
 
-void MainWindow::saveComponentsChanges(QListWidgetItem *current) {
+void MainWindow::discardComponentsChanges() {
+    for(unsigned int i=0; i!=componentsList->count(); ++i) {
+        QListWidgetItem *item=componentsList->item(i);
+        item->setFlags(Qt::ItemIsEnabled);
+    }
+}
+
+void MainWindow::saveComponentsChanges() {
     QString componentName=(componentsList->currentItem())->text();
     bool trovato=false;
     for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
-        if(!trovato && componenti[i]->getName()==componentName && current==componentsList->currentItem()) {
+        if(!trovato && componenti[i]->getName()==componentName) {
             trovato=true;
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
                 MOBA* moba=static_cast<MOBA*>(componenti[i]);
@@ -551,7 +558,10 @@ void MainWindow::editComponentsSpecs() {
     resetEditSpecs();
     if(componentsList->currentItem()!=nullptr && (componentsList->currentItem())->text()!=componentNameLine->text()) {
         bool trovato=false;
-        QListWidgetItem *current=componentsList->currentItem();
+        for(unsigned int i=0; i!=componentsList->count(); ++i) {
+            QListWidgetItem *item=componentsList->item(i);
+            item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+        }
         for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
                 QString mobaName=(componentsList->currentItem())->text();
@@ -588,15 +598,18 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(mobaPowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(mobaSocketLabel, mobaMOBASocketLine);
                     componentsSpecsLayout2->addRow(mobaFormFactorLabel, mobaMOBAFormFactorLine);
                     componentsSpecsLayout2->addRow(mobaRAMSlotsLabel, mobaMOBARAMSlotsLine);
                     componentsSpecsLayout2->addRow(mobaMaxRAMLabel, mobaMOBAmaxRAMLine);
                     componentsSpecsLayout2->addRow(mobaConnectorsLabel, mobaMOBAConnectorsLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
             if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
@@ -644,15 +657,18 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(cpuPowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(SpeedLabel, cpuCPUSpeedLine);
                     componentsSpecsLayout2->addRow(CoresLabel, cpuCPUCoresLine);
                     componentsSpecsLayout2->addRow(x64bitLabel, cpuCPUx64bitLine);
                     componentsSpecsLayout2->addRow(cpuSocketLabel, cpuCPUSocketLine);
                     componentsSpecsLayout2->addRow(IntegratedGraphicsLabel, cpuCPUIntegratedGraphicLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
             if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
@@ -702,6 +718,7 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(gpuPowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(gpuTypeLabel, gpuGPUTypeLine);
                     componentsSpecsLayout2->addRow(gpuMemorySizeLabel, gpuGPUMemorySizeLine);
                     componentsSpecsLayout2->addRow(gpuPerformanceLabel, gpuGPUPerformanceLine);
@@ -710,9 +727,11 @@ void MainWindow::editComponentsSpecs() {
                     componentsSpecsLayout2->addRow(gpuConnectorsLabel, gpuGPUConnectorsLine);
                     componentsSpecsLayout2->addRow(gpuSupplementaryPowerLabel, gpuGPUSupplementaryPowerLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
             if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
@@ -754,15 +773,18 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(psuPowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(psuFormFactorLabel, psuPSUFormFactorLine);
                     componentsSpecsLayout2->addRow(psuEfficiencyCertificationLabel, psuPSUEfficiencyCertificationLine);
                     componentsSpecsLayout2->addRow(psuWattageLabel, psuPSUWattageLine);
                     componentsSpecsLayout2->addRow(psuModularityLabel, psuPSUModularityLine);
                     componentsSpecsLayout2->addRow(psuSupplementaryPowerLabel, psuPSUSupplementaryPowerLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
             if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
@@ -794,13 +816,16 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(ramPowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(ramSpeedLabel, ramRAMSpeedLine);
                     componentsSpecsLayout2->addRow(ramTypeLabel, ramRAMTypeLine);
                     componentsSpecsLayout2->addRow(ramSizeLabel, ramRAMSizeLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
             if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
@@ -843,6 +868,7 @@ void MainWindow::editComponentsSpecs() {
                     componentPowerConsumptionLine->setText(storagePowerConsumption);
                     componentsSpecsLayout2=new QFormLayout();
                     saveChanges=new QPushButton("Salva modifiche");
+                    discardChanges=new QPushButton("Annulla modifiche");
                     componentsSpecsLayout2->addRow(storageTypeLabel, storageStorageTypeLine);
                     componentsSpecsLayout2->addRow(storageRPMLabel, storageStorageRPMLine);
                     componentsSpecsLayout2->addRow(storageSizeLabel, storageStorageSizeLine);
@@ -850,9 +876,11 @@ void MainWindow::editComponentsSpecs() {
                     componentsSpecsLayout2->addRow(storageFormFactorLabel, storageStorageFormFactorLine);
                     componentsSpecsLayout2->addRow(storageSpeedLabel, storageStorageSpeedLine);
                     componentsSpecsLayout2->addRow(saveChanges);
+                    componentsSpecsLayout2->addRow(discardChanges);
                     componentsSpecsLayout2->setVerticalSpacing(25);
                     specLayout2->addRow(componentsSpecsLayout2);
-                    connect(saveChanges, &QPushButton::clicked, this, [this, current]{saveComponentsChanges(current);});
+                    connect(discardChanges, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+                    connect(saveChanges, SIGNAL(clicked(bool)), this, SLOT(saveComponentsChanges()));
                 }
             }
         }

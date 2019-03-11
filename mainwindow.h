@@ -69,7 +69,8 @@ private slots:
     void removeComponents();
     void editComponentsSpecs();
     void resetEditSpecs();
-    void saveComponentsChanges(QListWidgetItem *);
+    void saveComponentsChanges();
+    void discardComponentsChanges();
     //void loadFileToBuild();
 
 private:
