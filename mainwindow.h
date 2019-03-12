@@ -24,6 +24,7 @@
 #include <QRegExp>
 #include <QDebug>
 #include <QAction>
+#include <QWindow>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -71,6 +72,7 @@ private slots:
     void resetEditSpecs();
     void saveComponentsChanges();
     void discardComponentsChanges();
+    void addComponents();
     //void loadFileToBuild();
 
 private:

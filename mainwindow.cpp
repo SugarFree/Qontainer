@@ -294,10 +294,21 @@ void MainWindow::resetEditSpecs() {
 }
 
 void MainWindow::discardComponentsChanges() {
+    resetEditSpecs();
     for(unsigned int i=0; i!=componentsList->count(); ++i) {
         QListWidgetItem *item=componentsList->item(i);
-        item->setFlags(Qt::ItemIsEnabled);
+        auto flags=item->flags();
+        flags.setFlag(Qt::ItemIsEnabled, true);
+        item->setFlags(flags);
     }
+}
+
+void MainWindow::addComponents() {
+    QWidget *componentType=new QWidget();
+    componentType->setFixedHeight(100);
+    componentType->setFixedWidth(400);
+    componentType->move(700, 400);
+    componentType->show();
 }
 
 void MainWindow::saveComponentsChanges() {
@@ -552,6 +563,7 @@ void MainWindow::saveComponentsChanges() {
             (componentsList->currentItem())->setText(componentNameLine->text());
         }
     }
+    discardComponentsChanges();
 }
 
 void MainWindow::editComponentsSpecs() {
@@ -560,7 +572,9 @@ void MainWindow::editComponentsSpecs() {
         bool trovato=false;
         for(unsigned int i=0; i!=componentsList->count(); ++i) {
             QListWidgetItem *item=componentsList->item(i);
-            item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+            auto flags=item->flags();
+            flags.setFlag(Qt::ItemIsEnabled, false);
+            item->setFlags(flags);
         }
         for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
@@ -1870,6 +1884,7 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     connect(searchBox, SIGNAL(textEdited(QString)), this, SLOT(searchComponents(QString)));
     connect(removeComponent, SIGNAL(clicked(bool)), this, SLOT(removeComponents()));
     connect(editComponent, SIGNAL(clicked(bool)), this, SLOT(editComponentsSpecs()));
+    connect(addComponent, SIGNAL(clicked(bool)), this, SLOT(addComponents()));
     //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 750);

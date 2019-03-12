@@ -148,7 +148,6 @@ void cvector<T>::push_back(const T& v) {
 template<class T>
 void cvector<T>::pop_back() {
     delete point[size-1];
-    qDebug()<<"fatto";
     size--;
 }
 
