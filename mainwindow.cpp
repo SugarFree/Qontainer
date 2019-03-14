@@ -303,12 +303,54 @@ void MainWindow::discardComponentsChanges() {
     }
 }
 
+void MainWindow::newComponentEdit(QString type) {
+    componentType->close();
+    if(type=="MOBA") {
+        QLabel *mobaSocketLabel=new QLabel("Socket: ");
+        QLabel *mobaFormFactorLabel=new QLabel("Form Factor: ");
+        QLabel *mobaRAMSlotsLabel=new QLabel("Slot RAM: ");
+        QLabel *mobaMaxRAMLabel=new QLabel("RAM massima supportata (GB): ");
+        QLabel *mobaConnectorsLabel=new QLabel("Interfacce: ");
+        mobaMOBASocketLine=new QLineEdit();
+        mobaMOBAFormFactorLine=new QLineEdit();
+        mobaMOBARAMSlotsLine=new QLineEdit();
+        mobaMOBAmaxRAMLine=new QLineEdit();
+        mobaMOBAConnectorsLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        componentsSpecsLayout2->addRow(mobaSocketLabel, mobaMOBASocketLine);
+        componentsSpecsLayout2->addRow(mobaFormFactorLabel, mobaMOBAFormFactorLine);
+        componentsSpecsLayout2->addRow(mobaRAMSlotsLabel, mobaMOBARAMSlotsLine);
+        componentsSpecsLayout2->addRow(mobaMaxRAMLabel, mobaMOBAmaxRAMLine);
+        componentsSpecsLayout2->addRow(mobaConnectorsLabel, mobaMOBAConnectorsLine);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+    }
+}
+
 void MainWindow::addComponents() {
-    QWidget *componentType=new QWidget();
+    componentType=new QDialog();
+    QVBoxLayout *componentSelection=new QVBoxLayout(componentType);
+    componentType->setLayout(componentSelection);
+    QLabel *componentTypeLine=new QLabel(componentType);
+    QComboBox *componentSelector=new QComboBox(componentType);
+    QPushButton *okButton=new QPushButton(componentType);
+    componentTypeLine->setText("Che tipo di componente vuoi aggiungere?");
+    componentSelector->addItem("MOBA");
+    componentSelector->addItem("CPU");
+    componentSelector->addItem("GPU");
+    componentSelector->addItem("PSU");
+    componentSelector->addItem("RAM");
+    componentSelector->addItem("Storage");
+    okButton->setText("OK");
+    componentSelection->addWidget(componentTypeLine);
+    componentSelection->addWidget(componentSelector);
+    componentSelection->addWidget(okButton);
+    componentSelection->setAlignment(componentSelection, Qt::AlignCenter);
     componentType->setFixedHeight(100);
-    componentType->setFixedWidth(400);
+    componentType->setFixedWidth(350);
     componentType->move(700, 400);
     componentType->show();
+    connect(okButton, &QPushButton::clicked, this, [this, componentSelector]{newComponentEdit(componentSelector->currentText());});
 }
 
 void MainWindow::saveComponentsChanges() {

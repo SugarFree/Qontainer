@@ -24,7 +24,7 @@
 #include <QRegExp>
 #include <QDebug>
 #include <QAction>
-#include <QWindow>
+#include <QDialog>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -73,6 +73,7 @@ private slots:
     void saveComponentsChanges();
     void discardComponentsChanges();
     void addComponents();
+    void newComponentEdit(QString);
     //void loadFileToBuild();
 
 private:
@@ -165,6 +166,7 @@ private:
     QLineEdit *componentPriceLine;
     QLineEdit *componentPowerConsumptionLine;
     QLineEdit *componentManufacturerLine;
+    //QLabel *mobaSocketLabel;
     QLineEdit *mobaMOBASocketLine;
     QLineEdit *mobaMOBAFormFactorLine;
     QLineEdit *mobaMOBARAMSlotsLine;
@@ -198,6 +200,7 @@ private:
     QLineEdit *storageStorageSpeedLine;
     QPushButton *saveChanges;
     QPushButton *discardChanges;
+    QDialog *componentType;
     cvector<PC_Parts*> componenti;
     bool load(QString path);
     std::string removeZero(std::string);
