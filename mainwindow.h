@@ -74,6 +74,7 @@ private slots:
     void discardComponentsChanges();
     void addComponents();
     void newComponentEdit(QString);
+    void saveNewComponent();
     //void loadFileToBuild();
 
 private:
@@ -201,6 +202,8 @@ private:
     QPushButton *saveChanges;
     QPushButton *discardChanges;
     QDialog *componentType;
+    QPushButton *saveComponent;
+    QPushButton *discardComponent;
     cvector<PC_Parts*> componenti;
     bool load(QString path);
     std::string removeZero(std::string);

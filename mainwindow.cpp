@@ -303,8 +303,19 @@ void MainWindow::discardComponentsChanges() {
     }
 }
 
+void MainWindow::saveNewComponent() {
+
+}
+
 void MainWindow::newComponentEdit(QString type) {
     componentType->close();
+    resetEditSpecs();
+    for(unsigned int i=0; i!=componentsList->count(); ++i) {
+        QListWidgetItem *item=componentsList->item(i);
+        auto flags=item->flags();
+        flags.setFlag(Qt::ItemIsEnabled, false);
+        item->setFlags(flags);
+    }
     if(type=="MOBA") {
         QLabel *mobaSocketLabel=new QLabel("Socket: ");
         QLabel *mobaFormFactorLabel=new QLabel("Form Factor: ");
@@ -317,13 +328,146 @@ void MainWindow::newComponentEdit(QString type) {
         mobaMOBAmaxRAMLine=new QLineEdit();
         mobaMOBAConnectorsLine=new QLineEdit();
         componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
         componentsSpecsLayout2->addRow(mobaSocketLabel, mobaMOBASocketLine);
         componentsSpecsLayout2->addRow(mobaFormFactorLabel, mobaMOBAFormFactorLine);
         componentsSpecsLayout2->addRow(mobaRAMSlotsLabel, mobaMOBARAMSlotsLine);
         componentsSpecsLayout2->addRow(mobaMaxRAMLabel, mobaMOBAmaxRAMLine);
         componentsSpecsLayout2->addRow(mobaConnectorsLabel, mobaMOBAConnectorsLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
         componentsSpecsLayout2->setVerticalSpacing(25);
         specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+    }
+    if(type=="CPU") {
+        QLabel *SpeedLabel=new QLabel("Frequenza (GHz): ");
+        QLabel *CoresLabel=new QLabel("Cores: ");
+        QLabel *x64bitLabel=new QLabel("Supporto 64 bit: ");
+        QLabel *cpuSocketLabel=new QLabel("Socket CPU: ");
+        QLabel *IntegratedGraphicsLabel=new QLabel("Chip grafico integrato: ");
+        cpuCPUSpeedLine=new QLineEdit();
+        cpuCPUCoresLine=new QLineEdit();
+        cpuCPUx64bitLine=new QLineEdit();
+        cpuCPUSocketLine=new QLineEdit();
+        cpuCPUIntegratedGraphicLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
+        componentsSpecsLayout2->addRow(SpeedLabel, cpuCPUSpeedLine);
+        componentsSpecsLayout2->addRow(CoresLabel, cpuCPUCoresLine);
+        componentsSpecsLayout2->addRow(x64bitLabel, cpuCPUx64bitLine);
+        componentsSpecsLayout2->addRow(cpuSocketLabel, cpuCPUSocketLine);
+        componentsSpecsLayout2->addRow(IntegratedGraphicsLabel, cpuCPUIntegratedGraphicLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+    }
+    if(type=="GPU") {
+        QLabel *gpuTypeLabel=new QLabel("Tipo: ");
+        QLabel *gpuMemorySizeLabel=new QLabel("Memoria dedicata (GB): ");
+        QLabel *gpuPerformanceLabel=new QLabel("TFLOPs: ");
+        QLabel *gpuClockLabel=new QLabel("Clock (MHz): ");
+        QLabel *gpuInterfaceLabel=new QLabel("Interfacce: ");
+        QLabel *gpuConnectorsLabel=new QLabel("Porte: ");
+        QLabel *gpuSupplementaryPowerLabel=new QLabel("Alimentazione supplementare richiesta: ");
+        gpuGPUTypeLine=new QLineEdit();
+        gpuGPUMemorySizeLine=new QLineEdit();
+        gpuGPUPerformanceLine=new QLineEdit();
+        gpuGPUClockLine=new QLineEdit();
+        gpuGPUInterfaceLine=new QLineEdit();
+        gpuGPUConnectorsLine=new QLineEdit();
+        gpuGPUSupplementaryPowerLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
+        componentsSpecsLayout2->addRow(gpuTypeLabel, gpuGPUTypeLine);
+        componentsSpecsLayout2->addRow(gpuMemorySizeLabel, gpuGPUMemorySizeLine);
+        componentsSpecsLayout2->addRow(gpuPerformanceLabel, gpuGPUPerformanceLine);
+        componentsSpecsLayout2->addRow(gpuClockLabel, gpuGPUClockLine);
+        componentsSpecsLayout2->addRow(gpuInterfaceLabel, gpuGPUInterfaceLine);
+        componentsSpecsLayout2->addRow(gpuConnectorsLabel, gpuGPUConnectorsLine);
+        componentsSpecsLayout2->addRow(gpuSupplementaryPowerLabel, gpuGPUSupplementaryPowerLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+    }
+    if(type=="PSU") {
+        QLabel *psuFormFactorLabel=new QLabel("Form Factor: ");
+        QLabel *psuWattageLabel=new QLabel("Wattaggio: ");
+        QLabel *psuEfficiencyCertificationLabel=new QLabel("Certificazione di efficienza: ");
+        QLabel *psuModularityLabel=new QLabel("Modularità: ");
+        QLabel *psuSupplementaryPowerLabel=new QLabel("Predisposizione alimentazione supplementare: ");
+        psuPSUFormFactorLine=new QLineEdit();
+        psuPSUWattageLine=new QLineEdit();
+        psuPSUEfficiencyCertificationLine=new QLineEdit();
+        psuPSUModularityLine=new QLineEdit();
+        psuPSUSupplementaryPowerLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
+        componentsSpecsLayout2->addRow(psuFormFactorLabel, psuPSUFormFactorLine);
+        componentsSpecsLayout2->addRow(psuEfficiencyCertificationLabel, psuPSUEfficiencyCertificationLine);
+        componentsSpecsLayout2->addRow(psuWattageLabel, psuPSUWattageLine);
+        componentsSpecsLayout2->addRow(psuModularityLabel, psuPSUModularityLine);
+        componentsSpecsLayout2->addRow(psuSupplementaryPowerLabel, psuPSUSupplementaryPowerLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+    }
+    if(type=="RAM") {
+        QLabel *ramSpeedLabel=new QLabel("Frequenza (MHz): ");
+        QLabel *ramTypeLabel=new QLabel("Tipo: ");
+        QLabel *ramSizeLabel=new QLabel("Capacità (GB): ");
+        ramRAMSpeedLine=new QLineEdit();
+        ramRAMTypeLine=new QLineEdit();
+        ramRAMSizeLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
+        componentsSpecsLayout2->addRow(ramSpeedLabel, ramRAMSpeedLine);
+        componentsSpecsLayout2->addRow(ramTypeLabel, ramRAMTypeLine);
+        componentsSpecsLayout2->addRow(ramSizeLabel, ramRAMSizeLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
+    }
+    if(type=="Storage") {
+        QLabel *storageTypeLabel=new QLabel("Tipo: ");
+        QLabel *storageRPMLabel=new QLabel("RPM: ");
+        QLabel *storageSizeLabel=new QLabel("Capacità (GB): ");
+        QLabel *storageInterfaceLabel=new QLabel("Interfaccia: ");
+        QLabel *storageFormFactorLabel=new QLabel("Form Factor: ");
+        QLabel *storageSpeedLabel=new QLabel("Velocità trasferimento (MB/s): ");
+        storageStorageTypeLine=new QLineEdit();
+        storageStorageRPMLine=new QLineEdit();
+        storageStorageSizeLine=new QLineEdit();
+        storageStorageInterfaceLine=new QLineEdit();
+        storageStorageFormFactorLine=new QLineEdit();
+        storageStorageSpeedLine=new QLineEdit();
+        componentsSpecsLayout2=new QFormLayout();
+        saveComponent=new QPushButton("Salva nuovo componente");
+        discardComponent=new QPushButton("Scarta nuovo componente");
+        componentsSpecsLayout2->addRow(storageTypeLabel, storageStorageTypeLine);
+        componentsSpecsLayout2->addRow(storageRPMLabel, storageStorageRPMLine);
+        componentsSpecsLayout2->addRow(storageSizeLabel, storageStorageSizeLine);
+        componentsSpecsLayout2->addRow(storageInterfaceLabel, storageStorageInterfaceLine);
+        componentsSpecsLayout2->addRow(storageFormFactorLabel, storageStorageFormFactorLine);
+        componentsSpecsLayout2->addRow(storageSpeedLabel, storageStorageSpeedLine);
+        componentsSpecsLayout2->addRow(saveComponent);
+        componentsSpecsLayout2->addRow(discardComponent);
+        componentsSpecsLayout2->setVerticalSpacing(25);
+        specLayout2->addRow(componentsSpecsLayout2);
+        connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
     }
 }
 
@@ -341,7 +485,7 @@ void MainWindow::addComponents() {
     componentSelector->addItem("PSU");
     componentSelector->addItem("RAM");
     componentSelector->addItem("Storage");
-    okButton->setText("OK");
+    okButton->setText("Ok");
     componentSelection->addWidget(componentTypeLine);
     componentSelection->addWidget(componentSelector);
     componentSelection->addWidget(okButton);
