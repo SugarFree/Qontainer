@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QAction>
 #include <QDialog>
+#include <QSpinBox>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -74,7 +75,7 @@ private slots:
     void discardComponentsChanges();
     void addComponents();
     void newComponentEdit(QString);
-    void saveNewComponent();
+    //void saveNewComponent(QString);
     //void loadFileToBuild();
 
 private:
@@ -162,16 +163,16 @@ private:
     QLabel *powerconsumptionLabel2;
     QFormLayout *componentsSpecsLayout2;
     QLineEdit *componentNameLine;
-    QLineEdit *componentLengthLine;
-    QLineEdit *componentHeightLine;
-    QLineEdit *componentPriceLine;
-    QLineEdit *componentPowerConsumptionLine;
+    QSpinBox *componentLengthSpin;
+    QSpinBox *componentHeightSpin;
+    QDoubleSpinBox *componentPriceSpin;
+    QSpinBox *componentPowerConsumptionSpin;
     QLineEdit *componentManufacturerLine;
     //QLabel *mobaSocketLabel;
     QLineEdit *mobaMOBASocketLine;
     QLineEdit *mobaMOBAFormFactorLine;
-    QLineEdit *mobaMOBARAMSlotsLine;
-    QLineEdit *mobaMOBAmaxRAMLine;
+    QSpinBox *mobaMOBARAMSlotsSpin;
+    QSpinBox *mobaMOBAmaxRAMSpin;
     QLineEdit *mobaMOBAConnectorsLine;
     QLineEdit *cpuCPUSpeedLine;
     QLineEdit *cpuCPUCoresLine;
