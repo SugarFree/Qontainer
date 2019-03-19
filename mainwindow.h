@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QDialog>
 #include <QSpinBox>
+#include <QCheckBox>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -174,32 +175,32 @@ private:
     QSpinBox *mobaMOBARAMSlotsSpin;
     QSpinBox *mobaMOBAmaxRAMSpin;
     QLineEdit *mobaMOBAConnectorsLine;
-    QLineEdit *cpuCPUSpeedLine;
-    QLineEdit *cpuCPUCoresLine;
-    QLineEdit *cpuCPUx64bitLine;
-    QLineEdit *cpuCPUIntegratedGraphicLine;
+    QDoubleSpinBox *cpuCPUSpeedSpin;
+    QSpinBox *cpuCPUCoresSpin;
+    QCheckBox *cpuCPUx64bitCheck;
+    QCheckBox *cpuCPUIntegratedGraphicCheck;
     QLineEdit *cpuCPUSocketLine;
     QLineEdit *gpuGPUTypeLine;
-    QLineEdit *gpuGPUMemorySizeLine;
-    QLineEdit *gpuGPUPerformanceLine;
-    QLineEdit *gpuGPUClockLine;
+    QSpinBox *gpuGPUMemorySizeSpin;
+    QDoubleSpinBox *gpuGPUPerformanceSpin;
+    QSpinBox *gpuGPUClockSpin;
     QLineEdit *gpuGPUInterfaceLine;
     QLineEdit *gpuGPUConnectorsLine;
-    QLineEdit *gpuGPUSupplementaryPowerLine;
+    QCheckBox *gpuGPUSupplementaryPowerCheck;
     QLineEdit *psuPSUFormFactorLine;
-    QLineEdit *psuPSUWattageLine;
+    QSpinBox *psuPSUWattageSpin;
     QLineEdit *psuPSUEfficiencyCertificationLine;
     QLineEdit *psuPSUModularityLine;
-    QLineEdit *psuPSUSupplementaryPowerLine;
-    QLineEdit *ramRAMSpeedLine;
+    QCheckBox *psuPSUSupplementaryPowerCheck;
+    QSpinBox *ramRAMSpeedSpin;
     QLineEdit *ramRAMTypeLine;
-    QLineEdit *ramRAMSizeLine;
+    QSpinBox *ramRAMSizeSpin;
     QLineEdit *storageStorageTypeLine;
-    QLineEdit *storageStorageRPMLine;
-    QLineEdit *storageStorageSizeLine;
+    QSpinBox *storageStorageRPMSpin;
+    QSpinBox *storageStorageSizeSpin;
     QLineEdit *storageStorageInterfaceLine;
-    QLineEdit *storageStorageFormFactorLine;
-    QLineEdit *storageStorageSpeedLine;
+    QDoubleSpinBox *storageStorageFormFactorSpin;
+    QSpinBox *storageStorageSpeedSpin;
     QPushButton *saveChanges;
     QPushButton *discardChanges;
     QDialog *componentType;
