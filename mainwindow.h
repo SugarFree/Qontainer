@@ -27,6 +27,8 @@
 #include <QDialog>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QMenuBar>
+#include <QMainWindow>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -39,12 +41,12 @@
 #include <string>
 
 
-class MainWindow : public QWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent=nullptr);
+    MainWindow();
 
 private slots:
     void mobaToBuild();
@@ -76,14 +78,21 @@ private slots:
     void discardComponentsChanges();
     void addComponents();
     void newComponentEdit(QString);
-    //void saveNewComponent(QString);
+    void saveNewComponent(QString);
+    bool load();
     //void loadFileToBuild();
 
 private:
     QTabWidget *tab;
     QWidget *window;
     QWidget *window2;
-    QRect screenGeometry;
+    QMenuBar *menuBar;
+    QMenuBar *menuBar2;
+    QMenu *saveMenu;
+    QMenu *loadMenu;
+    QMenu *saveMenu2;
+    QMenu *loadMenu2;
+    //QRect screenGeometry;
     QGridLayout *layout;
     QFormLayout *layout2;
     QHBoxLayout *layoutMOBA;
@@ -207,7 +216,6 @@ private:
     QPushButton *saveComponent;
     QPushButton *discardComponent;
     cvector<PC_Parts*> componenti;
-    bool load(QString path);
     std::string removeZero(std::string);
     void calculateTotal();
     void hideAll();

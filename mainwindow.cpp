@@ -303,68 +303,62 @@ void MainWindow::discardComponentsChanges() {
     }
 }
 
-/*void MainWindow::saveNewComponent(QString type) {
+void MainWindow::saveNewComponent(QString type) {
     if(type=="MOBA") {
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->text().toInt(), mobaMOBAmaxRAMSpin->text().toInt(),
+        componenti.push_back(new MOBA(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->value(), mobaMOBAmaxRAMSpin->value(),
                                       mobaMOBAConnectorsLine->text()));
         mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
     if(type=="CPU") {
-        bool x64bit, integrated_graphics;
-        if(cpuCPUx64bitCheck=="Sì")
-            x64bit=true;
-        else
-            x64bit=false;
-        if()
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      cpuCPUSpeedSpin->text().toDouble(), cpuCPUCoresSpin->text().toInt(), x64bit, cpuCPUSocketLine->text(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+        componenti.push_back(new CPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                     cpuCPUSpeedSpin->value(), cpuCPUCoresSpin->value(), cpuCPUx64bitCheck->isChecked(), cpuCPUSocketLine->text(),
+                                     cpuCPUIntegratedGraphicCheck->isChecked()));
+        cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
-    if(type=="MOBA") {
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->text().toInt(), mobaMOBAmaxRAMSpin->text().toInt(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+    if(type=="GPU") {
+        componenti.push_back(new GPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                     gpuGPUTypeLine->text(), gpuGPUMemorySizeSpin->value(), gpuGPUPerformanceSpin->value(),
+                                     gpuGPUClockSpin->value(), gpuGPUInterfaceLine->text(), gpuGPUConnectorsLine->text(),
+                                     gpuGPUSupplementaryPowerCheck->isChecked()));
+        gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
-    if(type=="MOBA") {
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->text().toInt(), mobaMOBAmaxRAMSpin->text().toInt(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+    if(type=="PSU") {
+        componenti.push_back(new PSU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                     psuPSUFormFactorLine->text(), psuPSUWattageSpin->value(), psuPSUEfficiencyCertificationLine->text(),
+                                     psuPSUModularityLine->text(), psuPSUSupplementaryPowerCheck->isChecked()));
+        psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
-    if(type=="MOBA") {
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->text().toInt(), mobaMOBAmaxRAMSpin->text().toInt(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+    if(type=="RAM") {
+        componenti.push_back(new RAM(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                     ramRAMSpeedSpin->value(), ramRAMTypeLine->text(), ramRAMSizeSpin->value()));
+        ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
-    if(type=="MOBA") {
-        componenti.push_back(new MOBA(componentLengthSpin->text().toInt(), componentHeightSpin->text().toInt(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->text().toDouble(), componentPowerConsumptionSpin->text().toInt(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->text().toInt(), mobaMOBAmaxRAMSpin->text().toInt(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+    if(type=="Storage") {
+        componenti.push_back(new Storage(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                         componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                         storageStorageTypeLine->text(), storageStorageRPMSpin->value(), storageStorageSizeSpin->value(),
+                                         storageStorageInterfaceLine->text(), storageStorageFormFactorSpin->value(), storageStorageSpeedSpin->value()));
+        storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
         componentsList->addItem(componenti[componenti.getSize()-1]->getName());
         discardComponentsChanges();
     }
-}*/
+}
 
 void MainWindow::newComponentEdit(QString type) {
     componentType->close();
@@ -487,7 +481,7 @@ void MainWindow::newComponentEdit(QString type) {
     componentsSpecsLayout2->addRow(discardComponent);
     componentsSpecsLayout2->setVerticalSpacing(25);
     specLayout2->addRow(componentsSpecsLayout2);
-    //connect(saveComponent, &QPushButton::clicked, this, [this, type]{saveNewComponent(type);});
+    connect(saveComponent, &QPushButton::clicked, this, [this, type]{saveNewComponent(type);});
     connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
 }
 
@@ -1423,7 +1417,8 @@ void MainWindow::showStorageSpecs() {
     }
 }*/
 
-bool MainWindow::load(QString path) {
+bool MainWindow::load() {
+    QString path=QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));
     QFile file(path);
     file.open(QIODevice::ReadOnly);
     QByteArray json=file.readAll();
@@ -1545,14 +1540,22 @@ bool MainWindow::load(QString path) {
 }
 
 
-MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
+MainWindow::MainWindow(): QMainWindow() {
     tab=new QTabWidget();
     window=new QWidget(tab);
     window2=new QWidget(tab);
     tab->addTab(window, "Build");
     tab->addTab(window2, "Gestione componenti");
+    menuBar=new QMenuBar();
+    saveMenu=new QMenu();
+    loadMenu=new QMenu();
+    saveMenu=menuBar->addMenu("&Salva");
+    loadMenu=menuBar->addMenu("&Carica");
+    saveMenu->addAction("&Salva database componenti");
+    loadMenu->addAction("&Carica database componenti");
     layout=new QGridLayout();
     window->setLayout(layout);
+    layout->setMenuBar(menuBar);
     layout2=new QFormLayout();
     layout->addLayout(layout2, 0, 0);
     layoutMOBA=new QHBoxLayout();
@@ -1700,19 +1703,18 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     saveBuild=new QPushButton("Salva Build");
     loadBuild=new QPushButton("Carica Build");
     discardBuild=new QPushButton("Scarta Build");
-    saveBuild->setMinimumWidth(150);
-    saveBuild->setMaximumWidth(150);
-    loadBuild->setMinimumWidth(150);
-    loadBuild->setMaximumWidth(150);
-    discardBuild->setMinimumWidth(150);
-    discardBuild->setMaximumWidth(150);
+    saveBuild->setFixedWidth(150);
+    loadBuild->setFixedWidth(150);
+    discardBuild->setFixedWidth(150);
     buttonsLayout->addWidget(saveBuild);
     buttonsLayout->addWidget(loadBuild);
     buttonsLayout->addWidget(discardBuild);
     layout3->addRow(build);
     layout3->addRow(buttonsLayout);
-    layout3->setAlignment(buttonsLayout, Qt::AlignLeft);
-    buttonsLayout->setSpacing(10);
+    buttonsLayout->setAlignment(saveBuild, Qt::AlignCenter);
+    buttonsLayout->setAlignment(loadBuild, Qt::AlignCenter);
+    buttonsLayout->setAlignment(discardBuild, Qt::AlignCenter);
+    buttonsLayout->setContentsMargins(0, 0, 20, 0);
     layout3->setVerticalSpacing(30);
     layout3->setContentsMargins(0, 0, 20, 0);
 
@@ -1741,7 +1743,15 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 
     layout4=new QGridLayout();
     window2->setLayout(layout4);
+    menuBar2=new QMenuBar();
+    saveMenu2=new QMenu();
+    loadMenu2=new QMenu();
+    saveMenu2=menuBar2->addMenu("&Salva");
+    loadMenu2=menuBar2->addMenu("&Carica");
+    saveMenu2->addAction("&Salva database componenti");
+    loadMenu2->addAction("&Carica database componenti");
     layout5=new QFormLayout();
+    layout4->setMenuBar(menuBar2);
     layout4->addLayout(layout5, 0, 0);
     managementButtonsLayout=new QHBoxLayout();
     searchBox=new QLineEdit(window2);
@@ -1812,8 +1822,9 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     connect(removeComponent, SIGNAL(clicked(bool)), this, SLOT(removeComponents()));
     connect(editComponent, SIGNAL(clicked(bool)), this, SLOT(editComponentsSpecs()));
     connect(addComponent, SIGNAL(clicked(bool)), this, SLOT(addComponents()));
+    connect(loadMenu, SIGNAL(triggered(QAction*)), this, SLOT(load()));
     //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
-    load("../Qontainer/database.json");
+    //load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 750);
     tab->setMaximumSize(1800, 750);
     tab->move(100, 100);
