@@ -1372,7 +1372,7 @@ void MainWindow::showStorageSpecs() {
     }
 }
 
-/*void MainWindow::loadFileToBuild() {
+void MainWindow::loadFileToBuild() {
     QString path = QFileDialog::getOpenFileName(this, tr("Load Build"), "", tr("JSON (*.json);"));
     QFile file(path);
     file.open(QIODevice::ReadOnly);
@@ -1403,19 +1403,140 @@ void MainWindow::showStorageSpecs() {
                                                   j.toObject().value("max_RAM").toInt(),
                                                   j.toObject().value("connectors").toString()
                                                   ));
-                    mobaComboBox->addItem(componenti[componenti.getSize()]->getName());
-                    componentsList->addItem(componenti[componenti.getSize()]->getName());
+                    mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
                     mobaComboBox->setCurrentIndex(mobaComboBox->count());
                     mobaToBuild();
                 }
                 else {
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(componenti[componenti.getSize()]->getName()));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(componenti[componenti.getSize()-1]->getName()));
                     mobaToBuild();
+                }
+            }
+            if(component_type=="CPU") {
+                if(componentPresence==false) {
+                    componenti.push_back(new CPU(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("cpu_speed").toDouble(),
+                                                  j.toObject().value("cores").toInt(),
+                                                  j.toObject().value("x64bit").toBool(),
+                                                  j.toObject().value("cpu_socket").toString(),
+                                                  j.toObject().value("integrated_grapchic").toBool()
+                                                  ));
+                    cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+                    cpuComboBox->setCurrentIndex(cpuComboBox->count());
+                    cpuToBuild();
+                }
+                else {
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    cpuToBuild();
+                }
+            }
+            if(component_type=="GPU") {
+                if(componentPresence==false) {
+                    componenti.push_back(new GPU(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("type").toString(),
+                                                  j.toObject().value("memory_size").toInt(),
+                                                  j.toObject().value("performance").toDouble(),
+                                                  j.toObject().value("clock").toInt(),
+                                                  j.toObject().value("interface").toString(),
+                                                  j.toObject().value("connectors").toString(),
+                                                  j.toObject().value("supplementary_power").toBool()
+                                                  ));
+                    gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+                    gpuComboBox->setCurrentIndex(mobaComboBox->count());
+                    gpuToBuild();
+                }
+                else {
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    gpuToBuild();
+                }
+            }
+            if(component_type=="PSU") {
+                if(componentPresence==false) {
+                    componenti.push_back(new PSU(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("form_factor").toString(),
+                                                  j.toObject().value("wattage").toInt(),
+                                                  j.toObject().value("efficiency_certification").toString(),
+                                                  j.toObject().value("modularity").toString(),
+                                                  j.toObject().value("supplementary_power").toBool()
+                                                  ));
+                    psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+                    psuComboBox->setCurrentIndex(psuComboBox->count());
+                    psuToBuild();
+                }
+                else {
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    psuToBuild();
+                }
+            }
+            if(component_type=="RAM") {
+                if(componentPresence==false) {
+                    componenti.push_back(new RAM(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("ram_speed").toInt(),
+                                                  j.toObject().value("type").toString(),
+                                                  j.toObject().value("size").toInt()
+                                                  ));
+                    ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+                    ramComboBox->setCurrentIndex(ramComboBox->count());
+                    ramToBuild();
+                }
+                else {
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    ramToBuild();
+                }
+            }
+            if(component_type=="Storage") {
+                if(componentPresence==false) {
+                    componenti.push_back(new Storage(j.toObject().value("length").toInt(),
+                                                  j.toObject().value("height").toInt(),
+                                                  j.toObject().value("name").toString(),
+                                                  j.toObject().value("manufacturer").toString(),
+                                                  j.toObject().value("price").toDouble(),
+                                                  j.toObject().value("power_consumption").toInt(),
+                                                  j.toObject().value("type").toString(),
+                                                  j.toObject().value("rpm").toInt(),
+                                                  j.toObject().value("size").toInt(),
+                                                  j.toObject().value("interface").toString(),
+                                                  j.toObject().value("form_factor").toDouble(),
+                                                  j.toObject().value("speed").toInt()
+                                                  ));
+                    storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+                    componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+                    storageComboBox->setCurrentIndex(storageComboBox->count());
+                    storageToBuild();
+                }
+                else {
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    storageToBuild();
                 }
             }
         }
     }
-}*/
+}
 
 bool MainWindow::load() {
     QString path=QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));
@@ -1823,6 +1944,7 @@ MainWindow::MainWindow(): QMainWindow() {
     connect(editComponent, SIGNAL(clicked(bool)), this, SLOT(editComponentsSpecs()));
     connect(addComponent, SIGNAL(clicked(bool)), this, SLOT(addComponents()));
     connect(loadMenu, SIGNAL(triggered(QAction*)), this, SLOT(load()));
+    connect(loadMenu2, SIGNAL(triggered(QAction*)), this, SLOT(load()));
     //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     //load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 750);
