@@ -12,14 +12,7 @@
 #include <QDebug>
 
 template<class T>
-class cvector;
-
-template<class T>
-std::ostream& operator<<(std::ostream&, const cvector<T>&);
-
-template<class T>
 class cvector {
-friend std::ostream& operator<< <T>(std::ostream&, const cvector<T>&);
 private:
     unsigned int capacity;
     unsigned int size;
@@ -40,7 +33,7 @@ public:
     void pop_back();
     void swap(T&, T&);
     void erase(unsigned int);
-    T* search(const T*) const;
+    int search(const T&) const;
     const T& operator[](unsigned int) const;
     bool operator==(const T&) const;
     bool operator!=(const T&) const;
@@ -169,13 +162,14 @@ void cvector<T>::erase(unsigned int pos) {
 }
 
 template<class T>
-T* cvector<T>::search(const T* v) const {
+int cvector<T>::search(const T& v) const {
     if(point) {
-        for(unsigned int j=0; j<size; j++) {
+        for(unsigned int j=0; j<size; ++j) {
             if(point[j]==v)
-                return point[j];
+                return j;
         }
     }
+    return -1;
 }
 
 template<class T>
@@ -237,13 +231,6 @@ typename cvector<T>::iterator cvector<T>::begin() const {
 template<class T>
 typename cvector<T>::iterator cvector<T>::end() const {
     return point[size-1];
-}
-
-template<class T>
-std::ostream& operator<<(std::ostream& os, const cvector<T>& v) {
-    for(int j=0; j<v.getSize(); ++j)
-        os << v[j] << ' ';
-    return os;
 }
 
 #endif // cvector_H

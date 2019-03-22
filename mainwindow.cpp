@@ -305,6 +305,8 @@ void MainWindow::discardComponentsChanges() {
 
 void MainWindow::saveNewComponent(QString type) {
     if(type=="MOBA") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new MOBA(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                       componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                       mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->value(), mobaMOBAmaxRAMSpin->value(),
@@ -314,6 +316,8 @@ void MainWindow::saveNewComponent(QString type) {
         discardComponentsChanges();
     }
     if(type=="CPU") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new CPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                      cpuCPUSpeedSpin->value(), cpuCPUCoresSpin->value(), cpuCPUx64bitCheck->isChecked(), cpuCPUSocketLine->text(),
@@ -323,6 +327,8 @@ void MainWindow::saveNewComponent(QString type) {
         discardComponentsChanges();
     }
     if(type=="GPU") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new GPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                      gpuGPUTypeLine->text(), gpuGPUMemorySizeSpin->value(), gpuGPUPerformanceSpin->value(),
@@ -333,6 +339,8 @@ void MainWindow::saveNewComponent(QString type) {
         discardComponentsChanges();
     }
     if(type=="PSU") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new PSU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                      psuPSUFormFactorLine->text(), psuPSUWattageSpin->value(), psuPSUEfficiencyCertificationLine->text(),
@@ -342,6 +350,8 @@ void MainWindow::saveNewComponent(QString type) {
         discardComponentsChanges();
     }
     if(type=="RAM") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new RAM(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                      ramRAMSpeedSpin->value(), ramRAMTypeLine->text(), ramRAMSizeSpin->value()));
@@ -350,6 +360,8 @@ void MainWindow::saveNewComponent(QString type) {
         discardComponentsChanges();
     }
     if(type=="Storage") {
+        if(componentNameLine->text()=="")
+            componentNameLine->setText("Componente generico");
         componenti.push_back(new Storage(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                          componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
                                          storageStorageTypeLine->text(), storageStorageRPMSpin->value(), storageStorageSizeSpin->value(),
