@@ -1036,6 +1036,133 @@ void MainWindow::saveBuildToFile() {
     }
 }
 
+void MainWindow::save() {
+    QString file = QFileDialog::getSaveFileName(this, tr("Save Database"), "", tr("JSON (*.json);"));
+    QJsonArray newDatabase;
+    QFile savePath(file);
+    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+        QJsonObject singleComponent;
+        if(dynamic_cast<MOBA*>(componenti[i])) {
+            MOBA* moba=static_cast<MOBA*>(componenti[i]);
+            singleComponent.insert("component_type", "MOBA");
+            singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
+            singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getForm_factor()));
+            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAM_slots()));
+            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMax_RAM()));
+            singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
+            newDatabase.append(singleComponent);
+        }
+        else if(dynamic_cast<CPU*>(componenti[i])) {
+            CPU* cpu=static_cast<CPU*>(componenti[i]);
+            singleComponent.insert("component_type", "CPU");
+            singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
+            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpu_speed()));
+            singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
+            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getX64bit()));
+            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpu_socket()));
+            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegrated_graphic()));
+            newDatabase.append(singleComponent);
+        }
+        else if(dynamic_cast<GPU*>(componenti[i])) {
+            GPU* gpu=static_cast<GPU*>(componenti[i]);
+            singleComponent.insert("component_type", "GPU");
+            singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
+            singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
+            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemory_size()));
+            singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
+            singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
+            singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
+            singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementary_power()));
+            newDatabase.append(singleComponent);
+        }
+        else if(dynamic_cast<PSU*>(componenti[i])) {
+            PSU* psu=static_cast<PSU*>(componenti[i]);
+            singleComponent.insert("component_type", "PSU");
+            singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getForm_factor()));
+            singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
+            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiency_certification()));
+            singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
+            newDatabase.append(singleComponent);
+        }
+        else if(dynamic_cast<RAM*>(componenti[i])) {
+            RAM* ram=static_cast<RAM*>(componenti[i]);
+            singleComponent.insert("component_type", "RAM");
+            singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
+            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRam_speed()));
+            singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
+            singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
+            newDatabase.append(singleComponent);
+        }
+        else if(dynamic_cast<Storage*>(componenti[i])) {
+            Storage* storage=static_cast<Storage*>(componenti[i]);
+            singleComponent.insert("component_type", "Storage");
+            singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
+            singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
+            singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
+            singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
+            singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
+            singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
+            singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
+            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRpm()));
+            singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
+            singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getForm_factor()));
+            singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
+            newDatabase.append(singleComponent);
+        }
+    }
+    QJsonObject toAdd;
+    toAdd.insert("pc_parts", newDatabase);
+    QJsonDocument json(toAdd);
+    if(savePath.open(QIODevice::WriteOnly)) {
+        savePath.write(json.toJson());
+        QDialog *success=new QDialog(this);
+        QVBoxLayout *successLayout=new QVBoxLayout(success);
+        success->setLayout(successLayout);
+        QLabel *successLabel=new QLabel("File salvato correttamente!");
+        QPushButton *successButton=new QPushButton("Ok");
+        successLayout->addWidget(successLabel);
+        successLayout->addWidget(successButton);
+        successLabel->setAlignment(Qt::AlignCenter);
+        successButton->resize(60, 30);
+        successLayout->setAlignment(successButton, Qt::AlignCenter);
+        success->setFixedHeight(100);
+        success->setFixedWidth(350);
+        success->move(700, 400);
+        success->show();
+        connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
+    }
+}
+
 void MainWindow::resetSpecs() {
     componentNameLabel->setText("");
     componentLengthLabel->setText("");
@@ -1373,7 +1500,7 @@ void MainWindow::showStorageSpecs() {
 }
 
 void MainWindow::loadFileToBuild() {
-    QString path = QFileDialog::getOpenFileName(this, tr("Load Build"), "", tr("JSON (*.json);"));
+    QString path = QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));;
     QFile file(path);
     file.open(QIODevice::ReadOnly);
     QByteArray json=file.readAll();
@@ -1405,11 +1532,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    mobaComboBox->setCurrentIndex(mobaComboBox->count());
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
                     mobaToBuild();
                 }
                 else {
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
                     mobaToBuild();
                 }
             }
@@ -1429,11 +1556,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    cpuComboBox->setCurrentIndex(cpuComboBox->count());
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
                     cpuToBuild();
                 }
                 else {
-                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
                     cpuToBuild();
                 }
             }
@@ -1455,11 +1582,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    gpuComboBox->setCurrentIndex(mobaComboBox->count());
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
                     gpuToBuild();
                 }
                 else {
-                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
                     gpuToBuild();
                 }
             }
@@ -1479,11 +1606,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    psuComboBox->setCurrentIndex(psuComboBox->count());
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
                     psuToBuild();
                 }
                 else {
-                    psuComboBox->setCurrentIndex(psuComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
                     psuToBuild();
                 }
             }
@@ -1501,11 +1628,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    ramComboBox->setCurrentIndex(ramComboBox->count());
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
                     ramToBuild();
                 }
                 else {
-                    ramComboBox->setCurrentIndex(ramComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
                     ramToBuild();
                 }
             }
@@ -1526,11 +1653,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    storageComboBox->setCurrentIndex(storageComboBox->count());
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
                     storageToBuild();
                 }
                 else {
-                    storageComboBox->setCurrentIndex(storageComboBox->findText(componenti[componenti.getSize()-1]->getName()));
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
                     storageToBuild();
                 }
             }
@@ -1538,7 +1665,7 @@ void MainWindow::loadFileToBuild() {
     }
 }
 
-bool MainWindow::load() {
+void MainWindow::load() {
     QString path=QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));
     QFile file(path);
     file.open(QIODevice::ReadOnly);
@@ -1655,9 +1782,7 @@ bool MainWindow::load() {
                 componentsList->addItem(componenti[i]->getName());
             }
         }
-        return true;
     }
-    return false;
 }
 
 
@@ -1932,7 +2057,6 @@ MainWindow::MainWindow(): QMainWindow() {
     connect(removeRAM, SIGNAL(clicked(bool)), this, SLOT(removeRAMFromBuild()));
     connect(removeStorage, SIGNAL(clicked(bool)), this, SLOT(removeStorageFromBuild()));
     connect(discardBuild, SIGNAL(clicked(bool)), this, SLOT(deleteBuild()));
-    connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
     connect(mobaSpecs, SIGNAL(clicked(bool)), this, SLOT(showMOBASpecs()));
     connect(cpuSpecs, SIGNAL(clicked(bool)), this, SLOT(showCPUSpecs()));
     connect(gpuSpecs, SIGNAL(clicked(bool)), this, SLOT(showGPUSpecs()));
@@ -1943,9 +2067,12 @@ MainWindow::MainWindow(): QMainWindow() {
     connect(removeComponent, SIGNAL(clicked(bool)), this, SLOT(removeComponents()));
     connect(editComponent, SIGNAL(clicked(bool)), this, SLOT(editComponentsSpecs()));
     connect(addComponent, SIGNAL(clicked(bool)), this, SLOT(addComponents()));
+    connect(saveMenu, SIGNAL(triggered(QAction*)), this, SLOT(save()));
+    connect(saveMenu2, SIGNAL(triggered(QAction*)), this, SLOT(save()));
     connect(loadMenu, SIGNAL(triggered(QAction*)), this, SLOT(load()));
     connect(loadMenu2, SIGNAL(triggered(QAction*)), this, SLOT(load()));
-    //connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
+    connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
+    connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     //load("../Qontainer/database.json");
     tab->setMinimumSize(1800, 750);
     tab->setMaximumSize(1800, 750);

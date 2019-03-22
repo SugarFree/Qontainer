@@ -62,7 +62,6 @@ private slots:
     void removeRAMFromBuild();
     void removeStorageFromBuild();
     void deleteBuild();
-    void saveBuildToFile();
     void showMOBASpecs();
     void showCPUSpecs();
     void showGPUSpecs();
@@ -79,8 +78,10 @@ private slots:
     void addComponents();
     void newComponentEdit(QString);
     void saveNewComponent(QString);
-    bool load();
-    //void loadFileToBuild();
+    void load();
+    void save();
+    void loadFileToBuild();
+    void saveBuildToFile();
 
 private:
     QTabWidget *tab;
