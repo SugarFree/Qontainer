@@ -234,7 +234,7 @@ void MainWindow::calculateTotal() {
 
 }
 
-void MainWindow::hideAll() {
+/*void MainWindow::hideAll() {
   for(unsigned int i=0; i!=componentsList->count(); i++)
     componentsList->item(i)->setHidden(true);
 }
@@ -244,6 +244,27 @@ void MainWindow::searchComponents(QString search_str) {
       QList<QListWidgetItem*> matches (componentsList->findItems(search_str, Qt::MatchFlag::MatchContains));
       for(QListWidgetItem* item:matches)
           item->setHidden(false);
+}*/
+
+void MainWindow::searchComponents(QString search_str) {
+    if(search_str!="") {
+        cvector<QString> componentsNames;
+        for(unsigned int i=0; i!=componenti.getSize(); i++)
+            componentsNames.push_back(componenti[i]->getName());
+        int pos=componentsNames.search(search_str);
+        if(pos==-1) {
+            for(unsigned int i=0; i!=componentsList->count(); i++)
+                componentsList->item(i)->setHidden(true);
+        }
+        else {
+            for(unsigned int i=0; i!=componentsList->count(); i++) {
+                if(i==pos)
+                    i++;
+                else
+                    componentsList->item(i)->setHidden(true);
+            }
+        }
+    }
 }
 
 void MainWindow::removeComponents() {
