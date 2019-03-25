@@ -1540,14 +1540,12 @@ void MainWindow::loadFileToBuild() {
     QJsonDocument document=QJsonDocument::fromJson(json);
     QJsonArray array=document.object().value("pc_parts").toArray();
     if(!array.isEmpty()) {
-        for(unsigned int i=0; i!=componenti.getSize(); ++i)
-            componentsNames.push_back(componenti[i]->getName());
         bool componentPresence=false;
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
             QString component_name=QString(j.toObject().value("name").toString());
             for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-                if(componentsNames.search(component_name)!=-1)
+                if(componenti[i]->getName()==component_name)
                     componentPresence=true;
             }
             if(component_type=="MOBA") {
@@ -1696,6 +1694,9 @@ void MainWindow::loadFileToBuild() {
                 }
             }
         }
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            componentsNames.push_back(componenti[i]->getName());
+        }
     }
 }
 
@@ -1708,23 +1709,11 @@ void MainWindow::load() {
     QJsonDocument document = QJsonDocument::fromJson(json);
     QJsonArray array = document.object().value("pc_parts").toArray();
     if(!array.isEmpty()) {
-        bool componentPresence;
-        int elements;
-        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-            if(componentsNames.search(componenti[i]->getName())==-1)
-                componentsNames.push_back(componenti[i]->getName());
-        }
+        if(componenti.getSize()!=0)
+            componenti.clear();
         foreach(const QJsonValue& j, array) {
-            componentPresence=false;
-            if(componenti.getSize()!=0)
-                elements=componenti.getSize();
             QString component_type=QString(j.toObject().value("component_type").toString());
-            QString component_name=QString(j.toObject().value("name").toString());
-            if(componentsNames.search(component_name)!=-1) {
-                componentPresence=true;
-                elements--;
-            }
-            if(component_type=="MOBA" && componentPresence==false)
+            if(component_type=="MOBA")
                 componenti.push_back(new MOBA(j.toObject().value("length").toInt(),
                                               j.toObject().value("height").toInt(),
                                               j.toObject().value("name").toString(),
@@ -1737,7 +1726,7 @@ void MainWindow::load() {
                                               j.toObject().value("max_RAM").toInt(),
                                               j.toObject().value("connectors").toString()
                                               ));
-            else if(component_type=="CPU" && componentPresence==false)
+            else if(component_type=="CPU")
                 componenti.push_back(new CPU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
                                              j.toObject().value("name").toString(),
@@ -1750,7 +1739,7 @@ void MainWindow::load() {
                                              j.toObject().value("cpu_socket").toString(),
                                              j.toObject().value("integrated_graphics").toBool()
                                              ));
-            else if(component_type=="GPU" && componentPresence==false)
+            else if(component_type=="GPU")
                 componenti.push_back(new GPU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
                                              j.toObject().value("name").toString(),
@@ -1765,7 +1754,7 @@ void MainWindow::load() {
                                              j.toObject().value("connectors").toString(),
                                              j.toObject().value("supplementary_power").toBool()
                                              ));
-            else if(component_type=="PSU" && componentPresence==false)
+            else if(component_type=="PSU")
                 componenti.push_back(new PSU(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
                                              j.toObject().value("name").toString(),
@@ -1778,7 +1767,7 @@ void MainWindow::load() {
                                              j.toObject().value("modularity").toString(),
                                              j.toObject().value("supplementary_power").toBool()
                                              ));
-            else if(component_type=="RAM" && componentPresence==false)
+            else if(component_type=="RAM")
                 componenti.push_back(new RAM(j.toObject().value("length").toInt(),
                                              j.toObject().value("height").toInt(),
                                              j.toObject().value("name").toString(),
@@ -1789,7 +1778,7 @@ void MainWindow::load() {
                                              j.toObject().value("type").toString(),
                                              j.toObject().value("size").toInt()
                                              ));
-            else if(component_type=="Storage" && componentPresence==false)
+            else if(component_type=="Storage")
                 componenti.push_back(new Storage(j.toObject().value("length").toInt(),
                                                  j.toObject().value("height").toInt(),
                                                  j.toObject().value("name").toString(),
@@ -1804,34 +1793,42 @@ void MainWindow::load() {
                                                  j.toObject().value("speed").toInt()
                                                  ));
         }
+        if(mobaComboBox->count()!=0)
+            mobaComboBox->clear();
+        if(cpuComboBox->count()!=0)
+            cpuComboBox->clear();
+        if(gpuComboBox->count()!=0)
+            gpuComboBox->clear();
+        if(psuComboBox->count()!=0)
+            psuComboBox->clear();
+        if(ramComboBox->count()!=0)
+            ramComboBox->clear();
+        if(storageComboBox->count()!=0)
+            storageComboBox->clear();
+        if(componentsList->count()!=0)
+            componentsList->clear();
         for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr) {
-                if(mobaComboBox->findText(componenti[i]->getName())==-1)
-                    mobaComboBox->addItem(componenti[i]->getName());
-            }
-            if(dynamic_cast<CPU*>(componenti[i])!=nullptr) {
-                if(cpuComboBox->findText(componenti[i]->getName())==-1)
-                    cpuComboBox->addItem(componenti[i]->getName());
-            }
-            if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
-                if(gpuComboBox->findText(componenti[i]->getName())==-1)
-                    gpuComboBox->addItem(componenti[i]->getName());
-            }
-            if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
-                if(psuComboBox->findText(componenti[i]->getName())==-1)
-                    psuComboBox->addItem(componenti[i]->getName());
-            }
-            if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
-                if(ramComboBox->findText(componenti[i]->getName())==-1)
-                    ramComboBox->addItem(componenti[i]->getName());
-            }
-            if(dynamic_cast<Storage*>(componenti[i])!=nullptr) {
-                if(storageComboBox->findText(componenti[i]->getName())==-1)
-                    storageComboBox->addItem(componenti[i]->getName());
-            }
-            if((componentsList->findItems(componenti[i]->getName(), Qt::MatchFlag::MatchExactly)).isEmpty())
-                componentsList->addItem(componenti[i]->getName());
+            componentsNames.push_back(componenti[i]->getName());
+            if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
+                mobaComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<CPU*>(componenti[i])!=nullptr)
+                cpuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<GPU*>(componenti[i])!=nullptr)
+                gpuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<PSU*>(componenti[i])!=nullptr)
+                psuComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<RAM*>(componenti[i])!=nullptr)
+                ramComboBox->addItem(componenti[i]->getName());
+            else if(dynamic_cast<Storage*>(componenti[i])!=nullptr)
+                storageComboBox->addItem(componenti[i]->getName());
+            componentsList->addItem(componenti[i]->getName());
         }
+        removeMOBAFromBuild();
+        removeCPUFromBuild();
+        removeGPUFromBuild();
+        removePSUFromBuild();
+        removeRAMFromBuild();
+        removeStorageFromBuild();
     }
 }
 

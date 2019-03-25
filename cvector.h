@@ -30,9 +30,9 @@ public:
     //void reserve(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
-    void pop_back();
-    void swap(T&, T&);
-    void erase(unsigned int);
+    //void pop_back();
+    //void swap(T&, T&);
+    void erase(const unsigned int &);
     int search(const T&) const;
     const T& operator[](unsigned int) const;
     bool operator==(const T&) const;
@@ -101,7 +101,9 @@ bool cvector<T>::empty() const {
 
 template<class T>
 void cvector<T>::clear() {
+    T* newPoint=nullptr;
     delete[] point;
+    point=newPoint;
     capacity=0;
     size=0;
 }
@@ -139,25 +141,19 @@ void cvector<T>::push_back(const T& v) {
 }
 
 template<class T>
-void cvector<T>::pop_back() {
-    delete point[size-1];
-    size--;
-}
-
-template<class T>
-void cvector<T>::swap(T& p, T& q) {
-    T temp(p);
-    p=q;
-    q=temp;
-}
-
-template<class T>
-void cvector<T>::erase(unsigned int pos) {
-    if(pos==size-1)
-        pop_back();
-    else {
-        swap(point[pos],point[size-1]);
-        pop_back();
+void cvector<T>::erase(const unsigned int &pos) {
+    if(pos<size) {
+        unsigned int j=0;
+        T* newPoint = new T[capacity];
+        for(unsigned int i=0; i<size; ++i) {
+            if(i!=pos) {
+                newPoint[j]=point[i];
+                ++j;
+            }
+        }
+        size--;
+        delete[] point;
+        point=newPoint;
     }
 }
 
