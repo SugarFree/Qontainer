@@ -179,7 +179,37 @@ private:
     QDoubleSpinBox *componentPriceSpin;
     QSpinBox *componentPowerConsumptionSpin;
     QLineEdit *componentManufacturerLine;
-    //QLabel *mobaSocketLabel;
+    QLabel *mobaSocketLabel;
+    QLabel *mobaFormFactorLabel;
+    QLabel *mobaRAMSlotsLabel;
+    QLabel *mobaMaxRAMLabel;
+    QLabel *mobaConnectorsLabel;
+    QLabel *cpuSpeedLabel;
+    QLabel *cpuCoresLabel;
+    QLabel *cpux64bitLabel;
+    QLabel *cpuSocketLabel;
+    QLabel *cpuIntegratedGraphicsLabel;
+    QLabel *gpuTypeLabel;
+    QLabel *gpuMemorySizeLabel;
+    QLabel *gpuPerformanceLabel;
+    QLabel *gpuClockLabel;
+    QLabel *gpuInterfaceLabel;
+    QLabel *gpuConnectorsLabel;
+    QLabel *gpuSupplementaryPowerLabel;
+    QLabel *psuFormFactorLabel;
+    QLabel *psuWattageLabel;
+    QLabel *psuEfficiencyCertificationLabel;
+    QLabel *psuModularityLabel;
+    QLabel *psuSupplementaryPowerLabel;
+    QLabel *ramSpeedLabel;
+    QLabel *ramTypeLabel;
+    QLabel *ramSizeLabel;
+    QLabel *storageTypeLabel;
+    QLabel *storageRPMLabel;
+    QLabel *storageSizeLabel;
+    QLabel *storageInterfaceLabel;
+    QLabel *storageFormFactorLabel;
+    QLabel *storageSpeedLabel;
     QLineEdit *mobaMOBASocketLine;
     QLineEdit *mobaMOBAFormFactorLine;
     QSpinBox *mobaMOBARAMSlotsSpin;
@@ -221,6 +251,8 @@ private:
     std::string removeZero(std::string);
     void calculateTotal();
     void hideAll();
+    void specLabels(QString);
+    void basicSpecs(unsigned int);
 };
 
 #endif // MAINWINDOW_H
