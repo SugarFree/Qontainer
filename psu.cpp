@@ -1,7 +1,7 @@
 #include "psu.h"
 #include <iostream>
 
-QString PSU::getForm_factor() const
+QString PSU::getFormFactor() const
 {
     return form_factor;
 }
@@ -11,7 +11,7 @@ unsigned int PSU::getWattage() const
     return wattage;
 }
 
-QString PSU::getEfficiency_certification() const
+QString PSU::getEfficiencyCertification() const
 {
     return efficiency_certification;
 }
@@ -21,7 +21,7 @@ QString PSU::getModularity() const
     return modularity;
 }
 
-void PSU::setForm_factor(const QString &value)
+void PSU::setFormFactor(const QString &value)
 {
     form_factor = value;
 }
@@ -31,7 +31,7 @@ void PSU::setWattage(unsigned int value)
     wattage = value;
 }
 
-void PSU::setEfficiency_certification(const QString &value)
+void PSU::setEfficiencyCertification(const QString &value)
 {
     efficiency_certification = value;
 }
@@ -41,7 +41,7 @@ void PSU::setModularity(const QString &value)
     modularity = value;
 }
 
-void PSU::setSupplementary_power(bool value)
+void PSU::setSupplementaryPower(bool value)
 {
     supplementary_power = value;
 }
@@ -64,13 +64,6 @@ unsigned int PSU::Rating() {
     if(supplementary_power)
         rating++;
     return rating;
-}
-
-void PSU::checkPowerConsumption(const PC_Parts *c) const {
-    if(c->getPowerConsumption()>wattage)
-        std::cerr<<"Attenzione! Consumo energetico eccessivo per l'attuale alimentazione.";
-    else if ((((c->getPowerConsumption())+(30/100)*c->getPowerConsumption()))<wattage)
-        std::cerr<<"Attenzione! Consumo energetico vicino al wattaggio dell'alimentatore.";
 }
 
 bool PSU::getSupplementaryPower() const {

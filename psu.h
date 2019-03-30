@@ -13,17 +13,16 @@ public:
     PSU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", unsigned int =0, QString ="Non specificato", QString ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
-    void checkPowerConsumption(const PC_Parts*) const;
-    bool getSupplementaryPower() const;
-    QString getForm_factor() const;
+    QString getFormFactor() const;
     unsigned int getWattage() const;
-    QString getEfficiency_certification() const;
+    QString getEfficiencyCertification() const;
     QString getModularity() const;
-    void setForm_factor(const QString &value);
+    bool getSupplementaryPower() const;
+    void setFormFactor(const QString &value);
     void setWattage(unsigned int value);
-    void setEfficiency_certification(const QString &value);
+    void setEfficiencyCertification(const QString &value);
     void setModularity(const QString &value);
-    void setSupplementary_power(bool value);
+    void setSupplementaryPower(bool value);
 };
 
 #endif // PSU_H

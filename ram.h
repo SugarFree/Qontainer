@@ -11,11 +11,10 @@ public:
     RAM(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, unsigned int =0, QString ="Non specificato", unsigned int =0);
     PC_Parts *clone() const;
     unsigned int Rating();
-    double PricePerGB() const;
     unsigned int getSize() const;
-    unsigned int getRam_speed() const;
     QString getType() const;
-    void setRam_speed(unsigned int value);
+    unsigned int getRamSpeed() const;
+    void setRamSpeed(unsigned int value);
     void setType(const QString &value);
     void setSize(unsigned int value);
 };

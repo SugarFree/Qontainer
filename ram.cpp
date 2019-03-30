@@ -1,6 +1,6 @@
 #include "ram.h"
 
-unsigned int RAM::getRam_speed() const
+unsigned int RAM::getRamSpeed() const
 {
     return ram_speed;
 }
@@ -10,7 +10,7 @@ QString RAM::getType() const
     return type;
 }
 
-void RAM::setRam_speed(unsigned int value)
+void RAM::setRamSpeed(unsigned int value)
 {
     ram_speed = value;
 }
@@ -45,10 +45,6 @@ unsigned int RAM::Rating() {
     if(size>=8)
         rating++;
     return rating;
-}
-
-double RAM::PricePerGB() const {
-    return (getPrice()/size);
 }
 
 unsigned int RAM::getSize() const {

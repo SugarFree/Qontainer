@@ -6,7 +6,7 @@ QString GPU::getType() const
     return type;
 }
 
-unsigned int GPU::getMemory_size() const
+unsigned int GPU::getMemorySize() const
 {
     return memory_size;
 }
@@ -31,7 +31,7 @@ QString GPU::getConnectors() const
     return connectors;
 }
 
-bool GPU::getSupplementary_power() const
+bool GPU::getSupplementaryPower() const
 {
     return supplementary_power;
 }
@@ -41,7 +41,7 @@ void GPU::setType(const QString &value)
     type = value;
 }
 
-void GPU::setMemory_size(unsigned int value)
+void GPU::setMemorySize(unsigned int value)
 {
     memory_size = value;
 }
@@ -66,7 +66,7 @@ void GPU::setConnectors(const QString &value)
     connectors = value;
 }
 
-void GPU::setSupplementary_power(bool value)
+void GPU::setSupplementaryPower(bool value)
 {
     supplementary_power = value;
 }
@@ -97,11 +97,4 @@ unsigned int GPU::Rating() {
     else if(clock<1400 && clock>=1100)
         rating++;
     return rating;
-}
-
-void GPU::checkSupplementaryPower(const PSU* p) const {
-    if(supplementary_power) {
-        if(p->getSupplementaryPower()==false && supplementary_power)
-            std::cerr<<"Pin di alimentazione supplementare non disponibili.";
-    }
 }

@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-//#include "ui_mainwindow.h"
 #include <iostream>
 
 std::string MainWindow::removeZero(std::string str) {
@@ -191,26 +190,6 @@ void MainWindow::searchComponents(QString search_str) {
       for(QListWidgetItem* item:matches)
           item->setHidden(false);
 }
-
-/*void MainWindow::searchComponents(QString search_str) {
-    if(search_str!="") {
-        int pos=componentsNames.search(search_str);
-        if(pos==-1) {
-            for(unsigned int i=0; i!=componentsList->count(); i++)
-                componentsList->item(i)->setHidden(true);
-        }
-        else {
-            for(unsigned int i=0; i!=componentsList->count(); i++) {
-                if(i==pos)
-                    componentsList->item(i)->setHidden(false);
-            }
-        }
-    }
-    else {
-        for(unsigned int i=0; i!=componentsList->count(); i++)
-            componentsList->item(i)->setHidden(false);
-    }
-}*/
 
 void MainWindow::removeComponents() {
     if(componentsList->currentItem()!=nullptr) {
@@ -490,13 +469,13 @@ void MainWindow::saveComponentsChanges() {
                 if((build->item(0, 0))!=nullptr && (build->item(0, 0))->text()==componentName)
                     removeMOBAFromBuild();
                 if(mobaMOBASocketLine->text()!=moba->getMOBASocket())
-                    moba->setMoba_socket(mobaMOBASocketLine->text());
-                if(mobaMOBAFormFactorLine->text()!=moba->getForm_factor())
+                    moba->setMOBASocket(mobaMOBASocketLine->text());
+                if(mobaMOBAFormFactorLine->text()!=moba->getFormFactor())
                     moba->setFormFactor(mobaMOBAFormFactorLine->text());
-                if(mobaMOBARAMSlotsSpin->value()!=moba->getRAM_slots())
-                    moba->setRAM_slots(mobaMOBARAMSlotsSpin->value());
-                if(mobaMOBAmaxRAMSpin->value()!=moba->getMax_RAM())
-                    moba->setMax_RAM(mobaMOBAmaxRAMSpin->value());
+                if(mobaMOBARAMSlotsSpin->value()!=moba->getRAMSlots())
+                    moba->setRAMSlots(mobaMOBARAMSlotsSpin->value());
+                if(mobaMOBAmaxRAMSpin->value()!=moba->getMaxRAM())
+                    moba->setMaxRAM(mobaMOBAmaxRAMSpin->value());
                 if(mobaMOBAConnectorsLine->text()!=moba->getConnectors())
                     moba->setConnectors(mobaMOBAConnectorsLine->text());
                 (componentsList->currentItem())->setText(componentNameLine->text());
@@ -505,16 +484,16 @@ void MainWindow::saveComponentsChanges() {
                 CPU* cpu=static_cast<CPU*>(componenti[i]);
                 if((build->item(1, 0))!=nullptr && (build->item(1, 0))->text()==componentName)
                     removeCPUFromBuild();
-                if(cpuCPUSpeedSpin->value()!=cpu->getCpu_speed())
-                    cpu->setCpu_speed(cpuCPUSpeedSpin->value());
+                if(cpuCPUSpeedSpin->value()!=cpu->getCpuSpeed())
+                    cpu->setCpuSpeed(cpuCPUSpeedSpin->value());
                 if(cpuCPUCoresSpin->value()!=cpu->getCores())
                     cpu->setCores(cpuCPUCoresSpin->value());
-                if(cpuCPUx64bitCheck->isChecked()!=cpu->getX64bit())
-                    cpu->setX64bit(cpuCPUx64bitCheck->isChecked());
-                if(cpuCPUSocketLine->text()!=cpu->getCpu_socket())
-                    cpu->setCpu_socket(cpuCPUSocketLine->text());
-                if(cpuCPUIntegratedGraphicCheck->isChecked()!=cpu->getIntegrated_graphic())
-                    cpu->setIntegrated_graphic(cpuCPUIntegratedGraphicCheck->isChecked());
+                if(cpuCPUx64bitCheck->isChecked()!=cpu->getx64bit())
+                    cpu->setx64bit(cpuCPUx64bitCheck->isChecked());
+                if(cpuCPUSocketLine->text()!=cpu->getCpuSocket())
+                    cpu->setCpuSocket(cpuCPUSocketLine->text());
+                if(cpuCPUIntegratedGraphicCheck->isChecked()!=cpu->getIntegratedGraphic())
+                    cpu->setIntegratedGraphic(cpuCPUIntegratedGraphicCheck->isChecked());
                 (componentsList->currentItem())->setText(componentNameLine->text());
             }
             if(dynamic_cast<GPU*>(componenti[i])!=nullptr) {
@@ -523,8 +502,8 @@ void MainWindow::saveComponentsChanges() {
                     removeGPUFromBuild();
                 if(gpuGPUTypeLine->text()!=gpu->getType())
                     gpu->setType(gpuGPUTypeLine->text());
-                if(gpuGPUMemorySizeSpin->value()!=gpu->getMemory_size())
-                    gpu->setMemory_size(gpuGPUMemorySizeSpin->value());
+                if(gpuGPUMemorySizeSpin->value()!=gpu->getMemorySize())
+                    gpu->setMemorySize(gpuGPUMemorySizeSpin->value());
                 if(gpuGPUPerformanceSpin->value()!=gpu->getPerformance())
                     gpu->setPerformance(gpuGPUPerformanceSpin->value());
                 if(gpuGPUClockSpin->value()!=gpu->getClock())
@@ -533,32 +512,32 @@ void MainWindow::saveComponentsChanges() {
                     gpu->setInterface(gpuGPUInterfaceLine->text());
                 if(gpuGPUConnectorsLine->text()!=gpu->getConnectors())
                     gpu->setConnectors(gpuGPUConnectorsLine->text());
-                if(gpuGPUSupplementaryPowerCheck->isChecked()!=gpu->getSupplementary_power())
-                    gpu->setSupplementary_power(gpuGPUSupplementaryPowerCheck->isChecked());
+                if(gpuGPUSupplementaryPowerCheck->isChecked()!=gpu->getSupplementaryPower())
+                    gpu->setSupplementaryPower(gpuGPUSupplementaryPowerCheck->isChecked());
                 (componentsList->currentItem())->setText(componentNameLine->text());
             }
             if(dynamic_cast<PSU*>(componenti[i])!=nullptr) {
                 PSU* psu=static_cast<PSU*>(componenti[i]);
                 if((build->item(3, 0))!=nullptr && (build->item(3, 0))->text()==componentName)
                     removePSUFromBuild();
-                if(psuPSUFormFactorLine->text()!=psu->getForm_factor())
-                    psu->setForm_factor(psuPSUFormFactorLine->text());
+                if(psuPSUFormFactorLine->text()!=psu->getFormFactor())
+                    psu->setFormFactor(psuPSUFormFactorLine->text());
                 if(psuPSUWattageSpin->value()!=psu->getWattage())
                     psu->setWattage(psuPSUWattageSpin->value());
-                if(psuPSUEfficiencyCertificationLine->text()!=psu->getEfficiency_certification())
-                    psu->setEfficiency_certification(psuPSUEfficiencyCertificationLine->text());
+                if(psuPSUEfficiencyCertificationLine->text()!=psu->getEfficiencyCertification())
+                    psu->setEfficiencyCertification(psuPSUEfficiencyCertificationLine->text());
                 if(psuPSUModularityLine->text()!=psu->getModularity())
                     psu->setModularity(psuPSUModularityLine->text());
                 if(psuPSUSupplementaryPowerCheck->isChecked()!=psu->getSupplementaryPower())
-                    psu->setSupplementary_power(psuPSUSupplementaryPowerCheck->isChecked());
+                    psu->setSupplementaryPower(psuPSUSupplementaryPowerCheck->isChecked());
                 (componentsList->currentItem())->setText(componentNameLine->text());
             }
             if(dynamic_cast<RAM*>(componenti[i])!=nullptr) {
                 RAM* ram=static_cast<RAM*>(componenti[i]);
                 if((build->item(4, 0))!=nullptr && (build->item(4, 0))->text()==componentName)
                     removeRAMFromBuild();
-                if(ramRAMSpeedSpin->value()!=ram->getRam_speed())
-                    ram->setRam_speed(ramRAMSpeedSpin->value());
+                if(ramRAMSpeedSpin->value()!=ram->getRamSpeed())
+                    ram->setRamSpeed(ramRAMSpeedSpin->value());
                 if(ramRAMTypeLine->text()!=ram->getType())
                     ram->setType(ramRAMTypeLine->text());
                 if(ramRAMSizeSpin->value()!=ram->getSize())
@@ -571,14 +550,14 @@ void MainWindow::saveComponentsChanges() {
                     removeStorageFromBuild();
                 if(storageStorageTypeLine->text()!=storage->getType())
                     storage->setType(storageStorageTypeLine->text());
-                if(storageStorageRPMSpin->value()!=storage->getRpm())
-                    storage->setRpm(storageStorageRPMSpin->value());
+                if(storageStorageRPMSpin->value()!=storage->getRPM())
+                    storage->setRPM(storageStorageRPMSpin->value());
                 if(storageStorageSizeSpin->value()!=storage->getSize())
                     storage->setSize(storageStorageSizeSpin->value());
                 if(storageStorageInterfaceLine->text()!=storage->getInterface())
                     storage->setInterface(storageStorageInterfaceLine->text());
-                if(storageStorageFormFactorSpin->value()!=storage->getForm_factor())
-                    storage->setForm_factor(storageStorageFormFactorSpin->value());
+                if(storageStorageFormFactorSpin->value()!=storage->getFormFactor())
+                    storage->setFormFactor(storageStorageFormFactorSpin->value());
                 if(storageStorageSpeedSpin->value()!=storage->getSpeed())
                     storage->setSpeed(storageStorageSpeedSpin->value());
                 (componentsList->currentItem())->setText(componentNameLine->text());
@@ -614,11 +593,11 @@ void MainWindow::editComponentsSpecs() {
                     MOBA* moba=static_cast<MOBA*>(componenti[i]);
                     specLabels(type);
                     mobaMOBASocketLine=new QLineEdit(moba->getMOBASocket());
-                    mobaMOBAFormFactorLine=new QLineEdit(moba->getForm_factor());
+                    mobaMOBAFormFactorLine=new QLineEdit(moba->getFormFactor());
                     mobaMOBARAMSlotsSpin=new QSpinBox();
-                    mobaMOBARAMSlotsSpin->setValue(moba->getRAM_slots());
+                    mobaMOBARAMSlotsSpin->setValue(moba->getRAMSlots());
                     mobaMOBAmaxRAMSpin=new QSpinBox();
-                    mobaMOBAmaxRAMSpin->setValue(moba->getMax_RAM());
+                    mobaMOBAmaxRAMSpin->setValue(moba->getMaxRAM());
                     mobaMOBAConnectorsLine=new QLineEdit(moba->getConnectors());
                     componentsSpecsLayout2->addRow(mobaSocketLabel, mobaMOBASocketLine);
                     componentsSpecsLayout2->addRow(mobaFormFactorLabel, mobaMOBAFormFactorLine);
@@ -635,14 +614,14 @@ void MainWindow::editComponentsSpecs() {
                     CPU* cpu=static_cast<CPU*>(componenti[i]);
                     specLabels(type);
                     cpuCPUSpeedSpin=new QDoubleSpinBox();
-                    cpuCPUSpeedSpin->setValue(cpu->getCpu_speed());
+                    cpuCPUSpeedSpin->setValue(cpu->getCpuSpeed());
                     cpuCPUCoresSpin=new QSpinBox();
                     cpuCPUCoresSpin->setValue(cpu->getCores());
                     cpuCPUx64bitCheck=new QCheckBox();
-                    cpuCPUx64bitCheck->setChecked(cpu->getX64bit());
-                    cpuCPUSocketLine=new QLineEdit(cpu->getCpu_socket());
+                    cpuCPUx64bitCheck->setChecked(cpu->getx64bit());
+                    cpuCPUSocketLine=new QLineEdit(cpu->getCpuSocket());
                     cpuCPUIntegratedGraphicCheck=new QCheckBox();
-                    cpuCPUIntegratedGraphicCheck->setChecked(cpu->getIntegrated_graphic());
+                    cpuCPUIntegratedGraphicCheck->setChecked(cpu->getIntegratedGraphic());
                     componentsSpecsLayout2->addRow(cpuSpeedLabel, cpuCPUSpeedSpin);
                     componentsSpecsLayout2->addRow(cpuCoresLabel, cpuCPUCoresSpin);
                     componentsSpecsLayout2->addRow(cpux64bitLabel, cpuCPUx64bitCheck);
@@ -659,7 +638,7 @@ void MainWindow::editComponentsSpecs() {
                     specLabels(type);
                     gpuGPUTypeLine=new QLineEdit(gpu->getType());
                     gpuGPUMemorySizeSpin=new QSpinBox();
-                    gpuGPUMemorySizeSpin->setValue(gpu->getMemory_size());
+                    gpuGPUMemorySizeSpin->setValue(gpu->getMemorySize());
                     gpuGPUPerformanceSpin=new QDoubleSpinBox();
                     gpuGPUPerformanceSpin->setValue(gpu->getPerformance());
                     gpuGPUClockSpin=new QSpinBox();
@@ -668,7 +647,7 @@ void MainWindow::editComponentsSpecs() {
                     gpuGPUInterfaceLine=new QLineEdit(gpu->getInterface());
                     gpuGPUConnectorsLine=new QLineEdit(gpu->getConnectors());
                     gpuGPUSupplementaryPowerCheck=new QCheckBox();
-                    gpuGPUSupplementaryPowerCheck->setChecked(gpu->getSupplementary_power());
+                    gpuGPUSupplementaryPowerCheck->setChecked(gpu->getSupplementaryPower());
                     componentsSpecsLayout2->addRow(gpuTypeLabel, gpuGPUTypeLine);
                     componentsSpecsLayout2->addRow(gpuMemorySizeLabel, gpuGPUMemorySizeSpin);
                     componentsSpecsLayout2->addRow(gpuPerformanceLabel, gpuGPUPerformanceSpin);
@@ -685,11 +664,11 @@ void MainWindow::editComponentsSpecs() {
                     QString type="PSU";
                     PSU *psu=static_cast<PSU*>(componenti[i]);
                     specLabels(type);
-                    psuPSUFormFactorLine=new QLineEdit(psu->getForm_factor());
+                    psuPSUFormFactorLine=new QLineEdit(psu->getFormFactor());
                     psuPSUWattageSpin=new QSpinBox();
                     psuPSUWattageSpin->setMaximum(2000);
                     psuPSUWattageSpin->setValue(psu->getWattage());
-                    psuPSUEfficiencyCertificationLine=new QLineEdit(psu->getEfficiency_certification());
+                    psuPSUEfficiencyCertificationLine=new QLineEdit(psu->getEfficiencyCertification());
                     psuPSUModularityLine=new QLineEdit(psu->getModularity());
                     psuPSUSupplementaryPowerCheck=new QCheckBox();
                     psuPSUSupplementaryPowerCheck->setChecked(psu->getSupplementaryPower());
@@ -709,7 +688,7 @@ void MainWindow::editComponentsSpecs() {
                     specLabels(type);
                     ramRAMSpeedSpin=new QSpinBox();
                     ramRAMSpeedSpin->setMaximum(10000);
-                    ramRAMSpeedSpin->setValue(ram->getRam_speed());
+                    ramRAMSpeedSpin->setValue(ram->getRamSpeed());
                     ramRAMTypeLine=new QLineEdit(ram->getType());
                     ramRAMSizeSpin=new QSpinBox();
                     ramRAMSizeSpin->setValue(ram->getSize());
@@ -728,13 +707,13 @@ void MainWindow::editComponentsSpecs() {
                     storageStorageTypeLine=new QLineEdit(storage->getType());
                     storageStorageRPMSpin=new QSpinBox();
                     storageStorageRPMSpin->setMaximum(10000);
-                    storageStorageRPMSpin->setValue(storage->getRpm());
+                    storageStorageRPMSpin->setValue(storage->getRPM());
                     storageStorageSizeSpin=new QSpinBox();
                     storageStorageSizeSpin->setMaximum(10000);
                     storageStorageSizeSpin->setValue(storage->getSize());
                     storageStorageInterfaceLine=new QLineEdit(storage->getInterface());
                     storageStorageFormFactorSpin=new QDoubleSpinBox();
-                    storageStorageFormFactorSpin->setValue(storage->getForm_factor());
+                    storageStorageFormFactorSpin->setValue(storage->getFormFactor());
                     storageStorageSpeedSpin=new QSpinBox();
                     storageStorageSpeedSpin->setMaximum(10000);
                     storageStorageSpeedSpin->setValue(storage->getSpeed());
@@ -760,7 +739,8 @@ void MainWindow::editComponentsSpecs() {
 
 void MainWindow::removeMOBAFromBuild() {
     if((build->item(0, 0))!=nullptr) {
-        resetSpecs();
+        if(!specLayout->isEmpty() || specLayout->isEnabled())
+            resetSpecs();
         build->setItem(0, 0, nullptr);
         build->setItem(0, 1, nullptr);
         build->setItem(0, 2, nullptr);
@@ -770,7 +750,8 @@ void MainWindow::removeMOBAFromBuild() {
 
 void MainWindow::removeCPUFromBuild() {
     if((build->item(1, 0))!=nullptr) {
-        resetSpecs();
+        if(componentNameLabel->text()!="")
+            resetSpecs();
         build->setItem(1, 0, nullptr);
         build->setItem(1, 1, nullptr);
         build->setItem(1, 2, nullptr);
@@ -780,7 +761,8 @@ void MainWindow::removeCPUFromBuild() {
 
 void MainWindow::removeGPUFromBuild() {
     if((build->item(2, 0))!=nullptr) {
-        resetSpecs();
+        if(componentNameLabel->text()!="")
+            resetSpecs();
         build->setItem(2, 0, nullptr);
         build->setItem(2, 1, nullptr);
         build->setItem(2, 2, nullptr);
@@ -790,7 +772,8 @@ void MainWindow::removeGPUFromBuild() {
 
 void MainWindow::removePSUFromBuild() {
     if((build->item(3, 0))!=nullptr) {
-        resetSpecs();
+        if(componentNameLabel->text()!="")
+            resetSpecs();
         build->setItem(3, 0, nullptr);
         build->setItem(3, 1, nullptr);
         build->setItem(3, 2, nullptr);
@@ -800,7 +783,8 @@ void MainWindow::removePSUFromBuild() {
 
 void MainWindow::removeRAMFromBuild() {
     if((build->item(4, 0))!=nullptr) {
-        resetSpecs();
+        if(componentNameLabel->text()!="")
+            resetSpecs();
         build->setItem(4, 0, nullptr);
         build->setItem(4, 1, nullptr);
         build->setItem(4, 2, nullptr);
@@ -810,7 +794,8 @@ void MainWindow::removeRAMFromBuild() {
 
 void MainWindow::removeStorageFromBuild() {
     if((build->item(5, 0))!=nullptr) {
-        resetSpecs();
+        if(componentNameLabel->text()!="")
+            resetSpecs();
         build->setItem(5, 0, nullptr);
         build->setItem(5, 1, nullptr);
         build->setItem(5, 2, nullptr);
@@ -849,9 +834,9 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
             singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getForm_factor()));
-            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAM_slots()));
-            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMax_RAM()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
+            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
+            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
             singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
             newBuild.append(singleComponent);
         }
@@ -864,11 +849,11 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
-            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpu_speed()));
+            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
             singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
-            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getX64bit()));
-            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpu_socket()));
-            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegrated_graphic()));
+            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
+            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
+            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
             newBuild.append(singleComponent);
         }
         else if(gpuCheck && (build->item(2, 0))->text()==componenti[i]->getName()) {
@@ -881,12 +866,12 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
             singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
-            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemory_size()));
+            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
             singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
             singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
             singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
             singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementary_power()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
             newBuild.append(singleComponent);
         }
         else if(psuCheck && (build->item(3, 0))->text()==componenti[i]->getName()) {
@@ -898,9 +883,9 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getForm_factor()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
             singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
-            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiency_certification()));
+            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
             singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
             singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
             newBuild.append(singleComponent);
@@ -914,7 +899,7 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
-            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRam_speed()));
+            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
             singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
             singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
             newBuild.append(singleComponent);
@@ -929,10 +914,10 @@ void MainWindow::saveBuildToFile() {
             singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
             singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
-            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRpm()));
+            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
             singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
             singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getForm_factor()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
             singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
             newBuild.append(singleComponent);
         }
@@ -976,9 +961,9 @@ void MainWindow::save() {
             singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
             singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getForm_factor()));
-            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAM_slots()));
-            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMax_RAM()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
+            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
+            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
             singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
             newDatabase.append(singleComponent);
         }
@@ -991,11 +976,11 @@ void MainWindow::save() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
-            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpu_speed()));
+            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
             singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
-            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getX64bit()));
-            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpu_socket()));
-            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegrated_graphic()));
+            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
+            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
+            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
             newDatabase.append(singleComponent);
         }
         else if(dynamic_cast<GPU*>(componenti[i])) {
@@ -1008,12 +993,12 @@ void MainWindow::save() {
             singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
             singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
-            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemory_size()));
+            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
             singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
             singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
             singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
             singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementary_power()));
+            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
             newDatabase.append(singleComponent);
         }
         else if(dynamic_cast<PSU*>(componenti[i])) {
@@ -1025,9 +1010,9 @@ void MainWindow::save() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getForm_factor()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
             singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
-            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiency_certification()));
+            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
             singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
             singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
             newDatabase.append(singleComponent);
@@ -1041,7 +1026,7 @@ void MainWindow::save() {
             singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
             singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
-            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRam_speed()));
+            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
             singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
             singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
             newDatabase.append(singleComponent);
@@ -1056,10 +1041,10 @@ void MainWindow::save() {
             singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
             singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
             singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
-            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRpm()));
+            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
             singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
             singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getForm_factor()));
+            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
             singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
             newDatabase.append(singleComponent);
         }
@@ -1146,7 +1131,18 @@ void MainWindow::specLabels(QString type) {
 void MainWindow::basicSpecs(unsigned int pos) {
     if((build->item(0, 0)!=nullptr && (build->item(0, 0))->text()!=componentNameLabel->text()) || (build->item(1, 0)!=nullptr && (build->item(1, 0))->text()!=componentNameLabel->text()) || (build->item(2, 0)!=nullptr && (build->item(2, 0))->text()!=componentNameLabel->text()) ||
        (build->item(3, 0)!=nullptr && (build->item(3, 0))->text()!=componentNameLabel->text()) || (build->item(4, 0)!=nullptr && (build->item(4, 0))->text()!=componentNameLabel->text()) || (build->item(5, 0)!=nullptr && (build->item(5, 0))->text()!=componentNameLabel->text())) {
-        componentNameLabel->setText((build->item(0, 0))->text());
+        if(dynamic_cast<MOBA*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(0, 0))->text());
+        else if(dynamic_cast<CPU*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(1, 0))->text());
+        else if(dynamic_cast<GPU*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(2, 0))->text());
+        else if(dynamic_cast<PSU*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(3, 0))->text());
+        else if(dynamic_cast<RAM*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(4, 0))->text());
+        else if(dynamic_cast<Storage*>(componenti[pos])!=nullptr)
+            componentNameLabel->setText((build->item(5, 0))->text());
         componentManufacturerLabel->setText(componenti[pos]->getManufacturer());
         componentLengthLabel->setText(QString::number(componenti[pos]->getLength()));
         componentHeightLabel->setText(QString::number(componenti[pos]->getHeight()));
@@ -1158,7 +1154,8 @@ void MainWindow::basicSpecs(unsigned int pos) {
 }
 
 void MainWindow::showMOBASpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(0, 0)!=nullptr && (build->item(0, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="MOBA";
@@ -1167,9 +1164,9 @@ void MainWindow::showMOBASpecs() {
                 trovato=true;
                 MOBA* moba=static_cast<MOBA*>(componenti[i]);
                 QString mobaMOBASocket=moba->getMOBASocket();
-                QString mobaFormFactor=moba->getForm_factor();
-                QString mobaRAMSlots=(QString::number(moba->getRAM_slots()));
-                QString mobaMaxRAM=(QString::number(moba->getMax_RAM()));
+                QString mobaFormFactor=moba->getFormFactor();
+                QString mobaRAMSlots=(QString::number(moba->getRAMSlots()));
+                QString mobaMaxRAM=(QString::number(moba->getMaxRAM()));
                 QString mobaConnectors=moba->getConnectors();
                 specLabels(type);
                 QLabel *mobaMOBASocketLabel=new QLabel(mobaMOBASocket);
@@ -1192,7 +1189,8 @@ void MainWindow::showMOBASpecs() {
 }
 
 void MainWindow::showCPUSpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(1, 0)!=nullptr && (build->item(1, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="CPU";
@@ -1202,16 +1200,16 @@ void MainWindow::showCPUSpecs() {
                 QString cpux64bit;
                 QString cpuIntegratedGraphics;
                 CPU* cpu=static_cast<CPU*>(componenti[i]);
-                std::string speed=std::to_string(cpu->getCpu_speed());
+                std::string speed=std::to_string(cpu->getCpuSpeed());
                 speed=removeZero(speed);
                 QString cpuSpeed=QString::fromStdString(speed);
                 QString cpuCores=(QString::number(cpu->getCores()));
-                if(cpu->getX64bit())
+                if(cpu->getx64bit())
                     cpux64bit="Sì";
                 else
                     cpux64bit="No";
-                QString cpuSocket=cpu->getCpu_socket();
-                if(cpu->getIntegrated_graphic())
+                QString cpuSocket=cpu->getCpuSocket();
+                if(cpu->getIntegratedGraphic())
                     cpuIntegratedGraphics="Sì";
                 else
                     cpuIntegratedGraphics="No";
@@ -1236,7 +1234,8 @@ void MainWindow::showCPUSpecs() {
 }
 
 void MainWindow::showGPUSpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(2, 0)!=nullptr && (build->item(2, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="GPU";
@@ -1246,14 +1245,14 @@ void MainWindow::showGPUSpecs() {
                 QString gpuSupplementaryPower;
                 GPU *gpu=static_cast<GPU*>(componenti[i]);
                 QString gpuType=gpu->getType();
-                QString gpuMemorySize=(QString::number(gpu->getMemory_size()));
+                QString gpuMemorySize=(QString::number(gpu->getMemorySize()));
                 std::string performance=std::to_string(gpu->getPerformance());
                 performance=removeZero(performance);
                 QString gpuPerformance=QString::fromStdString(performance);
                 QString gpuClock=(QString::number(gpu->getClock()));
                 QString gpuInterface=gpu->getInterface();
                 QString gpuConnectors=gpu->getConnectors();
-                if(gpu->getSupplementary_power())
+                if(gpu->getSupplementaryPower())
                     gpuSupplementaryPower="Sì";
                 else
                     gpuSupplementaryPower="No";
@@ -1282,7 +1281,8 @@ void MainWindow::showGPUSpecs() {
 }
 
 void MainWindow::showPSUSpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(3, 0)!=nullptr && (build->item(3, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="PSU";
@@ -1291,9 +1291,9 @@ void MainWindow::showPSUSpecs() {
                 trovato=true;
                 QString psuSupplementaryPower;
                 PSU *psu=static_cast<PSU*>(componenti[i]);
-                QString psuFormFactor=psu->getForm_factor();
+                QString psuFormFactor=psu->getFormFactor();
                 QString psuWattage=(QString::number(psu->getWattage()));
-                QString psuEfficiencyCertification=psu->getEfficiency_certification();
+                QString psuEfficiencyCertification=psu->getEfficiencyCertification();
                 QString psuModularity=psu->getModularity();
                 if(psu->getSupplementaryPower()==true)
                     psuSupplementaryPower="Sì";
@@ -1320,7 +1320,8 @@ void MainWindow::showPSUSpecs() {
 }
 
 void MainWindow::showRAMSpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(4, 0)!=nullptr && (build->item(4, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="RAM";
@@ -1328,7 +1329,7 @@ void MainWindow::showRAMSpecs() {
             if(!trovato && componenti[i]->getName()==(build->item(4, 0))->text()) {
                 trovato=true;
                 RAM *ram=static_cast<RAM*>(componenti[i]);
-                QString ramSpeed=(QString::number(ram->getRam_speed()));
+                QString ramSpeed=(QString::number(ram->getRamSpeed()));
                 QString ramType=ram->getType();
                 QString ramSize=(QString::number(ram->getSize()));
                 specLabels(type);
@@ -1348,7 +1349,8 @@ void MainWindow::showRAMSpecs() {
 }
 
 void MainWindow::showStorageSpecs() {
-    resetSpecs();
+    if(componentNameLabel->text()!="")
+        resetSpecs();
     if(build->item(5, 0)!=nullptr && (build->item(5, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
         QString type="Storage";
@@ -1357,10 +1359,10 @@ void MainWindow::showStorageSpecs() {
                 trovato=true;
                 Storage* storage=static_cast<Storage*>(componenti[i]);
                 QString storageType=storage->getType();
-                QString storageRPM=(QString::number(storage->getRpm()));
+                QString storageRPM=(QString::number(storage->getRPM()));
                 QString storageSize=(QString::number(storage->getSize()));
                 QString storageInterface=storage->getInterface();
-                std::string form_factor=std::to_string(storage->getForm_factor());
+                std::string form_factor=std::to_string(storage->getFormFactor());
                 form_factor=removeZero(form_factor);
                 QString storageFormFactor=QString::fromStdString(form_factor);
                 QString storageSpeed=(QString::number(storage->getSpeed()));
@@ -1810,29 +1812,6 @@ MainWindow::MainWindow(): QMainWindow() {
     verticalHeaders->append("Storage");
     verticalHeaders->append("Totale");
     build->setVerticalHeaderLabels(*verticalHeaders);
-    /*(build->item(0, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(0, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(0, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(1, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(1, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(1, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(2, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(2, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(2, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(3, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(3, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(3, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(4, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(4, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(4, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(5, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(5, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(5, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(6, 0))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(6, 1))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(6, 2))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(6, 3))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-    (build->item(6, 4))->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);*/
 
     saveBuild=new QPushButton("Salva Build");
     loadBuild=new QPushButton("Carica Build");

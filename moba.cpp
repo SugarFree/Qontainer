@@ -1,16 +1,16 @@
 #include "moba.h"
 
-QString MOBA::getForm_factor() const
+QString MOBA::getFormFactor() const
 {
     return form_factor;
 }
 
-unsigned int MOBA::getRAM_slots() const
+unsigned int MOBA::getRAMSlots() const
 {
     return RAM_slots;
 }
 
-unsigned int MOBA::getMax_RAM() const
+unsigned int MOBA::getMaxRAM() const
 {
     return max_RAM;
 }
@@ -20,17 +20,17 @@ QString MOBA::getConnectors() const
     return connectors;
 }
 
-void MOBA::setMoba_socket(const QString &value)
+void MOBA::setMOBASocket(const QString &value)
 {
     moba_socket = value;
 }
 
-void MOBA::setRAM_slots(unsigned int value)
+void MOBA::setRAMSlots(unsigned int value)
 {
     RAM_slots = value;
 }
 
-void MOBA::setMax_RAM(unsigned int value)
+void MOBA::setMaxRAM(unsigned int value)
 {
     max_RAM = value;
 }

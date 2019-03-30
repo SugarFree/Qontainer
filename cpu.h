@@ -17,18 +17,16 @@ public:
     CPU(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, double =0, unsigned int =0, bool =false, QString ="Non specificato", bool =false);
     PC_Parts* clone() const;
     unsigned int Rating();
-    void SocketCheck(const MOBA*) const;
-    void SupportedRAM(const RAM*) const;
-    double getCpu_speed() const;
+    double getCpuSpeed() const;
     unsigned int getCores() const;
-    bool getX64bit() const;
-    QString getCpu_socket() const;
-    bool getIntegrated_graphic() const;
-    void setCpu_speed(double value);
+    bool getx64bit() const;
+    QString getCpuSocket() const;
+    bool getIntegratedGraphic() const;
+    void setCpuSpeed(double value);
     void setCores(unsigned int value);
-    void setX64bit(bool value);
-    void setCpu_socket(const QString &value);
-    void setIntegrated_graphic(bool value);
+    void setx64bit(bool value);
+    void setCpuSocket(const QString &value);
+    void setIntegratedGraphic(bool value);
 };
 
 #endif // CPU_H

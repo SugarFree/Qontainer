@@ -14,15 +14,15 @@ public:
     PC_Parts* clone() const;
     unsigned int Rating();
     QString getMOBASocket() const;
-    void setFormFactor(QString);
-    //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
-    QString getForm_factor() const;
-    unsigned int getRAM_slots() const;
-    unsigned int getMax_RAM() const;
+    QString getFormFactor() const;
+    unsigned int getRAMSlots() const;
+    unsigned int getMaxRAM() const;
     QString getConnectors() const;
-    void setMoba_socket(const QString &value);
-    void setRAM_slots(unsigned int value);
-    void setMax_RAM(unsigned int value);
+    //controllo slot di RAM e GB di RAM (da fare nella "classe finale"???)
+    void setMOBASocket(const QString &value);
+    void setFormFactor(QString);
+    void setRAMSlots(unsigned int value);
+    void setMaxRAM(unsigned int value);
     void setConnectors(const QString &value);
 };
 

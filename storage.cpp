@@ -6,7 +6,7 @@ QString Storage::getType() const
     return type;
 }
 
-unsigned int Storage::getRpm() const
+unsigned int Storage::getRPM() const
 {
     return rpm;
 }
@@ -21,7 +21,7 @@ QString Storage::getInterface() const
     return interface;
 }
 
-double Storage::getForm_factor() const
+double Storage::getFormFactor() const
 {
     return form_factor;
 }
@@ -36,7 +36,7 @@ void Storage::setType(const QString &value)
     type = value;
 }
 
-void Storage::setRpm(unsigned int value)
+void Storage::setRPM(unsigned int value)
 {
     rpm = value;
 }
@@ -51,7 +51,7 @@ void Storage::setInterface(const QString &value)
     interface = value;
 }
 
-void Storage::setForm_factor(double value)
+void Storage::setFormFactor(double value)
 {
     form_factor = value;
 }
@@ -81,13 +81,4 @@ unsigned int Storage::Rating() {
     if(speed>=50 && speed<200)
         rating++;
     return rating;
-}
-
-double Storage::PricePerGB() const {
-    return (getPrice()/size);
-}
-
-void Storage::typeCheck() {
-    if(type=="SSD" && rpm!=0)
-        std::cerr<<"Attenzione! RPM non è un parametro valido per storage di tipo SSD.";
 }

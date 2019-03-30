@@ -22,7 +22,6 @@
 #include <QIODevice>
 #include <QFileDialog>
 #include <QRegExp>
-#include <QDebug>
 #include <QAction>
 #include <QDialog>
 #include <QSpinBox>
@@ -93,7 +92,6 @@ private:
     QMenu *loadMenu;
     QMenu *saveMenu2;
     QMenu *loadMenu2;
-    //QRect screenGeometry;
     QGridLayout *layout;
     QFormLayout *layout2;
     QHBoxLayout *layoutMOBA;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "cpu.h"
 
-double CPU::getCpu_speed() const
+double CPU::getCpuSpeed() const
 {
     return cpu_speed;
 }
@@ -11,22 +11,22 @@ unsigned int CPU::getCores() const
     return cores;
 }
 
-bool CPU::getX64bit() const
+bool CPU::getx64bit() const
 {
     return x64bit;
 }
 
-QString CPU::getCpu_socket() const
+QString CPU::getCpuSocket() const
 {
     return cpu_socket;
 }
 
-bool CPU::getIntegrated_graphic() const
+bool CPU::getIntegratedGraphic() const
 {
     return integrated_graphic;
 }
 
-void CPU::setCpu_speed(double value)
+void CPU::setCpuSpeed(double value)
 {
     cpu_speed = value;
 }
@@ -36,17 +36,17 @@ void CPU::setCores(unsigned int value)
     cores = value;
 }
 
-void CPU::setX64bit(bool value)
+void CPU::setx64bit(bool value)
 {
     x64bit = value;
 }
 
-void CPU::setCpu_socket(const QString &value)
+void CPU::setCpuSocket(const QString &value)
 {
     cpu_socket = value;
 }
 
-void CPU::setIntegrated_graphic(bool value)
+void CPU::setIntegratedGraphic(bool value)
 {
     integrated_graphic = value;
 }
@@ -73,14 +73,4 @@ unsigned int CPU::Rating() {
     if(cpu_socket=="LGA1151" || cpu_socket=="AM4")
         rating++;
     return rating;
-}
-
-void CPU::SocketCheck(const MOBA* m) const {
-    if(m->getMOBASocket()!=cpu_socket)
-        std::cerr<<"Socket MOBA e CPU non compatibili.";
-}
-
-void CPU::SupportedRAM(const RAM* r) const {
-    if(r->getSize()>8 && !x64bit)
-        std::cerr<<"CPU a 32 bit. Non verrano supportati quantitativi di RAM superiori ad 8 GB.";
 }

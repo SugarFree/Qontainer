@@ -14,19 +14,17 @@ public:
     Storage(unsigned int l, unsigned int h, QString n, QString m, double p, unsigned int pc, QString ="Non specificato", unsigned int =0, unsigned int =0, QString ="Non specificato", double =0, unsigned int =0);
     PC_Parts *clone() const;
     unsigned int Rating();
-    double PricePerGB() const;
-    void typeCheck();
     QString getType() const;
-    unsigned int getRpm() const;
+    unsigned int getRPM() const;
     unsigned int getSize() const;
     QString getInterface() const;
-    double getForm_factor() const;
+    double getFormFactor() const;
     unsigned int getSpeed() const;
     void setType(const QString &value);
-    void setRpm(unsigned int value);
+    void setRPM(unsigned int value);
     void setSize(unsigned int value);
     void setInterface(const QString &value);
-    void setForm_factor(double value);
+    void setFormFactor(double value);
     void setSpeed(unsigned int value);
 };
 
