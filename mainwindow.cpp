@@ -197,6 +197,8 @@ void MainWindow::removeComponents() {
         for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
             if(componenti[i]->getName()==(componentsList->currentItem())->text()) {
                 trovato=true;
+                int pos;
+                QString *componentName=new QString(componenti[i]->getName());
                 componentsList->takeItem(componentsList->currentRow());
                 if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
                     mobaComboBox->removeItem(mobaComboBox->findText(componenti[i]->getName()));
@@ -223,6 +225,9 @@ void MainWindow::removeComponents() {
                 if(build->item(5, 0)!=nullptr && componenti[i]->getName()==(build->item(5, 0)->text()))
                     removeStorageFromBuild();
                 componenti.erase(i);
+                pos=componentsNames.search(componentName);
+                if(pos!=-1)
+                    componentsNames.erase(pos);
             }
         }
     }
@@ -1389,7 +1394,7 @@ void MainWindow::showStorageSpecs() {
 }
 
 void MainWindow::loadFileToBuild() {
-    QString path = QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));;
+    QString path=QFileDialog::getOpenFileName(this, tr("Load Build"), QDir::currentPath(), tr("JSON (*.json)"));;
     QFile file(path);
     file.open(QIODevice::ReadOnly);
     QByteArray json=file.readAll();
@@ -1399,10 +1404,10 @@ void MainWindow::loadFileToBuild() {
     if(!array.isEmpty()) {
         bool componentPresence;
         for(unsigned int i=0; i!=componenti.getSize(); i++)
-            componentsNames.push_back(componenti[i]->getName());
+            componentsNames.push_back(new QString(componenti[i]->getName()));
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
-            QString component_name=QString(j.toObject().value("name").toString());
+            QString* component_name=new QString((j.toObject().value("name").toString()));
             if(componentsNames.search(component_name)!=-1)
                 componentPresence=true;
             else
@@ -1423,11 +1428,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(*component_name));
                     mobaToBuild();
                 }
                 else {
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(*component_name));
                     mobaToBuild();
                 }
             }
@@ -1447,11 +1452,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(*component_name));
                     cpuToBuild();
                 }
                 else {
-                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(*component_name));
                     cpuToBuild();
                 }
             }
@@ -1473,11 +1478,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(*component_name));
                     gpuToBuild();
                 }
                 else {
-                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(*component_name));
                     gpuToBuild();
                 }
             }
@@ -1497,11 +1502,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(*component_name));
                     psuToBuild();
                 }
                 else {
-                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(*component_name));
                     psuToBuild();
                 }
             }
@@ -1519,11 +1524,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(*component_name));
                     ramToBuild();
                 }
                 else {
-                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(*component_name));
                     ramToBuild();
                 }
             }
@@ -1544,17 +1549,17 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(*component_name));
                     storageToBuild();
                 }
                 else {
-                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(*component_name));
                     storageToBuild();
                 }
             }
         }
         for(unsigned int i=0; i!=componenti.getSize(); ++i)
-            componentsNames.push_back(componenti[i]->getName());
+            componentsNames.push_back(new QString(componenti[i]->getName()));
     }
 }
 
@@ -1569,10 +1574,10 @@ void MainWindow::load() {
     if(!array.isEmpty()) {
         bool componentPresence;
         for(unsigned int i=0; i!=componenti.getSize(); i++)
-            componentsNames.push_back(componenti[i]->getName());
+            componentsNames.push_back(new QString(componenti[i]->getName()));
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
-            QString component_name=QString(j.toObject().value("name").toString());
+            QString *component_name=new QString((j.toObject().value("name").toString()));
             if(componentsNames.search(component_name)!=-1)
                 componentPresence=true;
             else
@@ -1658,6 +1663,7 @@ void MainWindow::load() {
                                                  ));
         }
         for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            bool ok;
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr && mobaComboBox->findText(componenti[i]->getName())==-1)
                 mobaComboBox->addItem(componenti[i]->getName());
             else if(dynamic_cast<CPU*>(componenti[i])!=nullptr && cpuComboBox->findText(componenti[i]->getName())==-1)
@@ -1670,7 +1676,8 @@ void MainWindow::load() {
                 ramComboBox->addItem(componenti[i]->getName());
             else if(dynamic_cast<Storage*>(componenti[i])!=nullptr && storageComboBox->findText(componenti[i]->getName())==-1)
                 storageComboBox->addItem(componenti[i]->getName());
-            componentsList->addItem(componenti[i]->getName());
+            if(componentsList->findItems(componenti[i]->getName(), Qt::MatchExactly).empty())
+                componentsList->addItem(componenti[i]->getName());
         }
     }
 }

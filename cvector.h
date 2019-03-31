@@ -27,34 +27,15 @@ public:
     void clear();
     unsigned int getCapacity() const;
     unsigned int getSize() const;
-    //void reserve(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
-    //void pop_back();
-    //void swap(T&, T&);
+    void pop_back();
+    void swap(T&, T&);
     void erase(const unsigned int &);
     int search(const T&) const;
     const T& operator[](unsigned int) const;
     bool operator==(const T&) const;
     bool operator!=(const T&) const;
-    cvector<T> operator+(const cvector<T>&) const;
-    class iterator {
-    friend class cvector<T>;
-    private:
-        const T* pt;
-        bool eov;
-        iterator(T* =nullptr, bool =false);
-    public:
-        iterator();
-        /*iterator operator++(int); //postfisso
-        iterator operator--(int); //postfisso
-        iterator& operator++(); //prefisso
-        iterator& operator--(); //prefisso*/
-        bool operator==(const iterator&) const;
-        bool operator!=(const iterator&) const;
-    };
-    iterator begin() const;
-    iterator end() const;
 };
 
 template<class T>
@@ -141,19 +122,25 @@ void cvector<T>::push_back(const T& v) {
 }
 
 template<class T>
+void cvector<T>::pop_back() {
+    delete point[size-1];
+    size--;
+}
+
+template<class T>
+void cvector<T>::swap(T& p, T& q) {
+    T temp(p);
+    p=q;
+    q=temp;
+}
+
+template<class T>
 void cvector<T>::erase(const unsigned int &pos) {
-    if(pos<size) {
-        unsigned int j=0;
-        T* newPoint = new T[capacity];
-        for(unsigned int i=0; i<size; ++i) {
-            if(i!=pos) {
-                newPoint[j]=point[i];
-                ++j;
-            }
-        }
-        size--;
-        delete[] point;
-        point=newPoint;
+    if(pos==size-1)
+        pop_back();
+    else {
+        swap(point[pos],point[size-1]);
+        pop_back();
     }
 }
 
@@ -188,45 +175,6 @@ bool cvector<T>::operator!=(const T& v) const {
             return true;
     }
     return false;
-}
-
-template<class T>
-cvector<T> cvector<T>::operator+(const cvector<T>& v) const {
-    cvector w;
-    unsigned int x=size+v.size;
-    if(x) {
-        w.point=new T[x];
-        w.size=x;
-        w.capacity=capacity+v.capacity;
-        for(unsigned int j=0; j<size; ++j)
-            w.point[j]=point[j];
-        for(unsigned int j=0; j<v.size; ++j)
-            w.point[size+j]=v.point[j];
-    }
-    return w;
-}
-
-template<class T>
-cvector<T>::iterator::iterator(): pt(nullptr), eov(false) {}
-
-template<class T>
-bool cvector<T>::iterator::operator==(const iterator& it) const {
-    return pt==it.pt;
-}
-
-template<class T>
-bool cvector<T>::iterator::operator!=(const iterator& it) const {
-    return pt!=it.pt;
-}
-
-template<class T>
-typename cvector<T>::iterator cvector<T>::begin() const {
-    return point[0];
-}
-
-template<class T>
-typename cvector<T>::iterator cvector<T>::end() const {
-    return point[size-1];
 }
 
 #endif // cvector_H

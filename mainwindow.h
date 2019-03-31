@@ -28,6 +28,7 @@
 #include <QCheckBox>
 #include <QMenuBar>
 #include <QMainWindow>
+#include <QDebug>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -245,7 +246,7 @@ private:
     QPushButton *saveComponent;
     QPushButton *discardComponent;
     cvector<PC_Parts*> componenti;
-    cvector<QString> componentsNames;
+    cvector<QString*> componentsNames;
     std::string removeZero(std::string);
     void calculateTotal();
     void hideAll();
