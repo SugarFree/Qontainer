@@ -8,10 +8,8 @@
 #include <QLayout>
 #include <QFormLayout>
 #include <QPushButton>
-#include <QSize>
 #include <QTableWidget>
 #include <QHeaderView>
-#include <QScreen>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QFile>
@@ -21,7 +19,6 @@
 #include <QJsonValue>
 #include <QIODevice>
 #include <QFileDialog>
-#include <QRegExp>
 #include <QAction>
 #include <QDialog>
 #include <QSpinBox>
@@ -29,7 +26,6 @@
 #include <QMenuBar>
 #include <QMainWindow>
 #include <QCoreApplication>
-#include <QSignalBlocker>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
