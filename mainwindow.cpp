@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include <iostream>
 
+//funzione per rimuovere gli zeri in eccesso nella conversione da double a QString
 std::string MainWindow::removeZero(std::string str) {
     str.erase(str.find(',')+3, str.size());
     return str;
 }
 
+//metodo per inserire la MOBA selezionata sulla combobox nella build
 void MainWindow::mobaToBuild() {
     if(mobaComboBox->currentText()!="") {
         QString mobaName=mobaComboBox->currentText();
@@ -30,6 +32,7 @@ void MainWindow::mobaToBuild() {
     }
 }
 
+//metodo per inserire la CPU selezionata sulla combobox nella build
 void MainWindow::cpuToBuild() {
     if(cpuComboBox->currentText()!="") {
         QString cpuName=cpuComboBox->currentText();
@@ -54,6 +57,7 @@ void MainWindow::cpuToBuild() {
     }
 }
 
+//metodo per inserire la GPU selezionata sulla combobox nella build
 void MainWindow::gpuToBuild() {
     if(gpuComboBox->currentText()!="") {
         QString gpuName=gpuComboBox->currentText();
@@ -78,6 +82,7 @@ void MainWindow::gpuToBuild() {
     }
 }
 
+//metodo per inserire la PSU selezionata sulla combobox nella build
 void MainWindow::psuToBuild() {
     if(psuComboBox->currentText()!="") {
         QString psuName=psuComboBox->currentText();
@@ -102,6 +107,7 @@ void MainWindow::psuToBuild() {
     }
 }
 
+//metodo per inserire la RAM selezionata sulla combobox nella build
 void MainWindow::ramToBuild() {
     if(ramComboBox->currentText()!="") {
         QString ramName=ramComboBox->currentText();
@@ -126,6 +132,7 @@ void MainWindow::ramToBuild() {
     }
 }
 
+//metodo per inserire lo Storage selezionato sulla combobox nella build
 void MainWindow::storageToBuild() {
     if(storageComboBox->currentText()!="") {
         QString storageName=storageComboBox->currentText();
@@ -150,6 +157,7 @@ void MainWindow::storageToBuild() {
     }
 }
 
+//funzione che calcola il rating e il prezzo totale della build
 void MainWindow::calculateTotal() {
     if(build->item(0, 0)!=nullptr || build->item(1, 0)!=nullptr || build->item(2, 0)!=nullptr ||
        build->item(3, 0)!=nullptr || build->item(4, 0)!=nullptr || build->item(5, 0)!=nullptr) {
@@ -179,11 +187,13 @@ void MainWindow::calculateTotal() {
     }
 }
 
+//funzione che nasconde tutti gli elementi nella lista dei componenti
 void MainWindow::hideAll() {
-  for(unsigned int i=0; i!=componentsList->count(); i++)
+  for(int i=0; i!=componentsList->count(); i++)
     componentsList->item(i)->setHidden(true);
 }
 
+//funzione che mostra solo gli elementi della lista componenti che matchano la stringa cercata
 void MainWindow::searchComponents(QString search_str) {
       hideAll();
       QList<QListWidgetItem*> matches (componentsList->findItems(search_str, Qt::MatchFlag::MatchContains));
@@ -191,6 +201,7 @@ void MainWindow::searchComponents(QString search_str) {
           item->setHidden(false);
 }
 
+//metodo che rimuove il componente selezionato dalla lista componenti e dal contenitore
 void MainWindow::removeComponents() {
     if(componentsList->currentItem()!=nullptr) {
         bool trovato=false;
@@ -233,6 +244,7 @@ void MainWindow::removeComponents() {
     }
 }
 
+//reset del layout di modifica dei componenti
 void MainWindow::resetEditSpecs() {
     componentNameLine->setText("");
     componentLengthSpin->setValue(0);
@@ -240,13 +252,18 @@ void MainWindow::resetEditSpecs() {
     componentPriceSpin->setValue(0);
     componentPowerConsumptionSpin->setValue(0);
     componentManufacturerLine->setText("");
-    if(specLayout2->isEnabled())
-        specLayout2->removeRow(componentsSpecsLayout2);
+    while(componentsSpecsLayout2->count()!=0) {
+        QLayoutItem *item=componentsSpecsLayout2->takeAt(0);
+        delete item->widget();
+        delete item;
+    }
+    specLayout2->takeRow(componentsSpecsLayout2);
 }
 
+//metodo che annulla il processo di modifica del componente e riattiva la lista dei componenti
 void MainWindow::discardComponentsChanges() {
     resetEditSpecs();
-    for(unsigned int i=0; i!=componentsList->count(); ++i) {
+    for(int i=0; i!=componentsList->count(); ++i) {
         QListWidgetItem *item=componentsList->item(i);
         auto flags=item->flags();
         flags.setFlag(Qt::ItemIsEnabled, true);
@@ -254,6 +271,7 @@ void MainWindow::discardComponentsChanges() {
     }
 }
 
+//metodo che salva le caratteristiche del nuovo componente sul contenitore inserendolo nella combobox e nella lista dei componenti
 void MainWindow::saveNewComponent(QString type) {
     if(type=="MOBA") {
         if(componentNameLine->text()=="")
@@ -323,11 +341,13 @@ void MainWindow::saveNewComponent(QString type) {
     }
 }
 
+//metodo che imposta il layout per l'aggiunta del nuovo componente
 void MainWindow::newComponentEdit(QString type) {
     componentType->close();
-    resetEditSpecs();
+    if(componentNameLine->text()!="")
+        resetEditSpecs();
     componentsSpecsLayout2=new QFormLayout();
-    for(unsigned int i=0; i!=componentsList->count(); ++i) {
+    for(int i=0; i!=componentsList->count(); ++i) {
         QListWidgetItem *item=componentsList->item(i);
         auto flags=item->flags();
         flags.setFlag(Qt::ItemIsEnabled, false);
@@ -423,8 +443,9 @@ void MainWindow::newComponentEdit(QString type) {
     connect(discardComponent, SIGNAL(clicked(bool)), this, SLOT(discardComponentsChanges()));
 }
 
+//finestra di dialogo che permette di scegliere che tipo di componente si vuole aggiungere
 void MainWindow::addComponents() {
-    componentType=new QDialog();
+    componentType=new QDialog(this);
     QVBoxLayout *componentSelection=new QVBoxLayout(componentType);
     componentType->setLayout(componentSelection);
     QLabel *componentTypeLine=new QLabel(componentType);
@@ -449,6 +470,7 @@ void MainWindow::addComponents() {
     connect(okButton, &QPushButton::clicked, this, [this, componentSelector]{newComponentEdit(componentSelector->currentText());});
 }
 
+//metodo che permette di salvare le modifiche del componente sul contenitore
 void MainWindow::saveComponentsChanges() {
     QString componentName=(componentsList->currentItem())->text();
     bool trovato=false;
@@ -572,12 +594,14 @@ void MainWindow::saveComponentsChanges() {
     }
 }
 
+//metodo che imposta il layout per la modifica di un componente
 void MainWindow::editComponentsSpecs() {
-    resetEditSpecs();
-    componentsSpecsLayout2=new QFormLayout();
+    if(componentNameLine->text()!="")
+        resetEditSpecs();
+    componentsSpecsLayout2=new QFormLayout;
     if(componentsList->currentItem()!=nullptr && (componentsList->currentItem())->text()!=componentNameLine->text()) {
         bool trovato=false;
-        for(unsigned int i=0; i!=componentsList->count(); ++i) {
+        for(int i=0; i!=componentsList->count(); ++i) {
             QListWidgetItem *item=componentsList->item(i);
             auto flags=item->flags();
             flags.setFlag(Qt::ItemIsEnabled, false);
@@ -742,9 +766,10 @@ void MainWindow::editComponentsSpecs() {
     }
 }
 
+//metodo che rimuove la MOBA dalla build
 void MainWindow::removeMOBAFromBuild() {
     if((build->item(0, 0))!=nullptr) {
-        if(!specLayout->isEmpty() || specLayout->isEnabled())
+        if(componentNameLabel->text()!="")
             resetSpecs();
         build->setItem(0, 0, nullptr);
         build->setItem(0, 1, nullptr);
@@ -753,6 +778,7 @@ void MainWindow::removeMOBAFromBuild() {
     calculateTotal();
 }
 
+//metodo che rimuove la CPU dalla build
 void MainWindow::removeCPUFromBuild() {
     if((build->item(1, 0))!=nullptr) {
         if(componentNameLabel->text()!="")
@@ -764,6 +790,7 @@ void MainWindow::removeCPUFromBuild() {
     calculateTotal();
 }
 
+//metodo che rimuove la GPU dalla build
 void MainWindow::removeGPUFromBuild() {
     if((build->item(2, 0))!=nullptr) {
         if(componentNameLabel->text()!="")
@@ -775,6 +802,7 @@ void MainWindow::removeGPUFromBuild() {
     calculateTotal();
 }
 
+//metodo che rimuove la PSU dalla build
 void MainWindow::removePSUFromBuild() {
     if((build->item(3, 0))!=nullptr) {
         if(componentNameLabel->text()!="")
@@ -786,6 +814,7 @@ void MainWindow::removePSUFromBuild() {
     calculateTotal();
 }
 
+//metodo che rimuove la RAM dalla build
 void MainWindow::removeRAMFromBuild() {
     if((build->item(4, 0))!=nullptr) {
         if(componentNameLabel->text()!="")
@@ -797,6 +826,7 @@ void MainWindow::removeRAMFromBuild() {
     calculateTotal();
 }
 
+//metodo che rimuove lo Storage dalla build
 void MainWindow::removeStorageFromBuild() {
     if((build->item(5, 0))!=nullptr) {
         if(componentNameLabel->text()!="")
@@ -808,6 +838,7 @@ void MainWindow::removeStorageFromBuild() {
     calculateTotal();
 }
 
+//metodo che scarta l'intera build
 void MainWindow::deleteBuild() {
     removeMOBAFromBuild();
     removeCPUFromBuild();
@@ -817,6 +848,7 @@ void MainWindow::deleteBuild() {
     removeStorageFromBuild();
 }
 
+//metodo di salvataggio della build su file JSON
 void MainWindow::saveBuildToFile() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Build"), "", tr("JSON (*.json);"));
     QJsonArray newBuild;
@@ -950,6 +982,7 @@ void MainWindow::saveBuildToFile() {
     }
 }
 
+//metodo di salvataggio del database su file JSON
 void MainWindow::save() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Database"), "", tr("JSON (*.json);"));
     QJsonArray newDatabase;
@@ -1077,16 +1110,25 @@ void MainWindow::save() {
     }
 }
 
+//reset del layout che mostra le specifiche dei componenti
 void MainWindow::resetSpecs() {
-    componentNameLabel->setText("");
-    componentLengthLabel->setText("");
-    componentHeightLabel->setText("");
-    componentPriceLabel->setText("");
-    componentPowerConsumptionLabel->setText("");
-    componentManufacturerLabel->setText("");
-    specLayout->removeRow(componentsSpecsLayout);
+    if(componentNameLabel->text()!="") {
+        componentNameLabel->setText("");
+        componentLengthLabel->setText("");
+        componentHeightLabel->setText("");
+        componentPriceLabel->setText("");
+        componentPowerConsumptionLabel->setText("");
+        componentManufacturerLabel->setText("");
+        while(componentsSpecsLayout->count()!=0) {
+            QLayoutItem *item=componentsSpecsLayout->takeAt(0);
+            delete item->widget();
+            delete item;
+        }
+        specLayout->takeRow(componentsSpecsLayout);
+    }
 }
 
+//funzione che genera le label specifice per ogni componente
 void MainWindow::specLabels(QString type) {
     if(type=="MOBA") {
         mobaSocketLabel=new QLabel("Socket: ");
@@ -1133,6 +1175,7 @@ void MainWindow::specLabels(QString type) {
     }
 }
 
+//funzione che genera le label base per ogni componente
 void MainWindow::basicSpecs(unsigned int pos) {
     if((build->item(0, 0)!=nullptr && (build->item(0, 0))->text()!=componentNameLabel->text()) || (build->item(1, 0)!=nullptr && (build->item(1, 0))->text()!=componentNameLabel->text()) || (build->item(2, 0)!=nullptr && (build->item(2, 0))->text()!=componentNameLabel->text()) ||
        (build->item(3, 0)!=nullptr && (build->item(3, 0))->text()!=componentNameLabel->text()) || (build->item(4, 0)!=nullptr && (build->item(4, 0))->text()!=componentNameLabel->text()) || (build->item(5, 0)!=nullptr && (build->item(5, 0))->text()!=componentNameLabel->text())) {
@@ -1158,6 +1201,7 @@ void MainWindow::basicSpecs(unsigned int pos) {
     }
 }
 
+//metodo che mostra le specifiche della MOBA inserita nella build
 void MainWindow::showMOBASpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1193,6 +1237,7 @@ void MainWindow::showMOBASpecs() {
     }    
 }
 
+//metodo che mostra le specifiche della CPU inserita nella build
 void MainWindow::showCPUSpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1238,6 +1283,7 @@ void MainWindow::showCPUSpecs() {
     }
 }
 
+//metodo che mostra le specifiche della GPU inserita nella build
 void MainWindow::showGPUSpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1285,6 +1331,7 @@ void MainWindow::showGPUSpecs() {
     }
 }
 
+//metodo che mostra le specifiche della PSU inserita nella build
 void MainWindow::showPSUSpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1324,6 +1371,7 @@ void MainWindow::showPSUSpecs() {
     }
 }
 
+//metodo che mostra le specifiche della RAM inserita nella build
 void MainWindow::showRAMSpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1353,6 +1401,7 @@ void MainWindow::showRAMSpecs() {
     }
 }
 
+//metodo che mostra le specifiche dello Storage inserita nella build
 void MainWindow::showStorageSpecs() {
     if(componentNameLabel->text()!="")
         resetSpecs();
@@ -1393,6 +1442,7 @@ void MainWindow::showStorageSpecs() {
     }
 }
 
+//metodo per il caricamento di un file JSON nella build e nel database
 void MainWindow::loadFileToBuild() {
     QString path=QFileDialog::getOpenFileName(this, tr("Load Build"), QDir::currentPath(), tr("JSON (*.json)"));;
     QFile file(path);
@@ -1402,6 +1452,7 @@ void MainWindow::loadFileToBuild() {
     QJsonDocument document=QJsonDocument::fromJson(json);
     QJsonArray array=document.object().value("pc_parts").toArray();
     if(!array.isEmpty()) {
+        resetSpecs();
         bool componentPresence;
         for(unsigned int i=0; i!=componenti.getSize(); i++)
             componentsNames.push_back(new QString(componenti[i]->getName()));
@@ -1563,6 +1614,7 @@ void MainWindow::loadFileToBuild() {
     }
 }
 
+//metodo per il caricamento di un file JSON nel database
 void MainWindow::load() {
     QString path=QFileDialog::getOpenFileName(this, tr("Load Database"), QDir::currentPath(), tr("JSON (*.json)"));
     QFile file(path);
@@ -1663,7 +1715,6 @@ void MainWindow::load() {
                                                  ));
         }
         for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-            bool ok;
             if(dynamic_cast<MOBA*>(componenti[i])!=nullptr && mobaComboBox->findText(componenti[i]->getName())==-1)
                 mobaComboBox->addItem(componenti[i]->getName());
             else if(dynamic_cast<CPU*>(componenti[i])!=nullptr && cpuComboBox->findText(componenti[i]->getName())==-1)
@@ -1682,7 +1733,6 @@ void MainWindow::load() {
     }
 }
 
-
 MainWindow::MainWindow(): QMainWindow() {
     tab=new QTabWidget();
     window=new QWidget(tab);
@@ -1696,6 +1746,7 @@ MainWindow::MainWindow(): QMainWindow() {
     loadMenu=menuBar->addMenu("&Carica");
     saveMenu->addAction("&Salva database componenti");
     loadMenu->addAction("&Carica database componenti");
+
     layout=new QGridLayout();
     window->setLayout(layout);
     layout->setMenuBar(menuBar);
@@ -1779,6 +1830,7 @@ MainWindow::MainWindow(): QMainWindow() {
     build->setColumnWidth(3, 125);
     build->setColumnWidth(4, 150);
     build->setShowGrid(false);
+    build->setEditTriggers(QTableWidget::NoEditTriggers);
     removeMOBA=new QPushButton("-");
     removeCPU=new QPushButton("-");
     removeGPU=new QPushButton("-");
@@ -1803,22 +1855,20 @@ MainWindow::MainWindow(): QMainWindow() {
     build->setIndexWidget(build->model()->index(4,4), removeRAM);
     build->setIndexWidget(build->model()->index(5,3), storageSpecs);
     build->setIndexWidget(build->model()->index(5,4), removeStorage);
-    horizontalHeaders=new QStringList();
-    horizontalHeaders->append("Componente");
-    horizontalHeaders->append("Rating");
-    horizontalHeaders->append("Prezzo");
-    horizontalHeaders->append("Mostra specifiche");
-    horizontalHeaders->append("Rimuovi componente");
-    build->setHorizontalHeaderLabels(*horizontalHeaders);
-    verticalHeaders=new QStringList();
-    verticalHeaders->append("MOBA");
-    verticalHeaders->append("CPU");
-    verticalHeaders->append("GPU");
-    verticalHeaders->append("PSU");
-    verticalHeaders->append("RAM");
-    verticalHeaders->append("Storage");
-    verticalHeaders->append("Totale");
-    build->setVerticalHeaderLabels(*verticalHeaders);
+    horizontalHeaders.append("Componente");
+    horizontalHeaders.append("Rating");
+    horizontalHeaders.append("Prezzo");
+    horizontalHeaders.append("Mostra specifiche");
+    horizontalHeaders.append("Rimuovi componente");
+    build->setHorizontalHeaderLabels(horizontalHeaders);
+    verticalHeaders.append("MOBA");
+    verticalHeaders.append("CPU");
+    verticalHeaders.append("GPU");
+    verticalHeaders.append("PSU");
+    verticalHeaders.append("RAM");
+    verticalHeaders.append("Storage");
+    verticalHeaders.append("Totale");
+    build->setVerticalHeaderLabels(verticalHeaders);
 
     saveBuild=new QPushButton("Salva Build");
     loadBuild=new QPushButton("Carica Build");
@@ -1945,8 +1995,9 @@ MainWindow::MainWindow(): QMainWindow() {
     connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
     connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     //load("../Qontainer/database.json");
-    tab->setMinimumSize(1800, 750);
-    tab->setMaximumSize(1800, 750);
+    QCoreApplication::setApplicationName("PC Part Picker");
+    tab->setMinimumSize(1800, 800);
+    tab->setMaximumSize(1800, 800);
     tab->move(100, 100);
     tab->show();
 }

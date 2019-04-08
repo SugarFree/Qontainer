@@ -28,7 +28,8 @@
 #include <QCheckBox>
 #include <QMenuBar>
 #include <QMainWindow>
-#include <QDebug>
+#include <QCoreApplication>
+#include <QSignalBlocker>
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -135,8 +136,8 @@ private:
     QPushButton *removePSU;
     QPushButton *removeRAM;
     QPushButton *removeStorage;
-    QStringList *horizontalHeaders;
-    QStringList *verticalHeaders;
+    QStringList horizontalHeaders;
+    QStringList verticalHeaders;
     QSizePolicy headersPolicy;
     QPushButton *calculate;
     QPushButton *saveBuild;
