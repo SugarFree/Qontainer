@@ -33,7 +33,8 @@ SOURCES += \
     gpu.cpp \
     storage.cpp \
     psu.cpp \
-    pc_parts.cpp
+    pc_parts.cpp \
+    usermanual.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
     storage.h \
     psu.h \
     pc_parts.h \
-    cvector.h
+    cvector.h \
+    usermanual.h
 
 FORMS +=
 

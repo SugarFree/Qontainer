@@ -24,8 +24,8 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QMenuBar>
-#include <QMainWindow>
 #include <QCoreApplication>
+#include "usermanual.h"
 #include "cvector.h"
 #include "pc_parts.h"
 #include "moba.h"
@@ -38,7 +38,7 @@
 #include <string>
 
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -79,8 +79,10 @@ private slots:
     void save();
     void loadFileToBuild();
     void saveBuildToFile();
+    void help();
 
 private:
+    userManual* user_manual;
     QTabWidget *tab;
     QWidget *window;
     QWidget *window2;
@@ -88,8 +90,10 @@ private:
     QMenuBar *menuBar2;
     QMenu *saveMenu;
     QMenu *loadMenu;
+    QMenu *helpMenu;
     QMenu *saveMenu2;
     QMenu *loadMenu2;
+    QMenu *helpMenu2;
     QGridLayout *layout;
     QFormLayout *layout2;
     QHBoxLayout *layoutMOBA;

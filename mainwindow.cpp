@@ -852,6 +852,8 @@ void MainWindow::deleteBuild() {
 void MainWindow::saveBuildToFile() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Build"), "", tr("JSON (*.json);"));
     QJsonArray newBuild;
+    if(file.contains(".json")==false)
+        file.append(".json");
     QFile savePath(file);
     bool mobaCheck=(build->item(0, 0)!=nullptr);
     bool cpuCheck=(build->item(1, 0)!=nullptr);
@@ -986,6 +988,8 @@ void MainWindow::saveBuildToFile() {
 void MainWindow::save() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Database"), "", tr("JSON (*.json);"));
     QJsonArray newDatabase;
+    if(file.contains(".json")==false)
+        file.append(".json");
     QFile savePath(file);
     for(unsigned int i=0; i!=componenti.getSize(); ++i) {
         QJsonObject singleComponent;
@@ -1733,7 +1737,14 @@ void MainWindow::load() {
     }
 }
 
-MainWindow::MainWindow(): QMainWindow() {
+void MainWindow::help() {
+    if(user_manual!=nullptr)
+        user_manual->show();
+}
+
+MainWindow::MainWindow(): QWidget() {
+    user_manual=new userManual();
+    user_manual->show();
     tab=new QTabWidget();
     window=new QWidget(tab);
     window2=new QWidget(tab);
@@ -1742,10 +1753,13 @@ MainWindow::MainWindow(): QMainWindow() {
     menuBar=new QMenuBar();
     saveMenu=new QMenu();
     loadMenu=new QMenu();
-    saveMenu=menuBar->addMenu("&Salva");
-    loadMenu=menuBar->addMenu("&Carica");
-    saveMenu->addAction("&Salva database componenti");
-    loadMenu->addAction("&Carica database componenti");
+    helpMenu=new QMenu();
+    saveMenu=menuBar->addMenu("Salva");
+    loadMenu=menuBar->addMenu("Carica");
+    helpMenu=menuBar->addMenu("Aiuto");
+    saveMenu->addAction("Salva database componenti");
+    loadMenu->addAction("Carica database componenti");
+    helpMenu->addAction("Manuale utente");
 
     layout=new QGridLayout();
     window->setLayout(layout);
@@ -1913,10 +1927,13 @@ MainWindow::MainWindow(): QMainWindow() {
     menuBar2=new QMenuBar();
     saveMenu2=new QMenu();
     loadMenu2=new QMenu();
-    saveMenu2=menuBar2->addMenu("&Salva");
-    loadMenu2=menuBar2->addMenu("&Carica");
-    saveMenu2->addAction("&Salva database componenti");
-    loadMenu2->addAction("&Carica database componenti");
+    helpMenu2=new QMenu();
+    saveMenu2=menuBar2->addMenu("Salva");
+    loadMenu2=menuBar2->addMenu("Carica");
+    helpMenu2=menuBar2->addMenu("Aiuto");
+    saveMenu2->addAction("Salva database componenti");
+    loadMenu2->addAction("Carica database componenti");
+    helpMenu2->addAction("Manuale utente");
     layout5=new QFormLayout();
     layout4->setMenuBar(menuBar2);
     layout4->addLayout(layout5, 0, 0);
@@ -1992,6 +2009,8 @@ MainWindow::MainWindow(): QMainWindow() {
     connect(saveMenu2, SIGNAL(triggered(QAction*)), this, SLOT(save()));
     connect(loadMenu, SIGNAL(triggered(QAction*)), this, SLOT(load()));
     connect(loadMenu2, SIGNAL(triggered(QAction*)), this, SLOT(load()));
+    connect(helpMenu, SIGNAL(triggered(QAction*)), this, SLOT(help()));
+    connect(helpMenu2, SIGNAL(triggered(QAction*)), this, SLOT(help()));
     connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
     connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     //load("../Qontainer/database.json");
