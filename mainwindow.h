@@ -25,6 +25,7 @@
 #include <QCheckBox>
 #include <QMenuBar>
 #include <QCoreApplication>
+#include <QDebug>
 #include "usermanual.h"
 #include "cvector.h"
 #include "pc_parts.h"

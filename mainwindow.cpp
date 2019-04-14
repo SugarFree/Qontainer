@@ -851,266 +851,304 @@ void MainWindow::deleteBuild() {
 //metodo di salvataggio della build su file JSON
 void MainWindow::saveBuildToFile() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Build"), "", tr("JSON (*.json);"));
-    QJsonArray newBuild;
-    if(file.contains(".json")==false)
-        file.append(".json");
-    QFile savePath(file);
     bool mobaCheck=(build->item(0, 0)!=nullptr);
     bool cpuCheck=(build->item(1, 0)!=nullptr);
     bool gpuCheck=(build->item(2, 0)!=nullptr);
     bool psuCheck=(build->item(3, 0)!=nullptr);
     bool ramCheck=(build->item(4, 0)!=nullptr);
     bool storageCheck=(build->item(5, 0)!=nullptr);
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        QJsonObject singleComponent;
-        if(mobaCheck && (build->item(0, 0))->text()==componenti[i]->getName()) {
-            MOBA* moba=static_cast<MOBA*>(componenti[i]);
-            singleComponent.insert("component_type", "MOBA");
-            singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
-            singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
-            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
-            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
-            singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
-            newBuild.append(singleComponent);
-        }
-        else if(cpuCheck && (build->item(1, 0))->text()==componenti[i]->getName()) {
-            CPU* cpu=static_cast<CPU*>(componenti[i]);
-            singleComponent.insert("component_type", "CPU");
-            singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
-            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
-            singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
-            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
-            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
-            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
-            newBuild.append(singleComponent);
-        }
-        else if(gpuCheck && (build->item(2, 0))->text()==componenti[i]->getName()) {
-            GPU* gpu=static_cast<GPU*>(componenti[i]);
-            singleComponent.insert("component_type", "GPU");
-            singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
-            singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
-            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
-            singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
-            singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
-            singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
-            singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
-            newBuild.append(singleComponent);
-        }
-        else if(psuCheck && (build->item(3, 0))->text()==componenti[i]->getName()) {
-            PSU* psu=static_cast<PSU*>(componenti[i]);
-            singleComponent.insert("component_type", "PSU");
-            singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
-            singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
-            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
-            singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
-            newBuild.append(singleComponent);
-        }
-        else if(ramCheck && (build->item(4, 0))->text()==componenti[i]->getName()) {
-            RAM* ram=static_cast<RAM*>(componenti[i]);
-            singleComponent.insert("component_type", "RAM");
-            singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
-            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
-            singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
-            singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
-            newBuild.append(singleComponent);
-        }
-        else if(storageCheck && (build->item(5, 0))->text()==componenti[i]->getName()) {
-            Storage* storage=static_cast<Storage*>(componenti[i]);
-            singleComponent.insert("component_type", "Storage");
-            singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
-            singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
-            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
-            singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
-            singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
-            singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
-            newBuild.append(singleComponent);
-        }
+    if(mobaCheck==false && cpuCheck==false && gpuCheck==false && psuCheck==false && ramCheck==false && storageCheck==false) {
+        QDialog *error=new QDialog(this);
+        QVBoxLayout *errorLayout=new QVBoxLayout(error);
+        error->setLayout(errorLayout);
+        QLabel *errorLabel=new QLabel("Salvataggio non riuscito! Build vuota.");
+        QPushButton *errorButton=new QPushButton("Ok");
+        errorLayout->addWidget(errorLabel);
+        errorLayout->addWidget(errorButton);
+        errorLabel->setAlignment(Qt::AlignCenter);
+        errorButton->resize(60, 30);
+        errorLayout->setAlignment(errorButton, Qt::AlignCenter);
+        error->setFixedHeight(100);
+        error->setFixedWidth(350);
+        error->move(700, 400);
+        error->show();
+        connect(errorButton, SIGNAL(clicked(bool)), error, SLOT(close()));
     }
-    QJsonObject toAdd;
-    toAdd.insert("pc_parts", newBuild);
-    QJsonDocument json(toAdd);
-    if(savePath.open(QIODevice::WriteOnly)) {
-        savePath.write(json.toJson());
-        QDialog *success=new QDialog(this);
-        QVBoxLayout *successLayout=new QVBoxLayout(success);
-        success->setLayout(successLayout);
-        QLabel *successLabel=new QLabel("File salvato correttamente!");
-        QPushButton *successButton=new QPushButton("Ok");
-        successLayout->addWidget(successLabel);
-        successLayout->addWidget(successButton);
-        successLabel->setAlignment(Qt::AlignCenter);
-        successButton->resize(60, 30);
-        successLayout->setAlignment(successButton, Qt::AlignCenter);
-        success->setFixedHeight(100);
-        success->setFixedWidth(350);
-        success->move(700, 400);
-        success->show();
-        connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
+    else {
+        QJsonArray newBuild;
+        if(file.contains(".json")==false)
+            file.append(".json");
+        QFile savePath(file);
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            QJsonObject singleComponent;
+            if(mobaCheck && (build->item(0, 0))->text()==componenti[i]->getName()) {
+                MOBA* moba=static_cast<MOBA*>(componenti[i]);
+                singleComponent.insert("component_type", "MOBA");
+                singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
+                singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
+                singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
+                singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
+                singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
+                newBuild.append(singleComponent);
+            }
+            else if(cpuCheck && (build->item(1, 0))->text()==componenti[i]->getName()) {
+                CPU* cpu=static_cast<CPU*>(componenti[i]);
+                singleComponent.insert("component_type", "CPU");
+                singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
+                singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
+                singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
+                singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
+                singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
+                singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
+                newBuild.append(singleComponent);
+            }
+            else if(gpuCheck && (build->item(2, 0))->text()==componenti[i]->getName()) {
+                GPU* gpu=static_cast<GPU*>(componenti[i]);
+                singleComponent.insert("component_type", "GPU");
+                singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
+                singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
+                singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
+                singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
+                singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
+                singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
+                singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
+                singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
+                newBuild.append(singleComponent);
+            }
+            else if(psuCheck && (build->item(3, 0))->text()==componenti[i]->getName()) {
+                PSU* psu=static_cast<PSU*>(componenti[i]);
+                singleComponent.insert("component_type", "PSU");
+                singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
+                singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
+                singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
+                singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
+                singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
+                newBuild.append(singleComponent);
+            }
+            else if(ramCheck && (build->item(4, 0))->text()==componenti[i]->getName()) {
+                RAM* ram=static_cast<RAM*>(componenti[i]);
+                singleComponent.insert("component_type", "RAM");
+                singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
+                singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
+                singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
+                singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
+                newBuild.append(singleComponent);
+            }
+            else if(storageCheck && (build->item(5, 0))->text()==componenti[i]->getName()) {
+                Storage* storage=static_cast<Storage*>(componenti[i]);
+                singleComponent.insert("component_type", "Storage");
+                singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
+                singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
+                singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
+                singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
+                singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
+                singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
+                newBuild.append(singleComponent);
+            }
+        }
+        QJsonObject toAdd;
+        toAdd.insert("pc_parts", newBuild);
+        QJsonDocument json(toAdd);
+        if(savePath.open(QIODevice::WriteOnly)) {
+            savePath.write(json.toJson());
+            QDialog *success=new QDialog(this);
+            QVBoxLayout *successLayout=new QVBoxLayout(success);
+            success->setLayout(successLayout);
+            QLabel *successLabel=new QLabel("File salvato correttamente!");
+            QPushButton *successButton=new QPushButton("Ok");
+            successLayout->addWidget(successLabel);
+            successLayout->addWidget(successButton);
+            successLabel->setAlignment(Qt::AlignCenter);
+            successButton->resize(60, 30);
+            successLayout->setAlignment(successButton, Qt::AlignCenter);
+            success->setFixedHeight(100);
+            success->setFixedWidth(350);
+            success->move(700, 400);
+            success->show();
+            connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
+        }
     }
 }
 
 //metodo di salvataggio del database su file JSON
 void MainWindow::save() {
     QString file = QFileDialog::getSaveFileName(this, tr("Save Database"), "", tr("JSON (*.json);"));
-    QJsonArray newDatabase;
-    if(file.contains(".json")==false)
-        file.append(".json");
-    QFile savePath(file);
-    for(unsigned int i=0; i!=componenti.getSize(); ++i) {
-        QJsonObject singleComponent;
-        if(dynamic_cast<MOBA*>(componenti[i])) {
-            MOBA* moba=static_cast<MOBA*>(componenti[i]);
-            singleComponent.insert("component_type", "MOBA");
-            singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
-            singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
-            singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
-            singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
-            singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
-            newDatabase.append(singleComponent);
-        }
-        else if(dynamic_cast<CPU*>(componenti[i])) {
-            CPU* cpu=static_cast<CPU*>(componenti[i]);
-            singleComponent.insert("component_type", "CPU");
-            singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
-            singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
-            singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
-            singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
-            singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
-            singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
-            newDatabase.append(singleComponent);
-        }
-        else if(dynamic_cast<GPU*>(componenti[i])) {
-            GPU* gpu=static_cast<GPU*>(componenti[i]);
-            singleComponent.insert("component_type", "GPU");
-            singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
-            singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
-            singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
-            singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
-            singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
-            singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
-            singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
-            newDatabase.append(singleComponent);
-        }
-        else if(dynamic_cast<PSU*>(componenti[i])) {
-            PSU* psu=static_cast<PSU*>(componenti[i]);
-            singleComponent.insert("component_type", "PSU");
-            singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
-            singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
-            singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
-            singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
-            singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
-            newDatabase.append(singleComponent);
-        }
-        else if(dynamic_cast<RAM*>(componenti[i])) {
-            RAM* ram=static_cast<RAM*>(componenti[i]);
-            singleComponent.insert("component_type", "RAM");
-            singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
-            singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
-            singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
-            singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
-            newDatabase.append(singleComponent);
-        }
-        else if(dynamic_cast<Storage*>(componenti[i])) {
-            Storage* storage=static_cast<Storage*>(componenti[i]);
-            singleComponent.insert("component_type", "Storage");
-            singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
-            singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
-            singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
-            singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
-            singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
-            singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
-            singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
-            singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
-            singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
-            singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
-            singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
-            singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
-            newDatabase.append(singleComponent);
-        }
+    if(componenti.empty()==true) {
+        QDialog *error=new QDialog(this);
+        QVBoxLayout *errorLayout=new QVBoxLayout(error);
+        error->setLayout(errorLayout);
+        QLabel *errorLabel=new QLabel("Salvataggio non riuscito! Database vuoto.");
+        QPushButton *errorButton=new QPushButton("Ok");
+        errorLayout->addWidget(errorLabel);
+        errorLayout->addWidget(errorButton);
+        errorLabel->setAlignment(Qt::AlignCenter);
+        errorButton->resize(60, 30);
+        errorLayout->setAlignment(errorButton, Qt::AlignCenter);
+        error->setFixedHeight(100);
+        error->setFixedWidth(350);
+        error->move(700, 400);
+        error->show();
+        connect(errorButton, SIGNAL(clicked(bool)), error, SLOT(close()));
     }
-    QJsonObject toAdd;
-    toAdd.insert("pc_parts", newDatabase);
-    QJsonDocument json(toAdd);
-    if(savePath.open(QIODevice::WriteOnly)) {
-        savePath.write(json.toJson());
-        QDialog *success=new QDialog(this);
-        QVBoxLayout *successLayout=new QVBoxLayout(success);
-        success->setLayout(successLayout);
-        QLabel *successLabel=new QLabel("File salvato correttamente!");
-        QPushButton *successButton=new QPushButton("Ok");
-        successLayout->addWidget(successLabel);
-        successLayout->addWidget(successButton);
-        successLabel->setAlignment(Qt::AlignCenter);
-        successButton->resize(60, 30);
-        successLayout->setAlignment(successButton, Qt::AlignCenter);
-        success->setFixedHeight(100);
-        success->setFixedWidth(350);
-        success->move(700, 400);
-        success->show();
-        connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
+    else {
+        QJsonArray newDatabase;
+        if(file.contains(".json")==false)
+            file.append(".json");
+        QFile savePath(file);
+        for(unsigned int i=0; i!=componenti.getSize(); ++i) {
+            QJsonObject singleComponent;
+            if(dynamic_cast<MOBA*>(componenti[i])) {
+                MOBA* moba=static_cast<MOBA*>(componenti[i]);
+                singleComponent.insert("component_type", "MOBA");
+                singleComponent.insert("length", QJsonValue::fromVariant(moba->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(moba->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(moba->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(moba->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(moba->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(moba->getPowerConsumption()));
+                singleComponent.insert("moba_socket", QJsonValue::fromVariant(moba->getMOBASocket()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(moba->getFormFactor()));
+                singleComponent.insert("RAM_slots", QJsonValue::fromVariant(moba->getRAMSlots()));
+                singleComponent.insert("max_RAM", QJsonValue::fromVariant(moba->getMaxRAM()));
+                singleComponent.insert("connectors", QJsonValue::fromVariant(moba->getConnectors()));
+                newDatabase.append(singleComponent);
+            }
+            else if(dynamic_cast<CPU*>(componenti[i])) {
+                CPU* cpu=static_cast<CPU*>(componenti[i]);
+                singleComponent.insert("component_type", "CPU");
+                singleComponent.insert("length", QJsonValue::fromVariant(cpu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(cpu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(cpu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(cpu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(cpu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(cpu->getPowerConsumption()));
+                singleComponent.insert("cpu_speed", QJsonValue::fromVariant(cpu->getCpuSpeed()));
+                singleComponent.insert("cores", QJsonValue::fromVariant(cpu->getCores()));
+                singleComponent.insert("x64bit", QJsonValue::fromVariant(cpu->getx64bit()));
+                singleComponent.insert("cpu_socket", QJsonValue::fromVariant(cpu->getCpuSocket()));
+                singleComponent.insert("integrated_graphics", QJsonValue::fromVariant(cpu->getIntegratedGraphic()));
+                newDatabase.append(singleComponent);
+            }
+            else if(dynamic_cast<GPU*>(componenti[i])) {
+                GPU* gpu=static_cast<GPU*>(componenti[i]);
+                singleComponent.insert("component_type", "GPU");
+                singleComponent.insert("length", QJsonValue::fromVariant(gpu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(gpu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(gpu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(gpu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(gpu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(gpu->getPowerConsumption()));
+                singleComponent.insert("type", QJsonValue::fromVariant(gpu->getType()));
+                singleComponent.insert("memory_size", QJsonValue::fromVariant(gpu->getMemorySize()));
+                singleComponent.insert("performance", QJsonValue::fromVariant(gpu->getPerformance()));
+                singleComponent.insert("clock", QJsonValue::fromVariant(gpu->getClock()));
+                singleComponent.insert("interface", QJsonValue::fromVariant(gpu->getInterface()));
+                singleComponent.insert("connectors", QJsonValue::fromVariant(gpu->getConnectors()));
+                singleComponent.insert("supplementary_power", QJsonValue::fromVariant(gpu->getSupplementaryPower()));
+                newDatabase.append(singleComponent);
+            }
+            else if(dynamic_cast<PSU*>(componenti[i])) {
+                PSU* psu=static_cast<PSU*>(componenti[i]);
+                singleComponent.insert("component_type", "PSU");
+                singleComponent.insert("length", QJsonValue::fromVariant(psu->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(psu->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(psu->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(psu->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(psu->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(psu->getPowerConsumption()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(psu->getFormFactor()));
+                singleComponent.insert("wattage", QJsonValue::fromVariant(psu->getWattage()));
+                singleComponent.insert("efficiency_certification", QJsonValue::fromVariant(psu->getEfficiencyCertification()));
+                singleComponent.insert("modularity", QJsonValue::fromVariant(psu->getModularity()));
+                singleComponent.insert("supplementary_power", QJsonValue::fromVariant(psu->getSupplementaryPower()));
+                newDatabase.append(singleComponent);
+            }
+            else if(dynamic_cast<RAM*>(componenti[i])) {
+                RAM* ram=static_cast<RAM*>(componenti[i]);
+                singleComponent.insert("component_type", "RAM");
+                singleComponent.insert("length", QJsonValue::fromVariant(ram->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(ram->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(ram->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(ram->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(ram->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(ram->getPowerConsumption()));
+                singleComponent.insert("ram_speed", QJsonValue::fromVariant(ram->getRamSpeed()));
+                singleComponent.insert("type", QJsonValue::fromVariant(ram->getType()));
+                singleComponent.insert("size", QJsonValue::fromVariant(ram->getSize()));
+                newDatabase.append(singleComponent);
+            }
+            else if(dynamic_cast<Storage*>(componenti[i])) {
+                Storage* storage=static_cast<Storage*>(componenti[i]);
+                singleComponent.insert("component_type", "Storage");
+                singleComponent.insert("length", QJsonValue::fromVariant(storage->getLength()));
+                singleComponent.insert("height", QJsonValue::fromVariant(storage->getHeight()));
+                singleComponent.insert("name", QJsonValue::fromVariant(storage->getName()));
+                singleComponent.insert("manufacturer", QJsonValue::fromVariant(storage->getManufacturer()));
+                singleComponent.insert("price", QJsonValue::fromVariant(storage->getPrice()));
+                singleComponent.insert("power_consumption", QJsonValue::fromVariant(storage->getPowerConsumption()));
+                singleComponent.insert("type", QJsonValue::fromVariant(storage->getType()));
+                singleComponent.insert("rpm", QJsonValue::fromVariant(storage->getRPM()));
+                singleComponent.insert("size", QJsonValue::fromVariant(storage->getSize()));
+                singleComponent.insert("interface", QJsonValue::fromVariant(storage->getInterface()));
+                singleComponent.insert("form_factor", QJsonValue::fromVariant(storage->getFormFactor()));
+                singleComponent.insert("speed", QJsonValue::fromVariant(storage->getSpeed()));
+                newDatabase.append(singleComponent);
+            }
+        }
+        QJsonObject toAdd;
+        toAdd.insert("pc_parts", newDatabase);
+        QJsonDocument json(toAdd);
+        if(savePath.open(QIODevice::WriteOnly)) {
+            savePath.write(json.toJson());
+            QDialog *success=new QDialog(this);
+            QVBoxLayout *successLayout=new QVBoxLayout(success);
+            success->setLayout(successLayout);
+            QLabel *successLabel=new QLabel("File salvato correttamente!");
+            QPushButton *successButton=new QPushButton("Ok");
+            successLayout->addWidget(successLabel);
+            successLayout->addWidget(successButton);
+            successLabel->setAlignment(Qt::AlignCenter);
+            successButton->resize(60, 30);
+            successLayout->setAlignment(successButton, Qt::AlignCenter);
+            success->setFixedHeight(100);
+            success->setFixedWidth(350);
+            success->move(700, 400);
+            success->show();
+            connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
+        }
     }
 }
 
@@ -1455,11 +1493,26 @@ void MainWindow::loadFileToBuild() {
     file.close();
     QJsonDocument document=QJsonDocument::fromJson(json);
     QJsonArray array=document.object().value("pc_parts").toArray();
-    if(!array.isEmpty()) {
+    if(array.isEmpty()) {
+        QDialog *error=new QDialog(this);
+        QVBoxLayout *errorLayout=new QVBoxLayout(error);
+        error->setLayout(errorLayout);
+        QLabel *errorLabel=new QLabel("Caricamento non riuscito! File vuoto.");
+        QPushButton *errorButton=new QPushButton("Ok");
+        errorLayout->addWidget(errorLabel);
+        errorLayout->addWidget(errorButton);
+        errorLabel->setAlignment(Qt::AlignCenter);
+        errorButton->resize(60, 30);
+        errorLayout->setAlignment(errorButton, Qt::AlignCenter);
+        error->setFixedHeight(100);
+        error->setFixedWidth(350);
+        error->move(700, 400);
+        error->show();
+        connect(errorButton, SIGNAL(clicked(bool)), error, SLOT(close()));
+    }
+    else {
         resetSpecs();
         bool componentPresence;
-        for(unsigned int i=0; i!=componenti.getSize(); i++)
-            componentsNames.push_back(new QString(componenti[i]->getName()));
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
             QString* component_name=new QString((j.toObject().value("name").toString()));
@@ -1613,8 +1666,21 @@ void MainWindow::loadFileToBuild() {
                 }
             }
         }
-        for(unsigned int i=0; i!=componenti.getSize(); ++i)
-            componentsNames.push_back(new QString(componenti[i]->getName()));
+        QDialog *success=new QDialog(this);
+        QVBoxLayout *successLayout=new QVBoxLayout(success);
+        success->setLayout(successLayout);
+        QLabel *successLabel=new QLabel("File caricato correttamente!");
+        QPushButton *successButton=new QPushButton("Ok");
+        successLayout->addWidget(successLabel);
+        successLayout->addWidget(successButton);
+        successLabel->setAlignment(Qt::AlignCenter);
+        successButton->resize(60, 30);
+        successLayout->setAlignment(successButton, Qt::AlignCenter);
+        success->setFixedHeight(100);
+        success->setFixedWidth(350);
+        success->move(700, 400);
+        success->show();
+        connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
     }
 }
 
@@ -1627,7 +1693,24 @@ void MainWindow::load() {
     file.close();
     QJsonDocument document = QJsonDocument::fromJson(json);
     QJsonArray array = document.object().value("pc_parts").toArray();
-    if(!array.isEmpty()) {
+    if(array.isEmpty()) {
+        QDialog *error=new QDialog(this);
+        QVBoxLayout *errorLayout=new QVBoxLayout(error);
+        error->setLayout(errorLayout);
+        QLabel *errorLabel=new QLabel("Caricamento non riuscito! File vuoto.");
+        QPushButton *errorButton=new QPushButton("Ok");
+        errorLayout->addWidget(errorLabel);
+        errorLayout->addWidget(errorButton);
+        errorLabel->setAlignment(Qt::AlignCenter);
+        errorButton->resize(60, 30);
+        errorLayout->setAlignment(errorButton, Qt::AlignCenter);
+        error->setFixedHeight(100);
+        error->setFixedWidth(350);
+        error->move(700, 400);
+        error->show();
+        connect(errorButton, SIGNAL(clicked(bool)), error, SLOT(close()));
+    }
+    else {
         bool componentPresence;
         for(unsigned int i=0; i!=componenti.getSize(); i++)
             componentsNames.push_back(new QString(componenti[i]->getName()));
@@ -1734,9 +1817,25 @@ void MainWindow::load() {
             if(componentsList->findItems(componenti[i]->getName(), Qt::MatchExactly).empty())
                 componentsList->addItem(componenti[i]->getName());
         }
+        QDialog *success=new QDialog(this);
+        QVBoxLayout *successLayout=new QVBoxLayout(success);
+        success->setLayout(successLayout);
+        QLabel *successLabel=new QLabel("File caricato correttamente!");
+        QPushButton *successButton=new QPushButton("Ok");
+        successLayout->addWidget(successLabel);
+        successLayout->addWidget(successButton);
+        successLabel->setAlignment(Qt::AlignCenter);
+        successButton->resize(60, 30);
+        successLayout->setAlignment(successButton, Qt::AlignCenter);
+        success->setFixedHeight(100);
+        success->setFixedWidth(350);
+        success->move(700, 400);
+        success->show();
+        connect(successButton, SIGNAL(clicked(bool)), success, SLOT(close()));
     }
 }
 
+//metodo per la visualizzazione del manuale utente
 void MainWindow::help() {
     if(user_manual!=nullptr)
         user_manual->show();
