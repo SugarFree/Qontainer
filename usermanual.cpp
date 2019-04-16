@@ -11,9 +11,9 @@ userManual::userManual(QWidget* parent): QMessageBox(parent) {
             "Tab Gestione componenti:\n"
             "dopo aver caricato un database JSON attraverso il tasto carica nella menu bar "
             "vengono visualizzati tutti i componenti inseriti nella tabella sottostante; in questa tabella "
-            "è possibile filtrare gli elementi attraverso la search bar soprastante o aggiungere, rimuovere o "
-            "modificare i pezzi. A destra verrano mostrate le caratteristiche del componente selzionato modificabili "
-            "attraverso line edit, spin box o check box e due bottoni per il salvataggio o l'annullamento delle modifiche.");
+            "è possibile filtrare gli elementi attraverso la search bar soprastante o aggiungere (i nomi sono obbligatori e devono essere univoci), "
+            "rimuovere o modificare i pezzi con i bottoni. A destra verrano mostrate le caratteristiche del componente selzionato modificabili "
+            "attraverso line edit, spin box o check box e due pulsanti per il salvataggio o l'annullamento delle modifiche.");
     setTextFormat(Qt::PlainText);
     setWindowTitle("PC Part Picker - Manuale utente");
 }

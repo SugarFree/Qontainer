@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include <iostream>
 
 //funzione per rimuovere gli zeri in eccesso nella conversione da double a QString
 std::string MainWindow::removeZero(std::string str) {
@@ -9,7 +8,7 @@ std::string MainWindow::removeZero(std::string str) {
 
 //metodo per inserire la MOBA selezionata sulla combobox nella build
 void MainWindow::mobaToBuild() {
-    if(mobaComboBox->currentText()!="") {
+    if(mobaComboBox->currentText().isEmpty()==false) {
         QString mobaName=mobaComboBox->currentText();
         if(build->item(0, 0)!=nullptr && mobaName!=(build->item(0, 0))->text())
             resetSpecs();
@@ -34,7 +33,7 @@ void MainWindow::mobaToBuild() {
 
 //metodo per inserire la CPU selezionata sulla combobox nella build
 void MainWindow::cpuToBuild() {
-    if(cpuComboBox->currentText()!="") {
+    if(cpuComboBox->currentText().isEmpty()==false) {
         QString cpuName=cpuComboBox->currentText();
         if(build->item(1, 0)!=nullptr && cpuName!=(build->item(1, 0))->text())
             resetSpecs();
@@ -59,7 +58,7 @@ void MainWindow::cpuToBuild() {
 
 //metodo per inserire la GPU selezionata sulla combobox nella build
 void MainWindow::gpuToBuild() {
-    if(gpuComboBox->currentText()!="") {
+    if(gpuComboBox->currentText().isEmpty()==false) {
         QString gpuName=gpuComboBox->currentText();
         if(build->item(2, 0)!=nullptr && gpuName!=(build->item(2, 0))->text())
             resetSpecs();
@@ -84,7 +83,7 @@ void MainWindow::gpuToBuild() {
 
 //metodo per inserire la PSU selezionata sulla combobox nella build
 void MainWindow::psuToBuild() {
-    if(psuComboBox->currentText()!="") {
+    if(psuComboBox->currentText().isEmpty()==false) {
         QString psuName=psuComboBox->currentText();
         if(build->item(3, 0)!=nullptr && psuName!=(build->item(3, 0))->text())
             resetSpecs();
@@ -109,7 +108,7 @@ void MainWindow::psuToBuild() {
 
 //metodo per inserire la RAM selezionata sulla combobox nella build
 void MainWindow::ramToBuild() {
-    if(ramComboBox->currentText()!="") {
+    if(ramComboBox->currentText().isEmpty()==false) {
         QString ramName=ramComboBox->currentText();
         if(build->item(4, 0)!=nullptr && ramName!=(build->item(4, 0))->text())
             resetSpecs();
@@ -134,7 +133,7 @@ void MainWindow::ramToBuild() {
 
 //metodo per inserire lo Storage selezionato sulla combobox nella build
 void MainWindow::storageToBuild() {
-    if(storageComboBox->currentText()!="") {
+    if(storageComboBox->currentText().isEmpty()==false) {
         QString storageName=storageComboBox->currentText();
         if(build->item(5, 0)!=nullptr && storageName!=(build->item(5, 0))->text())
             resetSpecs();
@@ -209,7 +208,7 @@ void MainWindow::removeComponents() {
             if(componenti[i]->getName()==(componentsList->currentItem())->text()) {
                 trovato=true;
                 int pos;
-                QString *componentName=new QString(componenti[i]->getName());
+                QString component_name=QString(componenti[i]->getName());
                 componentsList->takeItem(componentsList->currentRow());
                 if(dynamic_cast<MOBA*>(componenti[i])!=nullptr)
                     mobaComboBox->removeItem(mobaComboBox->findText(componenti[i]->getName()));
@@ -236,9 +235,12 @@ void MainWindow::removeComponents() {
                 if(build->item(5, 0)!=nullptr && componenti[i]->getName()==(build->item(5, 0)->text()))
                     removeStorageFromBuild();
                 componenti.erase(i);
-                pos=componentsNames.search(componentName);
-                if(pos!=-1)
-                    componentsNames.erase(pos);
+                pos=componentsNames.search(component_name);
+                if(pos!=-1) {
+                    for(unsigned int i=pos; i!=componentsNames.getSize()-1; ++i)
+                        componentsNames[i].replace(0, componentsNames[i].length(), componentsNames[i+1]);
+                    componentsNames.setSize(componentsNames.getSize()-1);
+                }
             }
         }
     }
@@ -246,12 +248,12 @@ void MainWindow::removeComponents() {
 
 //reset del layout di modifica dei componenti
 void MainWindow::resetEditSpecs() {
-    componentNameLine->setText("");
+    componentNameLine->clear();
     componentLengthSpin->setValue(0);
     componentHeightSpin->setValue(0);
     componentPriceSpin->setValue(0);
     componentPowerConsumptionSpin->setValue(0);
-    componentManufacturerLine->setText("");
+    componentManufacturerLine->clear();
     while(componentsSpecsLayout2->count()!=0) {
         QLayoutItem *item=componentsSpecsLayout2->takeAt(0);
         delete item->widget();
@@ -273,78 +275,91 @@ void MainWindow::discardComponentsChanges() {
 
 //metodo che salva le caratteristiche del nuovo componente sul contenitore inserendolo nella combobox e nella lista dei componenti
 void MainWindow::saveNewComponent(QString type) {
-    if(type=="MOBA") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new MOBA(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
-                                      componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                      mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->value(), mobaMOBAmaxRAMSpin->value(),
-                                      mobaMOBAConnectorsLine->text()));
-        mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
+    if(componentNameLine->text().isEmpty()) {
+        QDialog *noName=new QDialog(this);
+        QVBoxLayout *noNameLayout=new QVBoxLayout(noName);
+        noName->setLayout(noNameLayout);
+        QLabel *noNameLabel=new QLabel("Salvataggio non riuscito! Inserire nome componente.");
+        QPushButton *noNameButton=new QPushButton("Ok");
+        noNameLayout->addWidget(noNameLabel);
+        noNameLayout->addWidget(noNameButton);
+        noNameLabel->setAlignment(Qt::AlignCenter);
+        noNameButton->resize(60, 30);
+        noNameLayout->setAlignment(noNameButton, Qt::AlignCenter);
+        noName->setFixedHeight(100);
+        noName->setFixedWidth(450);
+        noName->move(700, 400);
+        noName->show();
+        connect(noNameButton, SIGNAL(clicked(bool)), noName, SLOT(close()));
     }
-    if(type=="CPU") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new CPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
-                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                     cpuCPUSpeedSpin->value(), cpuCPUCoresSpin->value(), cpuCPUx64bitCheck->isChecked(), cpuCPUSocketLine->text(),
-                                     cpuCPUIntegratedGraphicCheck->isChecked()));
-        cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
-    }
-    if(type=="GPU") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new GPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
-                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                     gpuGPUTypeLine->text(), gpuGPUMemorySizeSpin->value(), gpuGPUPerformanceSpin->value(),
-                                     gpuGPUClockSpin->value(), gpuGPUInterfaceLine->text(), gpuGPUConnectorsLine->text(),
-                                     gpuGPUSupplementaryPowerCheck->isChecked()));
-        gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
-    }
-    if(type=="PSU") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new PSU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
-                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                     psuPSUFormFactorLine->text(), psuPSUWattageSpin->value(), psuPSUEfficiencyCertificationLine->text(),
-                                     psuPSUModularityLine->text(), psuPSUSupplementaryPowerCheck->isChecked()));
-        psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
-    }
-    if(type=="RAM") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new RAM(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
-                                     componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                     ramRAMSpeedSpin->value(), ramRAMTypeLine->text(), ramRAMSizeSpin->value()));
-        ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
-    }
-    if(type=="Storage") {
-        if(componentNameLine->text()=="")
-            componentNameLine->setText("Componente generico");
-        componenti.push_back(new Storage(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+    else {
+        if(type=="MOBA") {
+            componenti.push_back(new MOBA(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                          componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                          mobaMOBASocketLine->text(), mobaMOBAFormFactorLine->text(), mobaMOBARAMSlotsSpin->value(), mobaMOBAmaxRAMSpin->value(),
+                                          mobaMOBAConnectorsLine->text()));
+            componentsNames.push_back(componentNameLine->text());
+            mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
+        if(type=="CPU") {
+            componenti.push_back(new CPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
                                          componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
-                                         storageStorageTypeLine->text(), storageStorageRPMSpin->value(), storageStorageSizeSpin->value(),
-                                         storageStorageInterfaceLine->text(), storageStorageFormFactorSpin->value(), storageStorageSpeedSpin->value()));
-        storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
-        componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-        discardComponentsChanges();
+                                         cpuCPUSpeedSpin->value(), cpuCPUCoresSpin->value(), cpuCPUx64bitCheck->isChecked(), cpuCPUSocketLine->text(),
+                                         cpuCPUIntegratedGraphicCheck->isChecked()));
+            componentsNames.push_back(componentNameLine->text());
+            cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
+        if(type=="GPU") {
+            componenti.push_back(new GPU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                         componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                         gpuGPUTypeLine->text(), gpuGPUMemorySizeSpin->value(), gpuGPUPerformanceSpin->value(),
+                                         gpuGPUClockSpin->value(), gpuGPUInterfaceLine->text(), gpuGPUConnectorsLine->text(),
+                                         gpuGPUSupplementaryPowerCheck->isChecked()));
+            componentsNames.push_back(componentNameLine->text());
+            gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
+        if(type=="PSU") {
+            componenti.push_back(new PSU(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                         componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                         psuPSUFormFactorLine->text(), psuPSUWattageSpin->value(), psuPSUEfficiencyCertificationLine->text(),
+                                         psuPSUModularityLine->text(), psuPSUSupplementaryPowerCheck->isChecked()));
+            componentsNames.push_back(componentNameLine->text());
+            psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
+        if(type=="RAM") {
+            componenti.push_back(new RAM(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                         componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                         ramRAMSpeedSpin->value(), ramRAMTypeLine->text(), ramRAMSizeSpin->value()));
+            componentsNames.push_back(componentNameLine->text());
+            ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
+        if(type=="Storage") {
+            componenti.push_back(new Storage(componentLengthSpin->value(), componentHeightSpin->value(), componentNameLine->text(),
+                                             componentManufacturerLine->text(), componentPriceSpin->value(), componentPowerConsumptionSpin->value(),
+                                             storageStorageTypeLine->text(), storageStorageRPMSpin->value(), storageStorageSizeSpin->value(),
+                                             storageStorageInterfaceLine->text(), storageStorageFormFactorSpin->value(), storageStorageSpeedSpin->value()));
+            componentsNames.push_back(componentNameLine->text());
+            storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
+            componentsList->addItem(componenti[componenti.getSize()-1]->getName());
+            discardComponentsChanges();
+        }
     }
 }
 
 //metodo che imposta il layout per l'aggiunta del nuovo componente
 void MainWindow::newComponentEdit(QString type) {
     componentType->close();
-    if(componentNameLine->text()!="")
+    if(componentNameLine->text().isEmpty()==false)
         resetEditSpecs();
     componentsSpecsLayout2=new QFormLayout();
     for(int i=0; i!=componentsList->count(); ++i) {
@@ -477,7 +492,11 @@ void MainWindow::saveComponentsChanges() {
     for(unsigned int i=0; !trovato && i!=componenti.getSize(); ++i) {
         if(!trovato && componenti[i]->getName()==componentName) {
             trovato=true;
+            int pos;
             if(componentNameLine->text()!=componenti[i]->getName()) {
+                pos=componentsNames.search(componenti[i]->getName());
+                if(pos!=-1)
+                    componentsNames[pos].replace(0, componentsNames[pos].length(), componentNameLine->text());
                 mobaComboBox->setItemText(mobaComboBox->findText(componentName), componentNameLine->text());
                 componenti[i]->setName(componentNameLine->text());
             }
@@ -596,7 +615,7 @@ void MainWindow::saveComponentsChanges() {
 
 //metodo che imposta il layout per la modifica di un componente
 void MainWindow::editComponentsSpecs() {
-    if(componentNameLine->text()!="")
+    if(componentNameLine->text().isEmpty()==false)
         resetEditSpecs();
     componentsSpecsLayout2=new QFormLayout;
     if(componentsList->currentItem()!=nullptr && (componentsList->currentItem())->text()!=componentNameLine->text()) {
@@ -769,7 +788,7 @@ void MainWindow::editComponentsSpecs() {
 //metodo che rimuove la MOBA dalla build
 void MainWindow::removeMOBAFromBuild() {
     if((build->item(0, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(0, 0, nullptr);
         build->setItem(0, 1, nullptr);
@@ -781,7 +800,7 @@ void MainWindow::removeMOBAFromBuild() {
 //metodo che rimuove la CPU dalla build
 void MainWindow::removeCPUFromBuild() {
     if((build->item(1, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(1, 0, nullptr);
         build->setItem(1, 1, nullptr);
@@ -793,7 +812,7 @@ void MainWindow::removeCPUFromBuild() {
 //metodo che rimuove la GPU dalla build
 void MainWindow::removeGPUFromBuild() {
     if((build->item(2, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(2, 0, nullptr);
         build->setItem(2, 1, nullptr);
@@ -805,7 +824,7 @@ void MainWindow::removeGPUFromBuild() {
 //metodo che rimuove la PSU dalla build
 void MainWindow::removePSUFromBuild() {
     if((build->item(3, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(3, 0, nullptr);
         build->setItem(3, 1, nullptr);
@@ -817,7 +836,7 @@ void MainWindow::removePSUFromBuild() {
 //metodo che rimuove la RAM dalla build
 void MainWindow::removeRAMFromBuild() {
     if((build->item(4, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(4, 0, nullptr);
         build->setItem(4, 1, nullptr);
@@ -829,7 +848,7 @@ void MainWindow::removeRAMFromBuild() {
 //metodo che rimuove lo Storage dalla build
 void MainWindow::removeStorageFromBuild() {
     if((build->item(5, 0))!=nullptr) {
-        if(componentNameLabel->text()!="")
+        if(componentNameLabel->text().isEmpty()==false)
             resetSpecs();
         build->setItem(5, 0, nullptr);
         build->setItem(5, 1, nullptr);
@@ -861,7 +880,7 @@ void MainWindow::saveBuildToFile() {
         QDialog *error=new QDialog(this);
         QVBoxLayout *errorLayout=new QVBoxLayout(error);
         error->setLayout(errorLayout);
-        QLabel *errorLabel=new QLabel("Salvataggio non riuscito! Build vuota.");
+        QLabel *errorLabel=new QLabel("Salvataggio non riuscito!");
         QPushButton *errorButton=new QPushButton("Ok");
         errorLayout->addWidget(errorLabel);
         errorLayout->addWidget(errorButton);
@@ -1010,7 +1029,7 @@ void MainWindow::save() {
         QDialog *error=new QDialog(this);
         QVBoxLayout *errorLayout=new QVBoxLayout(error);
         error->setLayout(errorLayout);
-        QLabel *errorLabel=new QLabel("Salvataggio non riuscito! Database vuoto.");
+        QLabel *errorLabel=new QLabel("Salvataggio non riuscito!");
         QPushButton *errorButton=new QPushButton("Ok");
         errorLayout->addWidget(errorLabel);
         errorLayout->addWidget(errorButton);
@@ -1154,13 +1173,13 @@ void MainWindow::save() {
 
 //reset del layout che mostra le specifiche dei componenti
 void MainWindow::resetSpecs() {
-    if(componentNameLabel->text()!="") {
-        componentNameLabel->setText("");
-        componentLengthLabel->setText("");
-        componentHeightLabel->setText("");
-        componentPriceLabel->setText("");
-        componentPowerConsumptionLabel->setText("");
-        componentManufacturerLabel->setText("");
+    if(componentNameLabel->text().isEmpty()==false) {
+        componentNameLabel->clear();
+        componentLengthLabel->clear();
+        componentHeightLabel->clear();
+        componentPriceLabel->clear();
+        componentPowerConsumptionLabel->clear();
+        componentManufacturerLabel->clear();
         while(componentsSpecsLayout->count()!=0) {
             QLayoutItem *item=componentsSpecsLayout->takeAt(0);
             delete item->widget();
@@ -1245,7 +1264,7 @@ void MainWindow::basicSpecs(unsigned int pos) {
 
 //metodo che mostra le specifiche della MOBA inserita nella build
 void MainWindow::showMOBASpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(0, 0)!=nullptr && (build->item(0, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1281,7 +1300,7 @@ void MainWindow::showMOBASpecs() {
 
 //metodo che mostra le specifiche della CPU inserita nella build
 void MainWindow::showCPUSpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(1, 0)!=nullptr && (build->item(1, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1327,7 +1346,7 @@ void MainWindow::showCPUSpecs() {
 
 //metodo che mostra le specifiche della GPU inserita nella build
 void MainWindow::showGPUSpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(2, 0)!=nullptr && (build->item(2, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1375,7 +1394,7 @@ void MainWindow::showGPUSpecs() {
 
 //metodo che mostra le specifiche della PSU inserita nella build
 void MainWindow::showPSUSpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(3, 0)!=nullptr && (build->item(3, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1415,7 +1434,7 @@ void MainWindow::showPSUSpecs() {
 
 //metodo che mostra le specifiche della RAM inserita nella build
 void MainWindow::showRAMSpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(4, 0)!=nullptr && (build->item(4, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1445,7 +1464,7 @@ void MainWindow::showRAMSpecs() {
 
 //metodo che mostra le specifiche dello Storage inserita nella build
 void MainWindow::showStorageSpecs() {
-    if(componentNameLabel->text()!="")
+    if(componentNameLabel->text().isEmpty()==false)
         resetSpecs();
     if(build->item(5, 0)!=nullptr && (build->item(5, 0))->text()!=componentNameLabel->text()) {
         bool trovato=false;
@@ -1497,7 +1516,7 @@ void MainWindow::loadFileToBuild() {
         QDialog *error=new QDialog(this);
         QVBoxLayout *errorLayout=new QVBoxLayout(error);
         error->setLayout(errorLayout);
-        QLabel *errorLabel=new QLabel("Caricamento non riuscito! File vuoto.");
+        QLabel *errorLabel=new QLabel("Caricamento non riuscito!");
         QPushButton *errorButton=new QPushButton("Ok");
         errorLayout->addWidget(errorLabel);
         errorLayout->addWidget(errorButton);
@@ -1515,11 +1534,13 @@ void MainWindow::loadFileToBuild() {
         bool componentPresence;
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
-            QString* component_name=new QString((j.toObject().value("name").toString()));
+            QString component_name=QString((j.toObject().value("name").toString()));
             if(componentsNames.search(component_name)!=-1)
                 componentPresence=true;
-            else
+            else {
                 componentPresence=false;
+                componentsNames.push_back(component_name);
+            }
             if(component_type=="MOBA") {
                 if(componentPresence==false) {
                     componenti.push_back(new MOBA(j.toObject().value("length").toInt(),
@@ -1536,11 +1557,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     mobaComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(*component_name));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
                     mobaToBuild();
                 }
                 else {
-                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(*component_name));
+                    mobaComboBox->setCurrentIndex(mobaComboBox->findText(component_name));
                     mobaToBuild();
                 }
             }
@@ -1560,11 +1581,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     cpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(*component_name));
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
                     cpuToBuild();
                 }
                 else {
-                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(*component_name));
+                    cpuComboBox->setCurrentIndex(cpuComboBox->findText(component_name));
                     cpuToBuild();
                 }
             }
@@ -1586,11 +1607,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     gpuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(*component_name));
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
                     gpuToBuild();
                 }
                 else {
-                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(*component_name));
+                    gpuComboBox->setCurrentIndex(gpuComboBox->findText(component_name));
                     gpuToBuild();
                 }
             }
@@ -1610,11 +1631,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     psuComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    psuComboBox->setCurrentIndex(psuComboBox->findText(*component_name));
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
                     psuToBuild();
                 }
                 else {
-                    psuComboBox->setCurrentIndex(psuComboBox->findText(*component_name));
+                    psuComboBox->setCurrentIndex(psuComboBox->findText(component_name));
                     psuToBuild();
                 }
             }
@@ -1632,11 +1653,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     ramComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    ramComboBox->setCurrentIndex(ramComboBox->findText(*component_name));
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
                     ramToBuild();
                 }
                 else {
-                    ramComboBox->setCurrentIndex(ramComboBox->findText(*component_name));
+                    ramComboBox->setCurrentIndex(ramComboBox->findText(component_name));
                     ramToBuild();
                 }
             }
@@ -1657,11 +1678,11 @@ void MainWindow::loadFileToBuild() {
                                                   ));
                     storageComboBox->addItem(componenti[componenti.getSize()-1]->getName());
                     componentsList->addItem(componenti[componenti.getSize()-1]->getName());
-                    storageComboBox->setCurrentIndex(storageComboBox->findText(*component_name));
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
                     storageToBuild();
                 }
                 else {
-                    storageComboBox->setCurrentIndex(storageComboBox->findText(*component_name));
+                    storageComboBox->setCurrentIndex(storageComboBox->findText(component_name));
                     storageToBuild();
                 }
             }
@@ -1712,15 +1733,15 @@ void MainWindow::load() {
     }
     else {
         bool componentPresence;
-        for(unsigned int i=0; i!=componenti.getSize(); i++)
-            componentsNames.push_back(new QString(componenti[i]->getName()));
         foreach(const QJsonValue& j, array) {
             QString component_type=QString(j.toObject().value("component_type").toString());
-            QString *component_name=new QString((j.toObject().value("name").toString()));
+            QString component_name=QString((j.toObject().value("name").toString()));
             if(componentsNames.search(component_name)!=-1)
                 componentPresence=true;
-            else
+            else {
                 componentPresence=false;
+                componentsNames.push_back(component_name);
+            }
             if(component_type=="MOBA" && componentPresence==false)
                 componenti.push_back(new MOBA(j.toObject().value("length").toInt(),
                                               j.toObject().value("height").toInt(),

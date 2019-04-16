@@ -1,6 +1,5 @@
 #ifndef cvector_H
 #define cvector_H
-#include<iostream>
 #include "pc_parts.h"
 #include "moba.h"
 #include "cpu.h"
@@ -9,7 +8,6 @@
 #include "ram.h"
 #include "psu.h"
 #include "storage.h"
-#include <QDebug>
 
 template<class T>
 class cvector {
@@ -27,13 +25,14 @@ public:
     void clear();
     unsigned int getCapacity() const;
     unsigned int getSize() const;
+    void setSize(unsigned int);
     void resize(unsigned int);
     void push_back(const T&);
     void pop_back();
     void swap(T&, T&);
     void erase(const unsigned int &);
     int search(const T&) const;
-    const T& operator[](unsigned int) const;
+    T& operator[](unsigned int) const;
     bool operator==(const T&) const;
     bool operator!=(const T&) const;
 };
@@ -100,6 +99,11 @@ unsigned int cvector<T>::getSize() const {
 }
 
 template<class T>
+void cvector<T>::setSize(unsigned int s) {
+    size=s;
+}
+
+template<class T>
 void cvector<T>::resize(unsigned int c) {
     T* newPoint=new T[c];
     for(unsigned int j=0; j<size; j++)
@@ -109,7 +113,7 @@ void cvector<T>::resize(unsigned int c) {
 }
 
 template<class T>
-const T& cvector<T>::operator[](unsigned int j) const {
+T& cvector<T>::operator[](unsigned int j) const {
     return point[j];
 }
 
