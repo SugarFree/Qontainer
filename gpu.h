@@ -1,8 +1,6 @@
 #ifndef GPU_H
 #define GPU_H
 #include "pc_parts.h"
-#include "moba.h"
-#include "psu.h"
 
 class GPU: public PC_Parts
 {

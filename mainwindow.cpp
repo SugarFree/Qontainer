@@ -2134,6 +2134,7 @@ MainWindow::MainWindow(): QWidget() {
     connect(saveBuild, SIGNAL(clicked(bool)), this, SLOT(saveBuildToFile()));
     connect(loadBuild, SIGNAL(clicked(bool)), this, SLOT(loadFileToBuild()));
     //load("../Qontainer/database.json");
+    //load("../Qontainer/databsevuoto.json");
     QCoreApplication::setApplicationName("PC Part Picker");
     tab->setMinimumSize(1800, 800);
     tab->setMaximumSize(1800, 800);

@@ -1,0 +1,89 @@
+{
+    "pc_parts": [
+        {
+            "RAM_slots": 4,
+            "component_type": "MOBA",
+            "connectors": "Memory slots: 288-pin DIMM, Ethernet: 1x1000 Mbit/s, SATA: 6x6 GB/s",
+            "form_factor": "ATX",
+            "height": 244,
+            "length": 305,
+            "manufacturer": "Asus",
+            "max_RAM": 64,
+            "moba_socket": "LGA1151",
+            "name": "Asus Prime Z370-A",
+            "power_consumption": 50,
+            "price": 260
+        },
+        {
+            "component_type": "CPU",
+            "cores": 8,
+            "cpu_socket": "LGA1151",
+            "cpu_speed": 3.6,
+            "height": 355,
+            "integrated_graphics": true,
+            "length": 355,
+            "manufacturer": "Intel",
+            "name": "Intel Core i9-9900K",
+            "power_consumption": 95,
+            "price": 562.13,
+            "x64bit": true
+        },
+        {
+            "clock": 1725,
+            "component_type": "GPU",
+            "connectors": "Display Port: 3, HDMI: 1, Visuallink: 1",
+            "height": 400,
+            "interface": "PCI-Express x16",
+            "length": 280,
+            "manufacturer": "Nvidia",
+            "memory_size": 8,
+            "name": "Gigabyte GeForce RTX 2070",
+            "performance": 7.9,
+            "power_consumption": 185,
+            "price": 529.99,
+            "supplementary_power": true,
+            "type": "GDDR6"
+        },
+        {
+            "component_type": "PSU",
+            "efficiency_certification": "80+ Gold",
+            "form_factor": "ATX",
+            "height": 85,
+            "length": 150,
+            "manufacturer": "EVGA",
+            "modularity": "Full",
+            "name": "EVGA SuperNOVA G3",
+            "power_consumption": 0,
+            "price": 164.04,
+            "supplementary_power": true,
+            "wattage": 750
+        },
+        {
+            "component_type": "RAM",
+            "height": 76,
+            "length": 152,
+            "manufacturer": "Corsair",
+            "name": "Corsair Vengeance LPX 8 GB",
+            "power_consumption": 2,
+            "price": 149,
+            "ram_speed": 3000,
+            "size": 8,
+            "type": "288-pin DIMM"
+        },
+        {
+            "component_type": "Storage",
+            "form_factor": 3.5,
+            "height": 102,
+            "interface": "SATA 6GB/s",
+            "length": 147,
+            "manufacturer": "Western Digital",
+            "name": "Western Digital Caviar Blue 1 TB",
+            "power_consumption": 7,
+            "price": 41.5,
+            "rpm": 7200,
+            "size": 1000,
+            "speed": 150,
+            "type": "HDD"
+        }
+    ]
+}
